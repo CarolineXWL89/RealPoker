@@ -3,6 +3,7 @@ package com.example.caroline.realpoker;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -80,7 +81,9 @@ public class SettingsDrawer extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Fragment currentFragment = null;
         if (id == R.id.nav_camera) {
+            Fragment = new
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
