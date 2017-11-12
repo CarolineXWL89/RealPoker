@@ -346,7 +346,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         // show it
         alertDialog.show();
 
-
     }
 
     public void endTurn() {//todo add fold method
@@ -457,6 +456,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         Log.d(TAG, "onClick: " + v.getId());
         Log.d(TAG, "onClick: " + R.id.raise);
+
         switch (v.getId()) {
             case R.id.raise:
                 raiseBet();
@@ -465,10 +465,37 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                 checkCall();
                 break;
             case R.id.fold:
-                endTurn();
+                playerFolded();
                 break;
         }
     }
+
+    private void playerFolded() {
+        players.get(0).hasFolded(true);
+    }
+
+
+    public boolean checkIfNotFolded(){
+        int n = getNextGuy(currentplayer);
+
+        if(players.get(n).nic()){
+            return false;
+        } else{
+            return true;
+        }
+
+=    }
+
+    private int getNextGuy(int i) {
+        int nextPlayer = i;
+        if(i<players.size()-1){
+            nextPlayer++;
+        }else{
+            nextPlayer = 0;
+        }
+        return nextPlayer;
+    }
+
 
     public ArrayList<Player> getWinner() {
         ArrayList<Integer> best = new ArrayList<>();
