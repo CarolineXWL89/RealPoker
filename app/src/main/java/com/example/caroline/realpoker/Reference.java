@@ -21,8 +21,8 @@ public class Reference extends Fragment {
                              @Nullable Bundle savedInstanceState){
         super.onCreateView(inflater, container, savedInstanceState);
         //Inflate the layout we made (one_fragment.xml)
-        rootView = inflater.inflate(R.layout.activity_poker_game, container, false);
-        referenceInfo = (TextView) rootView.findViewById(R.id.reference_sheet_text);
+        rootView = inflater.inflate(R.layout.activity_reference, container, false);
+//        referenceInfo = (TextView) rootView.findViewById(R.id.reference_sheet_text);
         return rootView;
     }
 }
