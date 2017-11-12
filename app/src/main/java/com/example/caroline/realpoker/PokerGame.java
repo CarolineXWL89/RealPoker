@@ -51,6 +51,21 @@ public class PokerGame extends Fragment {
         createCards();
         wireWidgets();
 
+
+        //get any other initial set up done
+        //in place of where you would normally say this,
+        //you use getActivity() instead to get the context
+        //todo do this for real stuff
+        /*
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "I CLICKED THE THING",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
+        //return the view that we inflated.
         return rootView;
     }
 
