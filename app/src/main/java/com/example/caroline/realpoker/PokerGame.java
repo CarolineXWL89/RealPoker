@@ -51,53 +51,6 @@ public class PokerGame extends Fragment {
         createCards();
         wireWidgets();
 
-
-
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-
-     //   final TextView tw =new TextView(getActivity());
-        final  EditText et = new EditText(getActivity());
-        et.setText("Enter Number of Players");
-
-
-
-
-        // set prompts.xml to alertdialog builder
-        alertDialogBuilder.setView(et);
-
-        // set dialog message
-        alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-            }
-        });
-
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        // show it
-        alertDialog.show();
-        if(Integer.parseInt(et.getText().toString()) <6 && Integer.parseInt(et.getText().toString())>0)
-        {
-            numOfPlayers=Integer.parseInt(et.getText().toString());
-        }
-
-
-
-
-        //get any other initial set up done
-        //in place of where you would normally say this,
-        //you use getActivity() instead to get the context
-        //todo do this for real stuff
-        /*
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "I CLICKED THE THING",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
-        //return the view that we inflated.
         return rootView;
     }
 
@@ -142,39 +95,50 @@ public class PokerGame extends Fragment {
         //Wire any widgets -- must use rootView.findViewById
         myCard1View = (ImageView) rootView.findViewById(R.id.my_card_1);
         myCard1View.setContentDescription(myCard1.getCardNumber()+ " of " + myCard1.getSuitName());
-        int resA = getResources().getIdentifier(myCard1.getSuit()+"_"+myCard1.getNumber(), "drawable", "com.example.caroline.realpoker");
-        myCard1View.setImageResource(resA);
+        showCard(myCard1);
 
         myCard2View = (ImageView) rootView.findViewById(R.id.my_card_2);
         myCard2View.setContentDescription(myCard2.getCardNumber()+ " of " + myCard2.getSuitName());
-        int resB = getResources().getIdentifier(myCard2.getSuit()+"_"+myCard2.getNumber(), "drawable", "com.example.caroline.realpoker");
-        myCard1View.setImageResource(resB);
+        showCard(myCard2);
 
         tableCard1View = (ImageView) rootView.findViewById(R.id.table_card_1);
         tableCard1View.setContentDescription(tableCard1.getCardNumber()+ " of " + tableCard1.getSuitName());
-        int res1 = getResources().getIdentifier(tableCard1.getSuit()+"_"+tableCard1.getNumber(), "drawable", "com.example.caroline.realpoker");
-        myCard1View.setImageResource(res1);
+        showCard(tableCard1);
 
         tableCard2View = (ImageView) rootView.findViewById(R.id.table_card_2);
         tableCard2View.setContentDescription(tableCard2.getCardNumber()+ " of " + tableCard2.getSuitName());
-        int res2 = getResources().getIdentifier(tableCard2.getSuit()+"_"+tableCard2.getNumber(), "drawable", "com.example.caroline.realpoker");
-        myCard1View.setImageResource(res2);
+        showCard(tableCard2);
 
         tableCard3View = (ImageView) rootView.findViewById(R.id.table_card_3);
         tableCard3View.setContentDescription(tableCard3.getCardNumber()+ " of " + tableCard3.getSuitName());
-        int res3 = getResources().getIdentifier(tableCard1.getSuit()+"_"+tableCard1.getNumber(), "drawable", "com.example.caroline.realpoker");
-        myCard1View.setImageResource(res3);
+        showCard(tableCard3);
 
         tableCard4View = (ImageView) rootView.findViewById(R.id.table_card_4);
         tableCard4View.setContentDescription(tableCard4.getCardNumber()+ " of " + tableCard4.getSuitName());
-        int res4 = getResources().getIdentifier(tableCard4.getSuit()+"_"+tableCard4.getNumber(), "drawable", "com.example.caroline.realpoker");
-        myCard1View.setImageResource(res4);
+        showCard(tableCard4);
 
         tableCard5View = (ImageView) rootView.findViewById(R.id.table_card_5);
         tableCard5View.setContentDescription(tableCard5.getCardNumber()+ " of " + tableCard5.getSuitName());
-        int res5 = getResources().getIdentifier(tableCard5.getSuit()+"_"+tableCard5.getNumber(), "drawable", "com.example.caroline.realpoker");
-        myCard1View.setImageResource(res5);
+        showCard(tableCard5);
+    }
 
+    private void showCard(Card myCard) {
+        int res = getResources().getIdentifier(myCard.getSuit()+"_"+myCard.getNumber(), "drawable", "com.example.caroline.realpoker");
+        if(myCard.equals(myCard1)) {
+            myCard1View.setImageResource(res);
+        } else if(myCard.equals(myCard2)){
+            myCard2View.setImageResource(res);
+        } else if(myCard.equals(tableCard1)) {
+            tableCard1View.setImageResource(res);
+        } else if(myCard.equals(tableCard2)){
+            tableCard2View.setImageResource(res);
+        } else if(myCard.equals(tableCard3)) {
+            tableCard3View.setImageResource(res);
+        } else if(myCard.equals(tableCard4)){
+            tableCard4View.setImageResource(res);
+        } else if(myCard.equals(tableCard5)){
+            tableCard5View.setImageResource(res);
+        }
     }
 
     public ArrayList<Card> getHand() {

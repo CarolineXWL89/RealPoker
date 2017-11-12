@@ -16,10 +16,7 @@ public class Hand {
         fullhand.addAll(centerCards);
     }
 
-    public ArrayList<Card> getBestHand(){
 
-        ;
-    }
 
 
 }
