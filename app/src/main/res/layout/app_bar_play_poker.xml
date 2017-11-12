@@ -22,6 +22,7 @@
 
     <include
         layout="@layout/content_play_poker"
-        android:layout_height="507dp" />
+        android:layout_height="507dp"
+        android:layout_width="507dp" />
 
 </android.support.design.widget.CoordinatorLayout>

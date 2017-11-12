@@ -103,7 +103,8 @@ public class PokerGame extends Fragment {
         //Wire any widgets -- must use rootView.findViewById
         myCard1View = (ImageView) rootView.findViewById(R.id.my_card_1);
         myCard1View.setContentDescription(myCard1.getCardNumber()+ " of " + myCard1.getSuitName());
-        myCard1View.setImageResource(R.drawable.random2);
+        int res = getResources().getIdentifier(myCard1.getNumber()+myCard1.getSuit(), "drawable/cards", "com.example.caroline.realpoker:");
+        myCard1View.setImageResource(res);
 
         myCard2View = (ImageView) rootView.findViewById(R.id.my_card_2);;
         myCard2View.setContentDescription(myCard2.getCardNumber()+ " of " + myCard2.getSuitName());
