@@ -19,18 +19,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 import static com.example.caroline.realpoker.R.drawable.ic_menu_send;
 
-public class PokerGame extends Fragment {
+public class PokerGame extends Fragment implements View.OnClickListener{
 
     private ArrayList<Card> cardsOnTheTable;
     private ArrayList<Card> deck;
-    private int numOfPlayers;
-    private Player[] players;
-    private TextView player1View, player2View, player3View, player4View, player5View, player6View;
+    private int numOfPlayers,currentplayer;
+    private int potMoney;
+    private ArrayList<Player> players;
+    private TextView player1View, player2View, player3View, player4View, player5View, player6View, bet;
 
     private Card myCard1, myCard2, tableCard1, tableCard2, tableCard3, tableCard4, tableCard5;
     private ImageView myCard1View, myCard2View, tableCard1View, tableCard2View, tableCard3View, tableCard4View, tableCard5View;
@@ -47,13 +49,8 @@ public class PokerGame extends Fragment {
         rootView = inflater.inflate(R.layout.activity_poker_game, container, false);
         deck = new ArrayList<>();
         numOfPlayers = 6;
-        createDeck();
-        createPlayers();
-        createCardsOnTheTable();
-        createCards();
-        wireWidgets();
-        checkingHand();
-
+        startNewGame();
+        currentplayer=0;
 
 
         //get any other initial set up done
@@ -73,16 +70,25 @@ public class PokerGame extends Fragment {
         return rootView;
     }
 
+    private void startNewGame() {
+        createDeck();
+        createPlayers();
+        createCardsOnTheTable();
+        createCards();
+        wireWidgets();
+        checkingHand();
+    }
+
     private void checkingHand() {
-        Hand hand1 = new Hand(players[0].getHand(), cardsOnTheTable);
+        Hand hand1 = new Hand(players.get(0).getHand(), cardsOnTheTable);
         ArrayList<Integer> intstuff =  new ArrayList<>();
                 intstuff.addAll(hand1.getBestHand());
         Log.d(TAG, "checkingHand: "+intstuff.toString());
     }
 
     private void createCards() {
-        myCard1 = players[0].getHand().get(0);
-        myCard2 = players[0].getHand().get(1);
+        myCard1 = players.get(0).getHand().get(0);
+        myCard2 = players.get(0).getHand().get(1);
         tableCard1 = cardsOnTheTable.get(0);
         tableCard2 = cardsOnTheTable.get(1);
         tableCard3 = cardsOnTheTable.get(2);
@@ -110,13 +116,16 @@ public class PokerGame extends Fragment {
     }
     //todo get player name from a dialogue we will write later
     private void createPlayers() {
-        players = new Player[numOfPlayers];
+        players = new ArrayList<>();
         for(int i = 0; i< numOfPlayers; i++){
-            players[i] = new Player("Player"+i,10000, getHand());
+            players.add(i, new Player("Player"+i,10000, getHand()));
         }
     }
 
     private void wireWidgets() {
+
+        myCard1=players.get(0).getHand().get(0);
+        myCard2=players.get(0).getHand().get(1);
 
         //Wire any widgets -- must use rootView.findViewById
         myCard1View = (ImageView) rootView.findViewById(R.id.my_card_1);
@@ -143,29 +152,119 @@ public class PokerGame extends Fragment {
         tableCard5View.setContentDescription(tableCard5.getCardNumber()+ " of " + tableCard5.getSuitName());
 
         player1View = (TextView) rootView.findViewById(R.id.player_1);
-        String p1 = players[1].getName() + ": $" + players[1].getMonnies();
+        String p1 = players.get(1).getName() + ": $" + players.get(1).getMonnies();
         player1View.setText(p1);
 
         player2View = (TextView) rootView.findViewById(R.id.player_2);
-        String p2 = players[2].getName() + ": $" + players[2].getMonnies();
+        String p2 = players.get(2).getName() + ": $" + players.get(2).getMonnies();
         player2View.setText(p2);
 
         player3View = (TextView) rootView.findViewById(R.id.player_3);
-        String p3 = players[3].getName() + ": $" + players[3].getMonnies();
+        String p3 = players.get(3).getName() + ": $" + players.get(3).getMonnies();
         player3View.setText(p3);
 
         player4View = (TextView) rootView.findViewById(R.id.player_4);
-        String p4 = players[4].getName() + ": $" + players[4].getMonnies();
+        String p4 = players.get(4).getName() + ": $" + players.get(4).getMonnies();
         player4View.setText(p4);
 
         player5View = (TextView) rootView.findViewById(R.id.player_5);
-        String p5 = players[5].getName() + ": $" + players[5].getMonnies();
+        String p5 = players.get(5).getName() + ": $" + players.get(5).getMonnies();
         player5View.setText(p5);
 
         player6View = (TextView) rootView.findViewById(R.id.user);
-        String p6 = players[0].getName() + ": $" + players[0].getMonnies();
+        String p6 = players.get(0).getName() + ": $" + players.get(0).getMonnies();
         player6View.setText(p6);
+
+        bet = (TextView) rootView.findViewById(R.id.bet);
+        bet.setText("$"+potMoney);
+
+        Button raise = (Button) rootView.findViewById(R.id.raise);//todo
+        raise.setOnClickListener(this);
+        Button fold = (Button) rootView.findViewById(R.id.fold);
+        fold.setOnClickListener(this);
+        Button callCheck = (Button) rootView.findViewById(R.id.call_check);
+        callCheck.setOnClickListener(this);
     }
+    public void raiseBet(){
+         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        final EditText input = new EditText(getActivity());
+        // set title
+        alertDialogBuilder.setTitle("Input Raise amount");
+        alertDialogBuilder.setView(input);
+        //alertDialogBuilder.setIcon(R.drawable.ic_delete);
+        // set dialog message
+
+
+        alertDialogBuilder.setCancelable(true).setPositiveButton("ok",new DialogInterface.OnClickListener() {
+            int amountRaised;
+            public void onClick(DialogInterface dialog,int id) {
+
+                                try{
+                                    if(Integer.parseInt(input.getText().toString())>0 &&(Integer.parseInt(input.getText().toString())<players.get(0).getMonnies()))
+                                    {
+                                        amountRaised=Integer.parseInt(input.getText().toString());
+                                        potMoney+=amountRaised;
+                                        players.get(0).setMonnies(players.get(0).getMonnies()-amountRaised);
+                                        bet.setText("$"+potMoney);
+                                        player6View.setText(players.get(0).getName()+": $"+players.get(0).getMonnies());
+                                    }
+
+                                }
+                                catch(NumberFormatException e) {
+                                    Toast.makeText(getActivity(), "please enter a number", Toast.LENGTH_SHORT).show();
+
+
+                                }
+                                // if this button is clicked, close
+                                // current activity
+
+                            }
+                        });
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+
+
+    }
+    public void endTurn(){//todo add fold method
+        Log.d(TAG, "endTurn: ");
+    }
+
+    public void nextGuy(){
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        // set title
+        int i=0;
+        if(currentplayer < players.size() - 1){
+            i = currentplayer +1;
+        }
+        alertDialogBuilder.setTitle("Are you "+players.get(i).getName() +"?");
+
+        // set dialog message
+
+        alertDialogBuilder.setCancelable(false).setPositiveButton("yes",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int id) {
+                changePlayer();
+                // current activity
+
+            }
+        });
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+        Log.d(TAG, "nextGuy: ");
+
+    } //todo move to next player
+
+    private void changePlayer() {
+        Player p= players.remove(0);
+        players.add(p);
+        wireWidgets();
+    }
+
 
     private void showCard(Card myCard) {
         int res = getResources().getIdentifier(myCard.getSuit()+"_"+myCard.getNumber(), "drawable", "com.example.caroline.realpoker");
@@ -197,7 +296,24 @@ public class PokerGame extends Fragment {
         return hand;
     }
 
-   /** public Player getWinner(){
+    @Override
+    public void onClick(View v) {
+        Log.d(TAG, "onClick: "+v.getId());
+        Log.d(TAG, "onClick: "+R.id.raise);
+        switch(v.getId()){
+            case R.id.raise:
+                raiseBet();
+                break;
+            case R.id.call_check:
+                nextGuy();
+                break;
+            case R.id.fold:
+                endTurn();
+                break;
+        }
+    }
+
+    /** public Player getWinner(){
         ArrayList<Integer> best = new ArrayList<>();
         best.add(-1);
         int bestPlayer = -1;

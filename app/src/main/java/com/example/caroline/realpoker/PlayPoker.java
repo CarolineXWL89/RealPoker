@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 
 public class PlayPoker extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private Fragment currentGame;
 
     //TODO se up setting acticity maybe make it fragment or somtheing nice like that
     //TOdo fix game so that it starts by askign for player
@@ -36,11 +38,13 @@ public class PlayPoker extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        currentGame = new PokerGame();
+        Log.d("blah", "onCreate: new game");
         startGame();
     }
 
     private void startGame() {
-        Fragment currentFragment = new PokerGame();
+        Fragment currentFragment = currentGame;
         FragmentManager fm = getSupportFragmentManager();
         if(currentFragment != null)
         {
@@ -90,7 +94,7 @@ public class PlayPoker extends AppCompatActivity
 
         Fragment currentFragment = null;
         if (id == R.id.nav_game) {
-            currentFragment = new PokerGame();
+            currentFragment = currentGame;
         } else if (id == R.id.nav_reference) {
             currentFragment = new Reference();
         } else if (id == R.id.nav_settings) {
