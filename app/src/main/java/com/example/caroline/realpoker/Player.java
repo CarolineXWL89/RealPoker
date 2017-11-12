@@ -13,10 +13,12 @@ public class Player {
     private int monnies;
     private ArrayList<Card> hand;
 
+
     public Player(String name, int monnies, ArrayList<Card> hand) {
         this.name = name;
         this.monnies = monnies;
-        this.hand = hand;
+        Hand me = new Hand(hand);
+        this.hand = Hand.getBestHand();
     }
 
     public String getName() {
