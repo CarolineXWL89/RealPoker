@@ -195,6 +195,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         Button fold = (Button) rootView.findViewById(R.id.fold);
         fold.setOnClickListener(this);
         Button callCheck = (Button) rootView.findViewById(R.id.call_check);
+        callCheck.setText("call/check");
         callCheck.setOnClickListener(this);
 
         Card player1Card1 = players.get(1).getHand().get(0);
@@ -265,7 +266,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
             turn++;
             endTurn();
         }
-        else if(players.get(2).getRaiseBy() == 0 && hasRaised){
+        else if(players.get(1).getRaiseBy() == 0 && hasRaised){
             hasRaised = false;
             round = 0;
             turn++;
@@ -484,7 +485,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
             return true;
         }
 
-=    }
+    }
 
     private int getNextGuy(int i) {
         int nextPlayer = i;
@@ -550,6 +551,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         player5Card1View.setVisibility(View.VISIBLE);
         player5Card2View.setVisibility(View.VISIBLE);
         Log.d(TAG, "endGame: "+winnerTitle(nute));//TODO: Make a text box saying who won;
+        Toast.makeText(getActivity(), winnerTitle(nute), Toast.LENGTH_LONG).show();
             for(int i=0;i<nute.size();i++){
                 nute.get(i).setMonnies(nute.get(i).getMonnies()+potMoney/nute.size());
             }
