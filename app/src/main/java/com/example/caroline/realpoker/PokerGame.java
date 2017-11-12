@@ -154,7 +154,7 @@ public class PokerGame extends Fragment {
         } else if(myCard.equals(tableCard5)){
             tableCard5View.setImageResource(res);
         }
-    }
+    }//
 
     public ArrayList<Card> getHand() {
         int cardPlace = (int)( Math.random()*deck.size());
