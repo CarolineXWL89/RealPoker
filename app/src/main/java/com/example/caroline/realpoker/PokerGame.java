@@ -54,7 +54,10 @@ public class PokerGame extends Fragment {
         wireWidgets();
         checkingHand();
 
-
+        ArrayList<Player> winners = getWinner();
+        for(Player p: winners){
+            Log.d(TAG, "onCreateView: "+ p.getName());
+        }
 
         //get any other initial set up done
         //in place of where you would normally say this,
@@ -112,6 +115,7 @@ public class PokerGame extends Fragment {
     private void createPlayers() {
         players = new Player[numOfPlayers];
         for(int i = 0; i< numOfPlayers; i++){
+            Log.d(TAG, "createPlayers: player"+i);
             players[i] = new Player("Player"+i,10000, getHand());
         }
     }
@@ -129,18 +133,23 @@ public class PokerGame extends Fragment {
 
         tableCard1View = (ImageView) rootView.findViewById(R.id.table_card_1);
         tableCard1View.setContentDescription(tableCard1.getCardNumber()+ " of " + tableCard1.getSuitName());
+        showCard(tableCard1);
 
         tableCard2View = (ImageView) rootView.findViewById(R.id.table_card_2);
         tableCard2View.setContentDescription(tableCard2.getCardNumber()+ " of " + tableCard2.getSuitName());
+        showCard(tableCard2);
 
         tableCard3View = (ImageView) rootView.findViewById(R.id.table_card_3);
         tableCard3View.setContentDescription(tableCard3.getCardNumber()+ " of " + tableCard3.getSuitName());
+        showCard(tableCard3);
 
         tableCard4View = (ImageView) rootView.findViewById(R.id.table_card_4);
         tableCard4View.setContentDescription(tableCard4.getCardNumber()+ " of " + tableCard4.getSuitName());
+        showCard(tableCard4);
 
         tableCard5View = (ImageView) rootView.findViewById(R.id.table_card_5);
         tableCard5View.setContentDescription(tableCard5.getCardNumber()+ " of " + tableCard5.getSuitName());
+        showCard(tableCard5);
 
         player1View = (TextView) rootView.findViewById(R.id.player_1);
         String p1 = players[1].getName() + ": $" + players[1].getMonnies();
@@ -194,26 +203,49 @@ public class PokerGame extends Fragment {
         cardPlace = (int) (Math.random()*deck.size());
         hand.add(deck.get(cardPlace));
         deck.remove(cardPlace);
+        Log.d(TAG, "getHand: " + hand.get(0).getCardNumber() + hand.get(0).getSuitName() +hand.get(1).getCardNumber() + hand.get(1).getSuitName());
         return hand;
     }
 
-   /** public Player getWinner(){
-        ArrayList<Integer> best = new ArrayList<>();
-        best.add(-1);
-        int bestPlayer = -1;
+    public ArrayList<Player> getWinner(){
+            ArrayList<Integer> best = new ArrayList<>();
+            best.add(-1);
+            ArrayList<Player> winners = new ArrayList<>();
+            int bestPlayer = -1;
+            for(int i = 0; i < players.length;i++) {
+                Hand hand1 = new Hand(players[i].getHand(), cardsOnTheTable);
+                ArrayList<Integer> intstuff1 = new ArrayList<>();
+                intstuff1.addAll(hand1.getBestHand());
+                if(hand1.getHigherHand(best,intstuff1).equals(intstuff1)){
+                    bestPlayer = i;
+                }
+                best = hand1.getHigherHand(best,intstuff1);
+            }
         for(int i = 0; i < players.length;i++) {
             Hand hand1 = new Hand(players[i].getHand(), cardsOnTheTable);
             ArrayList<Integer> intstuff1 = new ArrayList<>();
             intstuff1.addAll(hand1.getBestHand());
-            if(hand1.getHigherHand(best,intstuff1)==intstuff1){
-                bestPlayer = i;
+            if(hand1.getHigherHand(best,intstuff1).equals(intstuff1)){
+                winners.add(players[i]);
             }
-            best = hand1.getHigherHand(best,intstuff1);
         }
-
-        return players[bestPlayer];
+        return winners;
     }
-    */
+
+    public String winnerTitle(ArrayList<Player> winners){
+        String samIsTired="";
+        for(int i = 0; i < winners.size(); i++){
+            if(winners.size() - 1 == i && i !=0){
+                samIsTired=samIsTired +" and ";
+            }
+            else if(i != 0){
+                samIsTired=samIsTired+", ";
+            }
+            samIsTired = samIsTired + winners.get(i).getName();
+        }
+        return samIsTired + " won!";
+    }
+
 
 }
 
@@ -248,5 +280,24 @@ public class PokerGame extends Fragment {
  }
  else{
  return;
+ }
+ */
+
+/**
+ public ArrayList<Integer> getWinner(){
+ ArrayList<Integer> best = new ArrayList<>();
+ best.add(-1);
+ int bestPlayer = -1;
+ for(int i = 0; i < players.length;i++) {
+ Hand hand1 = new Hand(players[i].getHand(), cardsOnTheTable);
+ ArrayList<Integer> intstuff1 = new ArrayList<>();
+ intstuff1.addAll(hand1.getBestHand());
+ if(hand1.getHigherHand(best,intstuff1)==intstuff1){
+ bestPlayer = i;
+ }
+ best = hand1.getHigherHand(best,intstuff1);
+ }
+
+ return players[bestPlayer];
  }
  */

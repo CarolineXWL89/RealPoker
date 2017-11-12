@@ -18,7 +18,6 @@ public class Hand {
     public Hand(ArrayList<Card> playerCards, ArrayList<Card> centerCards){
         fullhand.addAll(playerCards);
         fullhand.addAll(centerCards);
-        Log.d(TAG, "Hand: " + fullhand.size());
     }
 
     public ArrayList<Integer> getBestHand(){
