@@ -263,7 +263,7 @@ public class HandComparer {
         else if(storedTwo.size()>storedOne.size() && storedTwo.size()>0){
             list.add(storedTwo.get(0));
             if (matches == 6) {
-                list.add(storedTwo.get(0));
+                list.add(storedOne.get(0));
             } else if (matches == 7) {
                 int b = 4;
                 for (int i = 0; i < 3; i++) {
