@@ -19,6 +19,9 @@ import android.view.MenuItem;
 public class PlayPoker extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    //TODO se up setting acticity maybe make it fragment or somtheing nice like that
+    //TOdo fix game so that it starts by askign for player
+    //todo fix horizontal xml file
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
