@@ -44,14 +44,7 @@ public class HandComparer {
             return match;
         }
 
-
-
-
-
-
-
-
-
+        return ans;
 
     }
 
