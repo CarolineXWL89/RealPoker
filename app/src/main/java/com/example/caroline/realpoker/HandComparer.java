@@ -17,6 +17,9 @@ public class HandComparer {
     //6 = full house
     //7 = four of a kind
     //8 Straight flush
+    public HandComparer(){
+
+    }
 
 
     public ArrayList<Integer> getHandType(ArrayList<Card> cards){

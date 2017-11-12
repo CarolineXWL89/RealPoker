@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class Hand {
     private ArrayList<Card> fullhand;
+    private HandComparer compare = new HandComparer();
 
 
     public Hand(ArrayList<Card> playerCards, ArrayList<Card> centerCards){
@@ -16,9 +17,24 @@ public class Hand {
         fullhand.addAll(centerCards);
     }
 
-    public ArrayList<Card> getBestHand(){
+    public ArrayList<Card> getBestHand(ArrayList<Card> cards){
+        ArrayList<Integer> best = new ArrayList<>();
+        for(int i=0;i<7;i++){
+            for(int j = i+1;j<7;j++){
+                if(true){
+                    ArrayList<Card> googleDocsSucks = new ArrayList<>();
+                    googleDocsSucks.addAll(cards);
+                    googleDocsSucks.remove(i);
+                    googleDocsSucks.remove(j);
+                    compare.getHandType(googleDocsSucks);
+                    getHigherHand()
+                }
+            }
+        }
+    }
 
-        ;
+    public ArrayList<Integer> getHigherHand(){
+
     }
 
 

@@ -52,38 +52,6 @@ public class PokerGame extends Fragment {
         wireWidgets();
 
 
-
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-
-     //   final TextView tw =new TextView(getActivity());
-        final  EditText et = new EditText(getActivity());
-        et.setText("Enter Number of Players");
-
-
-
-
-        // set prompts.xml to alertdialog builder
-        alertDialogBuilder.setView(et);
-
-        // set dialog message
-        alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-            }
-        });
-
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        // show it
-        alertDialog.show();
-        if(Integer.parseInt(et.getText().toString()) <6 && Integer.parseInt(et.getText().toString())>0)
-        {
-            numOfPlayers=Integer.parseInt(et.getText().toString());
-        }
-
-
-
-
         //get any other initial set up done
         //in place of where you would normally say this,
         //you use getActivity() instead to get the context
