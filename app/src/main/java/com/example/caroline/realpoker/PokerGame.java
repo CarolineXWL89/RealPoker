@@ -271,16 +271,27 @@ public class PokerGame extends Fragment implements View.OnClickListener {
             turn++;
             endTurn();
         }
-        else if(!hasRaised && round -1>players.size()){
+        else if(!hasRaised && round +2>players.size()){
             hasRaised = false;
             round = 0;
-            turn++;
+            turn ++;
             endTurn();
         }
         else{
-            players.get(0).setMonnies(players.get(0).getMonnies()-players.get(0).getRaiseBy());
-            players.get(0).setRaiseBy(0);
-            nextGuy();
+            if(players.get(0).getMonnies()<players.get(0).getRaiseBy()){
+                potMoney += players.get(0).getRaiseBy();
+                players.get(0).setMonnies(0);
+                players.get(0).setRaiseBy(0);
+                round++;
+                nextGuy();
+            }
+            else {
+                potMoney += players.get(0).getRaiseBy();
+                players.get(0).setMonnies(players.get(0).getMonnies() - players.get(0).getRaiseBy());
+                players.get(0).setRaiseBy(0);
+                round++;
+                nextGuy();
+            }
         }
     }
 
@@ -302,16 +313,22 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                 try {
                     if (Integer.parseInt(input.getText().toString()) > 0 && (Integer.parseInt(input.getText().toString()) < players.get(0).getMonnies())) {
                         amountRaised = Integer.parseInt(input.getText().toString());
-                        potMoney += amountRaised;
-                        players.get(1).setRaiseBy(players.get(1).getRaiseBy()+amountRaised);
-                        players.get(2).setRaiseBy(players.get(2).getRaiseBy()+amountRaised);
-                        players.get(3).setRaiseBy(players.get(3).getRaiseBy()+amountRaised);
-                        players.get(4).setRaiseBy(players.get(4).getRaiseBy()+amountRaised);
-                        players.get(5).setRaiseBy(players.get(5).getRaiseBy()+amountRaised);
-                        players.get(0).setMonnies(players.get(0).getMonnies() - amountRaised);
-                        hasRaised = true;
-                        bet.setText("$" + potMoney);
-                        player6View.setText(players.get(0).getName() + ": $" + players.get(0).getMonnies());
+                        if(amountRaised<=players.get(0).getRaiseBy()){
+                            Toast.makeText(getActivity(), "please enter a number larger than the call", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            potMoney += amountRaised;
+                            players.get(1).setRaiseBy(players.get(1).getRaiseBy() + amountRaised);
+                            players.get(2).setRaiseBy(players.get(2).getRaiseBy() + amountRaised);
+                            players.get(3).setRaiseBy(players.get(3).getRaiseBy() + amountRaised);
+                            players.get(4).setRaiseBy(players.get(4).getRaiseBy() + amountRaised);
+                            players.get(5).setRaiseBy(players.get(5).getRaiseBy() + amountRaised);
+                            players.get(0).setMonnies(players.get(0).getMonnies() - amountRaised);
+                            hasRaised = true;
+                            bet.setText("$" + potMoney);
+                            player6View.setText(players.get(0).getName() + ": $" + players.get(0).getMonnies());
+                            nextGuy();
+                        }
                     }
 
                 } catch (NumberFormatException e) {
@@ -337,12 +354,15 @@ public class PokerGame extends Fragment implements View.OnClickListener {
             showCard(tableCard1);
             showCard(tableCard2);
             showCard(tableCard3);
+            nextGuy();
         }
         else if(turn == 2){
             showCard(tableCard4);
+            nextGuy();
         }
         else if(turn == 3){
             showCard(tableCard5);
+            nextGuy();
         }
         else{
             endGame();
