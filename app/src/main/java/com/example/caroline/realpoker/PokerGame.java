@@ -26,18 +26,18 @@ import java.util.ArrayList;
 import static android.content.ContentValues.TAG;
 import static com.example.caroline.realpoker.R.drawable.ic_menu_send;
 
-public class PokerGame extends Fragment implements View.OnClickListener{
+public class PokerGame extends Fragment implements View.OnClickListener {
 
     private ArrayList<Card> cardsOnTheTable;
     private ArrayList<Card> deck;
-    private int numOfPlayers,currentplayer;
+    private int numOfPlayers, currentplayer;
     private int potMoney;
     private ArrayList<Player> players;
     private TextView player1View, player2View, player3View, player4View, player5View, player6View, bet;
 
     private Card myCard1, myCard2, tableCard1, tableCard2, tableCard3, tableCard4, tableCard5;
     private ImageView myCard1View, myCard2View, tableCard1View, tableCard2View, tableCard3View, tableCard4View, tableCard5View,
-    player1Card1View, player1Card2View, player2Card1View, player2Card2View, player3Card1View, player3Card2View, player4Card1View, player4Card2View,
+            player1Card1View, player1Card2View, player2Card1View, player2Card2View, player3Card1View, player3Card2View, player4Card1View, player4Card2View,
             player5Card1View, player5Card2View;
     private View rootView;
 
@@ -46,15 +46,14 @@ public class PokerGame extends Fragment implements View.OnClickListener{
 
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState){
+                             @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         //Inflate the layout we made (one_fragment.xml)
         rootView = inflater.inflate(R.layout.activity_poker_game, container, false);
         deck = new ArrayList<>();
         numOfPlayers = 6;
         startNewGame();
-        currentplayer=0;
-
+        currentplayer = 0;
 
 
         //get any other initial set up done
@@ -85,9 +84,9 @@ public class PokerGame extends Fragment implements View.OnClickListener{
 
     private void checkingHand() {
         Hand hand1 = new Hand(players.get(0).getHand(), cardsOnTheTable);
-        ArrayList<Integer> intstuff =  new ArrayList<>();
-                intstuff.addAll(hand1.getBestHand());
-        Log.d(TAG, "checkingHand: "+intstuff.toString());
+        ArrayList<Integer> intstuff = new ArrayList<>();
+        intstuff.addAll(hand1.getBestHand());
+        Log.d(TAG, "checkingHand: " + intstuff.toString());
     }
 
     private void createCards() {
@@ -101,86 +100,93 @@ public class PokerGame extends Fragment implements View.OnClickListener{
     }
 
     private void createCardsOnTheTable() {
-        int cardPlace = (int)(Math.random()*deck.size());
+        int cardPlace = (int) (Math.random() * deck.size());
         cardsOnTheTable = new ArrayList<>();
-        for(int i = 0; i<5;i++){
+        for (int i = 0; i < 5; i++) {
             cardsOnTheTable.add(deck.get(cardPlace));
             deck.remove(cardPlace);
-            cardPlace = (int)(Math.random()*deck.size());
+            cardPlace = (int) (Math.random() * deck.size());
         }
     }
 
     private void createDeck() {
         String[] suits = {"c", "d", "h", "s"};
-        for(String s:suits){
-            for(int i = 2; i < 15;i++){
-                deck.add(new Card(i,s));
+        for (String s : suits) {
+            for (int i = 2; i < 15; i++) {
+                deck.add(new Card(i, s));
             }
         }
     }
+
     //todo get player name from a dialogue we will write later
     private void createPlayers() {
         players = new ArrayList<>();
-        for(int i = 0; i< numOfPlayers; i++){
-            players.add(i, new Player("Player"+i,10000, getHand()));
+        for (int i = 0; i < numOfPlayers; i++) {
+            players.add(i, new Player("Player" + i, 10000, getHand()));
         }
     }
 
     private void wireWidgets() {
 
-        myCard1=players.get(0).getHand().get(0);
-        myCard2=players.get(0).getHand().get(1);
+        myCard1 = players.get(0).getHand().get(0);
+        myCard2 = players.get(0).getHand().get(1);
 
         //Wire any widgets -- must use rootView.findViewById
         myCard1View = (ImageView) rootView.findViewById(R.id.my_card_1);
-        myCard1View.setContentDescription(myCard1.getCardNumber()+ " of " + myCard1.getSuitName());
+        myCard1View.setContentDescription(myCard1.getCardNumber() + " of " + myCard1.getSuitName());
         showCard(myCard1);
 
         myCard2View = (ImageView) rootView.findViewById(R.id.my_card_2);
-        myCard2View.setContentDescription(myCard2.getCardNumber()+ " of " + myCard2.getSuitName());
+        myCard2View.setContentDescription(myCard2.getCardNumber() + " of " + myCard2.getSuitName());
         showCard(myCard2);
 
         tableCard1View = (ImageView) rootView.findViewById(R.id.table_card_1);
-        tableCard1View.setContentDescription(tableCard1.getCardNumber()+ " of " + tableCard1.getSuitName());
+        tableCard1View.setContentDescription(tableCard1.getCardNumber() + " of " + tableCard1.getSuitName());
 
         tableCard2View = (ImageView) rootView.findViewById(R.id.table_card_2);
-        tableCard2View.setContentDescription(tableCard2.getCardNumber()+ " of " + tableCard2.getSuitName());
+        tableCard2View.setContentDescription(tableCard2.getCardNumber() + " of " + tableCard2.getSuitName());
 
         tableCard3View = (ImageView) rootView.findViewById(R.id.table_card_3);
-        tableCard3View.setContentDescription(tableCard3.getCardNumber()+ " of " + tableCard3.getSuitName());
+        tableCard3View.setContentDescription(tableCard3.getCardNumber() + " of " + tableCard3.getSuitName());
 
         tableCard4View = (ImageView) rootView.findViewById(R.id.table_card_4);
-        tableCard4View.setContentDescription(tableCard4.getCardNumber()+ " of " + tableCard4.getSuitName());
+        tableCard4View.setContentDescription(tableCard4.getCardNumber() + " of " + tableCard4.getSuitName());
 
         tableCard5View = (ImageView) rootView.findViewById(R.id.table_card_5);
-        tableCard5View.setContentDescription(tableCard5.getCardNumber()+ " of " + tableCard5.getSuitName());
+        tableCard5View.setContentDescription(tableCard5.getCardNumber() + " of " + tableCard5.getSuitName());
 
         player1View = (TextView) rootView.findViewById(R.id.player_1);
         String p1 = players.get(1).getName() + ": $" + players.get(1).getMonnies();
         player1View.setText(p1);
+        player1View.setVisibility(View.INVISIBLE);
 
         player2View = (TextView) rootView.findViewById(R.id.player_2);
         String p2 = players.get(2).getName() + ": $" + players.get(2).getMonnies();
         player2View.setText(p2);
+        player2View.setVisibility(View.INVISIBLE);
 
         player3View = (TextView) rootView.findViewById(R.id.player_3);
         String p3 = players.get(3).getName() + ": $" + players.get(3).getMonnies();
         player3View.setText(p3);
+        player3View.setVisibility(View.INVISIBLE);
 
         player4View = (TextView) rootView.findViewById(R.id.player_4);
         String p4 = players.get(4).getName() + ": $" + players.get(4).getMonnies();
         player4View.setText(p4);
+        player4View.setVisibility(View.INVISIBLE);
 
         player5View = (TextView) rootView.findViewById(R.id.player_5);
         String p5 = players.get(5).getName() + ": $" + players.get(5).getMonnies();
         player5View.setText(p5);
+        player5View.setVisibility(View.INVISIBLE);
 
         player6View = (TextView) rootView.findViewById(R.id.user);
         String p6 = players.get(0).getName() + ": $" + players.get(0).getMonnies();
         player6View.setText(p6);
+        player6View.setVisibility(View.INVISIBLE);
 
         bet = (TextView) rootView.findViewById(R.id.bet);
-        bet.setText("$"+potMoney);
+        bet.setText("$" + potMoney);
 
         Button raise = (Button) rootView.findViewById(R.id.raise);//todo
         raise.setOnClickListener(this);
@@ -189,7 +195,7 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         Button callCheck = (Button) rootView.findViewById(R.id.call_check);
         callCheck.setOnClickListener(this);
 
-        Card player1Card1 = players[1].getHand().get(0);
+        /*Card player1Card1 = players[1].getHand().get(0);
         player1Card1View = (ImageView) rootView.findViewById(R.id.player1_card_1);
         player1Card1View.setContentDescription(player1Card1.getCardNumber()+ " of " + player1Card1.getSuitName());
         showCard(player1Card1);
@@ -237,10 +243,11 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         Card player5Card2 = players[5].getHand().get(1);
         player5Card2View = (ImageView) rootView.findViewById(R.id.player5_card_2);
         player5Card2View.setContentDescription(player5Card2.getCardNumber()+ " of " + player5Card2.getSuitName());
-        showCard(player5Card2);
+        showCard(player5Card2); */
     }
-    public void raiseBet(){
-         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+
+    public void raiseBet() {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         final EditText input = new EditText(getActivity());
         // set title
         alertDialogBuilder.setTitle("Input Raise amount");
@@ -249,31 +256,29 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         // set dialog message
 
 
-        alertDialogBuilder.setCancelable(true).setPositiveButton("ok",new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setCancelable(true).setPositiveButton("ok", new DialogInterface.OnClickListener() {
             int amountRaised;
-            public void onClick(DialogInterface dialog,int id) {
 
-                                try{
-                                    if(Integer.parseInt(input.getText().toString())>0 &&(Integer.parseInt(input.getText().toString())<players.get(0).getMonnies()))
-                                    {
-                                        amountRaised=Integer.parseInt(input.getText().toString());
-                                        potMoney+=amountRaised;
-                                        players.get(0).setMonnies(players.get(0).getMonnies()-amountRaised);
-                                        bet.setText("$"+potMoney);
-                                        player6View.setText(players.get(0).getName()+": $"+players.get(0).getMonnies());
-                                    }
+            public void onClick(DialogInterface dialog, int id) {
 
-                                }
-                                catch(NumberFormatException e) {
-                                    Toast.makeText(getActivity(), "please enter a number", Toast.LENGTH_SHORT).show();
+                try {
+                    if (Integer.parseInt(input.getText().toString()) > 0 && (Integer.parseInt(input.getText().toString()) < players.get(0).getMonnies())) {
+                        amountRaised = Integer.parseInt(input.getText().toString());
+                        potMoney += amountRaised;
+                        players.get(0).setMonnies(players.get(0).getMonnies() - amountRaised);
+                        bet.setText("$" + potMoney);
+                        player6View.setText(players.get(0).getName() + ": $" + players.get(0).getMonnies());
+                    }
 
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getActivity(), "please enter a number", Toast.LENGTH_SHORT).show();
 
-                                }
-                                // if this button is clicked, close
-                                // current activity
+                }
+                // if this button is clicked, close
+                // current activity
 
-                            }
-                        });
+            }
+        });
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
 
@@ -282,23 +287,24 @@ public class PokerGame extends Fragment implements View.OnClickListener{
 
 
     }
-    public void endTurn(){//todo add fold method
+
+    public void endTurn() {//todo add fold method
         Log.d(TAG, "endTurn: ");
     }
 
-    public void nextGuy(){
+    public void nextGuy() {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         // set title
-        int i=0;
-        if(currentplayer < players.size() - 1){
-            i = currentplayer +1;
+        int i = 0;
+        if (currentplayer < players.size() - 1) {
+            i = currentplayer + 1;
         }
-        alertDialogBuilder.setTitle("Are you "+players.get(i).getName() +"?");
+        alertDialogBuilder.setTitle("Are you " + players.get(i).getName() + "?");
 
         // set dialog message
 
-        alertDialogBuilder.setCancelable(false).setPositiveButton("yes",new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int id) {
+        alertDialogBuilder.setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
                 changePlayer();
                 // current activity
 
@@ -314,37 +320,57 @@ public class PokerGame extends Fragment implements View.OnClickListener{
     } //todo move to next player
 
     private void changePlayer() {
-        Player p= players.remove(0);
+        Player p = players.remove(0);
         players.add(p);
         wireWidgets();
     }
 
 
     private void showCard(Card myCard) {
-        int res = getResources().getIdentifier(myCard.getSuit()+"_"+myCard.getNumber(), "drawable", "com.example.caroline.realpoker");
-        if(myCard.equals(myCard1)) {
+        int res = getResources().getIdentifier(myCard.getSuit() + "_" + myCard.getNumber(), "drawable", "com.example.caroline.realpoker");
+        if (myCard.equals(myCard1)) {
             myCard1View.setImageResource(res);
-        } else if(myCard.equals(myCard2)){
+        } else if (myCard.equals(myCard2)) {
             myCard2View.setImageResource(res);
-        } else if(myCard.equals(tableCard1)) {
+        } else if (myCard.equals(players.get(1).getHand().get(0))) {
+            player1Card1View.setImageResource(res);
+        } else if (myCard.equals(players.get(1).getHand().get(1))) {
+            player1Card2View.setImageResource(res);
+        } else if (myCard.equals(players.get(2).getHand().get(0))) {
+            player2Card1View.setImageResource(res);
+        } else if (myCard.equals(players.get(2).getHand().get(1))) {
+            player2Card2View.setImageResource(res);
+        } else if (myCard.equals(players.get(3).getHand().get(0))) {
+            player3Card1View.setImageResource(res);
+        } else if (myCard.equals(players.get(3).getHand().get(1))) {
+            player3Card2View.setImageResource(res);
+        } else if (myCard.equals(players.get(4).getHand().get(0))) {
+            player4Card1View.setImageResource(res);
+        } else if (myCard.equals(players.get(4).getHand().get(1))) {
+            player4Card2View.setImageResource(res);
+        } else if (myCard.equals(players.get(5).getHand().get(0))) {
+            player5Card1View.setImageResource(res);
+        } else if (myCard.equals(players.get(5).getHand().get(1))) {
+            player5Card2View.setImageResource(res);
+        } else if (myCard.equals(tableCard1)) {
             tableCard1View.setImageResource(res);
-        } else if(myCard.equals(tableCard2)){
+        } else if (myCard.equals(tableCard2)) {
             tableCard2View.setImageResource(res);
-        } else if(myCard.equals(tableCard3)) {
+        } else if (myCard.equals(tableCard3)) {
             tableCard3View.setImageResource(res);
-        } else if(myCard.equals(tableCard4)){
+        } else if (myCard.equals(tableCard4)) {
             tableCard4View.setImageResource(res);
-        } else if(myCard.equals(tableCard5)){
+        } else if (myCard.equals(tableCard5)) {
             tableCard5View.setImageResource(res);
         }
     }
 
     public ArrayList<Card> getHand() {
-        int cardPlace = (int)( Math.random()*deck.size());
+        int cardPlace = (int) (Math.random() * deck.size());
         ArrayList<Card> hand = new ArrayList<>();
         hand.add(deck.get(cardPlace));
         deck.remove(cardPlace);
-        cardPlace = (int) (Math.random()*deck.size());
+        cardPlace = (int) (Math.random() * deck.size());
         hand.add(deck.get(cardPlace));
         deck.remove(cardPlace);
         return hand;
@@ -352,9 +378,9 @@ public class PokerGame extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "onClick: "+v.getId());
-        Log.d(TAG, "onClick: "+R.id.raise);
-        switch(v.getId()){
+        Log.d(TAG, "onClick: " + v.getId());
+        Log.d(TAG, "onClick: " + R.id.raise);
+        switch (v.getId()) {
             case R.id.raise:
                 raiseBet();
                 break;
@@ -367,19 +393,30 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         }
     }
 
-    /** public Player getWinner(){
+    public ArrayList<Player> getWinner() {
         ArrayList<Integer> best = new ArrayList<>();
+        ArrayList<Player> winners = new ArrayList<>();
         best.add(-1);
         int bestPlayer = -1;
-        for(int i = 0; i < players.length;i++) {
-            Hand hand1 = new Hand(players[i].getHand(), cardsOnTheTable);
+        for (int i = 0; i < players.size(); i++) {
+            Hand hand1 = new Hand(players.get(i).getHand(), cardsOnTheTable);
             ArrayList<Integer> intstuff1 = new ArrayList<>();
             intstuff1.addAll(hand1.getBestHand());
-            if(hand1.getHigherHand(best,intstuff1)==intstuff1){
+            if (hand1.getHigherHand(best, intstuff1).equals(intstuff1)) {
                 bestPlayer = i;
             }
-            best = hand1.getHigherHand(best,intstuff1);
+            best = hand1.getHigherHand(best, intstuff1);
         }
+        for(int i = 0; i < players.size(); i++){
+            Hand hand1 = new Hand(players.get(i).getHand(), cardsOnTheTable);
+            ArrayList<Integer> intstuff1 = new ArrayList<>();
+            intstuff1.addAll(hand1.getBestHand());
+            if (hand1.getHigherHand(best, intstuff1).equals(intstuff1)) {
+                winners.add(players.get(i));
+            }
+        }
+        return winners;
+    }
 
 
     public String winnerTitle(ArrayList<Player> winners){
@@ -393,19 +430,27 @@ public class PokerGame extends Fragment implements View.OnClickListener{
             }
             samIsTired = samIsTired + winners.get(i).getName();
         }
-\
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString("player1"), players[0].get);
-        editor.commit();
         return samIsTired + " won!";
-        return players[bestPlayer];
     }
-    */
 
+    public void endGame(){
+        ArrayList<Player> nute=this.getWinner();
+        player1View.setVisibility(View.VISIBLE);
+        player2View.setVisibility(View.VISIBLE);
+        player3View.setVisibility(View.VISIBLE);
+        player4View.setVisibility(View.VISIBLE);
+        player5View.setVisibility(View.VISIBLE);
+        player6View.setVisibility(View.VISIBLE);
+        winnerTitle(nute);//TODO: Make a text box saying who won;
+            for(int i=0;i<nute.size();i++){
+                nute.get(i).setMonnies(nute.get(i).getMonnies()+potMoney/nute.size());
+            }
 
-
+    }
 }
+
+
+
 
 /**
  *Hand hand1 = new Hand(players[0].getHand(), cardsOnTheTable);
@@ -440,3 +485,5 @@ public class PokerGame extends Fragment implements View.OnClickListener{
  return;
  }
  */
+
+
