@@ -30,7 +30,8 @@ public class PokerGame extends Fragment {
     private ArrayList<Card> deck;
     private int numOfPlayers;
     private Player[] players;
-    private TextView player1View, player2View, player3View, player4View, player5View, player6View;
+    private TextView player1View, player2View, player3View, player4View, player5View, player6View, bet;
+    private Button fold, callCheck, raise;
 
     private Card myCard1, myCard2, tableCard1, tableCard2, tableCard3, tableCard4, tableCard5;
     private ImageView myCard1View, myCard2View, tableCard1View, tableCard2View, tableCard3View, tableCard4View, tableCard5View;
@@ -165,6 +166,12 @@ public class PokerGame extends Fragment {
         player6View = (TextView) rootView.findViewById(R.id.user);
         String p6 = players[0].getName() + ": $" + players[0].getMonnies();
         player6View.setText(p6);
+
+        Button callCheck = (Button) rootView.findViewById(R.id.call_check);
+        Button raise = (Button) rootView.findViewById(R.id.raise);
+        Button fold = (Button) rootView.findViewById(R.id.fold);
+        TextView bet = (TextView) rootView.findViewById((R.id.bet);
+
     }
 
     private void showCard(Card myCard) {
@@ -196,8 +203,24 @@ public class PokerGame extends Fragment {
         deck.remove(cardPlace);
         return hand;
     }
+    public void startTurn(){
 
-   /** public Player getWinner(){
+    }
+    public void callCheck(View view) {
+
+    }
+    public void fold(View view){
+        endTurn();
+    }
+    public void raise(View view){
+
+    }
+    public void endTurn()
+    {
+
+    }
+
+    /** public Player getWinner(){
         ArrayList<Integer> best = new ArrayList<>();
         best.add(-1);
         int bestPlayer = -1;
