@@ -132,8 +132,8 @@ public class PokerGame extends Fragment implements View.OnClickListener{
 
     //todo get player name from a dialogue we will write later
     private void createPlayerHands(){
-        for( Playerp:players){
-           p.setHand( getHand());
+        for(Player p:players) {
+           p.setHand(getHand());
         }
     }
 
