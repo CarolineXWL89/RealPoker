@@ -135,6 +135,23 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         for(Player p:players) {
            p.setHand(getHand());
         }
+        while(players.size()<6){
+            if(players.size()<4)
+            {
+                players.add(3,emptyPlayer);
+                players.add(4, emptyPlayer);
+                players.add(5, emptyPlayer);
+            }
+            else if(players.size() <5)
+            {
+                players.add(4,emptyPlayer);
+                players.add(5, emptyPlayer);
+            }
+            else{
+                players.add(5, emptyPlayer);
+            }
+
+        }
     }
 
     private void wireWidgets() {
@@ -166,34 +183,38 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         tableCard5View = (ImageView) rootView.findViewById(R.id.table_card_5);
         tableCard5View.setContentDescription(tableCard5.getCardNumber() + " of " + tableCard5.getSuitName());
 
-        player1View = (TextView) rootView.findViewById(R.id.player_1);
-        String p1 = players.get(1).getName() + ": $" + players.get(1).getMonnies();
-        player1View.setText(p1);
+          player1View = (TextView) rootView.findViewById(R.id.player_1);
+         String p1 = players.get(1).getName() + ": $" + players.get(1).getMonnies();
+          player1View.setText(p1);
 
 
-        player2View = (TextView) rootView.findViewById(R.id.player_2);
-        String p2 = players.get(2).getName() + ": $" + players.get(2).getMonnies();
-        player2View.setText(p2);
+          player2View = (TextView) rootView.findViewById(R.id.player_2);
+          String p2 = players.get(2).getName() + ": $" + players.get(2).getMonnies();
+          player2View.setText(p2);
 
 
-        player3View = (TextView) rootView.findViewById(R.id.player_3);
-        String p3 = players.get(3).getName() + ": $" + players.get(3).getMonnies();
-        player3View.setText(p3);
+          player3View = (TextView) rootView.findViewById(R.id.player_3);
+          String p3 = players.get(3).getName() + ": $" + players.get(3).getMonnies();
+          player3View.setText(p3);
 
 
-        player4View = (TextView) rootView.findViewById(R.id.player_4);
-        String p4 = players.get(4).getName() + ": $" + players.get(4).getMonnies();
-        player4View.setText(p4);
+          player4View = (TextView) rootView.findViewById(R.id.player_4);
+          String p4 = players.get(4).getName() + ": $" + players.get(4).getMonnies();
+          player4View.setText(p4);
+
+          player5View = (TextView) rootView.findViewById(R.id.player_5);
+          String p5 = players.get(5).getName() + ": $" + players.get(5).getMonnies();
+          player5View.setText(p5);
+
+          player6View = (TextView) rootView.findViewById(R.id.user);
+          String p6 = players.get(0).getName() + ": $" + players.get(0).getMonnies();
+          player6View.setText(p6);
 
 
-        player5View = (TextView) rootView.findViewById(R.id.player_5);
-        String p5 = players.get(5).getName() + ": $" + players.get(5).getMonnies();
-        player5View.setText(p5);
 
 
-        player6View = (TextView) rootView.findViewById(R.id.user);
-        String p6 = players.get(0).getName() + ": $" + players.get(0).getMonnies();
-        player6View.setText(p6);
+
+
 
 
         bet = (TextView) rootView.findViewById(R.id.bet);
