@@ -29,28 +29,63 @@ public class HandComparer {
         if (flush && straight)
         {
             ans.add(8);
+            int n=cards.size();
+            for(int i=0; i<n; i++)
+            {
+                for (int j=1;j<n-i; j++)
+                {
+                    if(cards.get(j-1).getNumber()>cards.get(j).getNumber())
+                    {
+                        cards.add(j-1, cards.remove(j));
+
+                    }
+
+                }
+
+            }
+            ans.add(cards.get(4).getNumber());
+            ans.add(suitToNum(cards.get(4)));
         }
         else if (flush)
         {
             ans.add(5);
-            String a = cards.get(0).getSuit();
-            if(a.equals("c")){
-                ans.add(1);
+            int n=cards.size();
+            for(int i=0; i<n; i++)
+            {
+                for (int j=1;j<n-i; j++)
+                {
+                    if(cards.get(j-1).getNumber()>cards.get(j).getNumber())
+                    {
+                        cards.add(j-1, cards.remove(j));
+
+                    }
+
+                }
+
             }
-            else if(a.equals("d")){
-                ans.add(2);
-            }
-            else if(a.equals("h")){
-                ans.add(3);
-            }
-            else{
-                ans.add(4);
-            }
+            ans.add(cards.get(4).getNumber());
+            ans.add(suitToNum(cards.get(4)));
         }
         // Straight might be a WIP
         else if (straight)
         {
             ans.add(4);
+            int n=cards.size();
+            for(int i=0; i<n; i++)
+            {
+                for (int j=1;j<n-i; j++)
+                {
+                    if(cards.get(j-1).getNumber()>cards.get(j).getNumber())
+                    {
+                        cards.add(j-1, cards.remove(j));
+
+                    }
+
+                }
+
+            }
+            ans.add(cards.get(4).getNumber());
+            ans.add(suitToNum(cards.get(4)));
         }
         // Straight might be a WIP
         else{
@@ -237,6 +272,22 @@ public class HandComparer {
         return list;
 
 
+    }
+
+    public int suitToNum(Card bob){
+        String a = bob.getSuit();
+        if(a.equals("c")){
+           return 1;
+        }
+        else if(a.equals("d")){
+            return 2;
+        }
+        else if(a.equals("h")){
+            return 3;
+        }
+        else{
+            return 4;
+        }
     }
 
 
