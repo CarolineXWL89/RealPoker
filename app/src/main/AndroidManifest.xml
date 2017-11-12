@@ -21,9 +21,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".PokerGame" />
-        <activity
-            android:name=".Settings"
-            android:label="@string/title_activity_settings" />
         <activity android:name=".Reference" />
     </application>
 
