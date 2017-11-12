@@ -1,9 +1,11 @@
 package com.example.caroline.realpoker;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static com.example.caroline.realpoker.R.drawable.ic_menu_send;
 
 public class PokerGame extends Fragment {
 
@@ -33,9 +37,12 @@ public class PokerGame extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         //Inflate the layout we made (one_fragment.xml)
         rootView = inflater.inflate(R.layout.activity_poker_game, container, false);
+        deck = new ArrayList<>();
+        numOfPlayers = 6;
         createDeck();
         createPlayers();
         createCardsOnTheTable();
+        createCards();
         wireWidgets();
 
         //get any other initial set up done
@@ -53,6 +60,16 @@ public class PokerGame extends Fragment {
 
         //return the view that we inflated.
         return rootView;
+    }
+
+    private void createCards() {
+        myCard1 = players[0].getHand().get(0);
+        myCard2 = players[0].getHand().get(1);
+        tableCard1 = cardsOnTheTable.get(0);
+        tableCard2 = cardsOnTheTable.get(1);
+        tableCard3 = cardsOnTheTable.get(2);
+        tableCard4 = cardsOnTheTable.get(3);
+        tableCard5 = cardsOnTheTable.get(4);
     }
 
     private void createCardsOnTheTable() {
@@ -86,6 +103,7 @@ public class PokerGame extends Fragment {
         //Wire any widgets -- must use rootView.findViewById
         myCard1View = (ImageView) rootView.findViewById(R.id.my_card_1);
         myCard1View.setContentDescription(myCard1.getCardNumber()+ " of " + myCard1.getSuitName());
+        myCard1View.setImageResource(R.drawable.random2);
 
         myCard2View = (ImageView) rootView.findViewById(R.id.my_card_2);;
         myCard2View.setContentDescription(myCard2.getCardNumber()+ " of " + myCard2.getSuitName());
