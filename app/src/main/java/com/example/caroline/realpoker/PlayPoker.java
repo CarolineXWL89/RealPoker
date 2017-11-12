@@ -1,5 +1,6 @@
 package com.example.caroline.realpoker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -79,7 +80,8 @@ public class PlayPoker extends AppCompatActivity
         } else if (id == R.id.nav_reference) {
             currentFragment = new Reference();
         } else if (id == R.id.nav_settings) {
-            currentFragment = new PokerGame();
+            Intent i = new Intent(this, Settings.class);
+            startActivity(i);
         }
 
         FragmentManager fm = getSupportFragmentManager();
