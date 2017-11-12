@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
 import static com.example.caroline.realpoker.R.drawable.ic_menu_send;
 
 public class PokerGame extends Fragment {
@@ -51,6 +52,7 @@ public class PokerGame extends Fragment {
         createCardsOnTheTable();
         createCards();
         wireWidgets();
+        checkingHand();
 
 
 
@@ -71,6 +73,13 @@ public class PokerGame extends Fragment {
         return rootView;
     }
 
+    private void checkingHand() {
+        Hand hand1 = new Hand(players[0].getHand(), cardsOnTheTable);
+        ArrayList<Integer> intstuff =  new ArrayList<>();
+                intstuff.addAll(hand1.getBestHand());
+        Log.d(TAG, "checkingHand: "+intstuff.toString());
+    }
+
     private void createCards() {
         myCard1 = players[0].getHand().get(0);
         myCard2 = players[0].getHand().get(1);
@@ -82,12 +91,12 @@ public class PokerGame extends Fragment {
     }
 
     private void createCardsOnTheTable() {
-        int cardPlace = (int) (Math.random()*deck.size());
+        int cardPlace = (int)(Math.random()*deck.size());
         cardsOnTheTable = new ArrayList<>();
         for(int i = 0; i<5;i++){
             cardsOnTheTable.add(deck.get(cardPlace));
             deck.remove(cardPlace);
-            cardPlace = (int) (Math.random()*deck.size());
+            cardPlace = (int)(Math.random()*deck.size());
         }
     }
 
@@ -188,4 +197,56 @@ public class PokerGame extends Fragment {
         return hand;
     }
 
+   /** public Player getWinner(){
+        ArrayList<Integer> best = new ArrayList<>();
+        best.add(-1);
+        int bestPlayer = -1;
+        for(int i = 0; i < players.length;i++) {
+            Hand hand1 = new Hand(players[i].getHand(), cardsOnTheTable);
+            ArrayList<Integer> intstuff1 = new ArrayList<>();
+            intstuff1.addAll(hand1.getBestHand());
+            if(hand1.getHigherHand(best,intstuff1)==intstuff1){
+                bestPlayer = i;
+            }
+            best = hand1.getHigherHand(best,intstuff1);
+        }
+
+        return players[bestPlayer];
+    }
+    */
+
 }
+
+/**
+ *Hand hand1 = new Hand(players[0].getHand(), cardsOnTheTable);
+ ArrayList<Integer> intstuff1 =  new ArrayList<>();
+ intstuff1.addAll(hand1.getBestHand());
+
+ Hand hand2 = new Hand(players[1].getHand(), cardsOnTheTable);
+ ArrayList<Integer> intstuff2 =  new ArrayList<>();
+ intstuff2.addAll(hand2.getBestHand());
+
+ Hand hand3 = new Hand(players[2].getHand(), cardsOnTheTable);
+ ArrayList<Integer> intstuff3 =  new ArrayList<>();
+ intstuff3.addAll(hand3.getBestHand());
+ if(players.length>3) {
+ Hand hand4 = new Hand(players[3].getHand(), cardsOnTheTable);
+ ArrayList<Integer> intstuff4 = new ArrayList<>();
+ intstuff4.addAll(hand4.getBestHand());
+ hand1.getHigherHand(hand1.getHigherHand(intstuff1,intstuff2),hand1.getHigherHand(intstuff3,intstuff4));
+ }
+ else if(players.length>4) {
+ Hand hand5 = new Hand(players[4].getHand(), cardsOnTheTable);
+ ArrayList<Integer> intstuff5 = new ArrayList<>();
+ intstuff5.addAll(hand5.getBestHand());
+ }
+
+ else if(players.length>5) {
+ Hand hand6 = new Hand(players[5].getHand(), cardsOnTheTable);
+ ArrayList<Integer> intstuff6 = new ArrayList<>();
+ intstuff6.addAll(hand6.getBestHand());
+ }
+ else{
+ return;
+ }
+ */
