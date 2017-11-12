@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
 import static com.example.caroline.realpoker.R.drawable.ic_menu_send;
 
 public class PokerGame extends Fragment {
@@ -50,6 +51,7 @@ public class PokerGame extends Fragment {
         createCardsOnTheTable();
         createCards();
         wireWidgets();
+        checkingHand();
 
 
         //get any other initial set up done
@@ -69,6 +71,13 @@ public class PokerGame extends Fragment {
         return rootView;
     }
 
+    private void checkingHand() {
+        Hand hand1 = new Hand(players[0].getHand(), cardsOnTheTable);
+        ArrayList<Integer> intstuff =  new ArrayList<>();
+                intstuff.addAll(hand1.getBestHand());
+        Log.d(TAG, "checkingHand: "+intstuff.toString());
+    }
+
     private void createCards() {
         myCard1 = players[0].getHand().get(0);
         myCard2 = players[0].getHand().get(1);
@@ -80,12 +89,12 @@ public class PokerGame extends Fragment {
     }
 
     private void createCardsOnTheTable() {
-        int cardPlace = (int) (Math.random()*deck.size());
+        int cardPlace = (int)(Math.random()*deck.size());
         cardsOnTheTable = new ArrayList<>();
         for(int i = 0; i<5;i++){
             cardsOnTheTable.add(deck.get(cardPlace));
             deck.remove(cardPlace);
-            cardPlace = (int) (Math.random()*deck.size());
+            cardPlace = (int)(Math.random()*deck.size());
         }
     }
 

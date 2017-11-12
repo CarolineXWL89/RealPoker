@@ -1,28 +1,33 @@
 package com.example.caroline.realpoker;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by Sam on 11/11/17.
  */
 
 public class Hand {
-    private ArrayList<Card> fullhand;
+    private ArrayList<Card> fullhand = new ArrayList<>();
     private HandComparer compare = new HandComparer();
 
 
     public Hand(ArrayList<Card> playerCards, ArrayList<Card> centerCards){
-        fullhand = new ArrayList<>();
         fullhand.addAll(playerCards);
         fullhand.addAll(centerCards);
+        Log.d(TAG, "Hand: " + fullhand.size());
     }
 
-    public ArrayList<Integer> getBestHand(ArrayList<Card> cards){
+    public ArrayList<Integer> getBestHand(){
         ArrayList<Integer> best = new ArrayList<>();
+        best.add(-1);
         for(int i=0;i<7;i++){
-            for(int j = i+1;j<7;j++){
+            for(int j = i;j<6;j++){
                     ArrayList<Card> googleDocsSucks = new ArrayList<>();
-                    googleDocsSucks.addAll(cards);
+                    googleDocsSucks.addAll(fullhand);
                     googleDocsSucks.remove(i);
                     googleDocsSucks.remove(j);
                     ArrayList<Integer> samsPuns=compare.getHandType(googleDocsSucks);
