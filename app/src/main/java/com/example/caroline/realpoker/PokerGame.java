@@ -158,32 +158,32 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         player1View = (TextView) rootView.findViewById(R.id.player_1);
         String p1 = players.get(1).getName() + ": $" + players.get(1).getMonnies();
         player1View.setText(p1);
-        player1View.setVisibility(View.INVISIBLE);
+
 
         player2View = (TextView) rootView.findViewById(R.id.player_2);
         String p2 = players.get(2).getName() + ": $" + players.get(2).getMonnies();
         player2View.setText(p2);
-        player2View.setVisibility(View.INVISIBLE);
+
 
         player3View = (TextView) rootView.findViewById(R.id.player_3);
         String p3 = players.get(3).getName() + ": $" + players.get(3).getMonnies();
         player3View.setText(p3);
-        player3View.setVisibility(View.INVISIBLE);
+
 
         player4View = (TextView) rootView.findViewById(R.id.player_4);
         String p4 = players.get(4).getName() + ": $" + players.get(4).getMonnies();
         player4View.setText(p4);
-        player4View.setVisibility(View.INVISIBLE);
+
 
         player5View = (TextView) rootView.findViewById(R.id.player_5);
         String p5 = players.get(5).getName() + ": $" + players.get(5).getMonnies();
         player5View.setText(p5);
-        player5View.setVisibility(View.INVISIBLE);
+
 
         player6View = (TextView) rootView.findViewById(R.id.user);
         String p6 = players.get(0).getName() + ": $" + players.get(0).getMonnies();
         player6View.setText(p6);
-        player6View.setVisibility(View.INVISIBLE);
+
 
         bet = (TextView) rootView.findViewById(R.id.bet);
         bet.setText("$" + potMoney);
@@ -195,55 +195,65 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         Button callCheck = (Button) rootView.findViewById(R.id.call_check);
         callCheck.setOnClickListener(this);
 
-        /*Card player1Card1 = players[1].getHand().get(0);
+        Card player1Card1 = players.get(1).getHand().get(0);
         player1Card1View = (ImageView) rootView.findViewById(R.id.player1_card_1);
         player1Card1View.setContentDescription(player1Card1.getCardNumber()+ " of " + player1Card1.getSuitName());
         showCard(player1Card1);
+        player1Card1View.setVisibility(View.INVISIBLE);
 
-        Card player1Card2 = players[1].getHand().get(1);
+        Card player1Card2 = players.get(1).getHand().get(1);
         player1Card2View = (ImageView) rootView.findViewById(R.id.player1_card_2);
         player1Card2View.setContentDescription(player1Card2.getCardNumber()+ " of " + player1Card2.getSuitName());
         showCard(player1Card2);
+        player1Card2View.setVisibility(View.INVISIBLE);
 
-        Card player2Card1 = players[2].getHand().get(0);
+        Card player2Card1 = players.get(2).getHand().get(0);
         player2Card1View = (ImageView) rootView.findViewById(R.id.player2_card_1);
         player2Card1View.setContentDescription(player2Card1.getCardNumber()+ " of " + player2Card1.getSuitName());
         showCard(player2Card1);
+        player2Card1View.setVisibility(View.INVISIBLE);
 
-        Card player2Card2 = players[2].getHand().get(1);
+        Card player2Card2 = players.get(2).getHand().get(1);
         player2Card2View = (ImageView) rootView.findViewById(R.id.player2_card_2);
         player2Card2View.setContentDescription(player2Card2.getCardNumber()+ " of " + player2Card2.getSuitName());
         showCard(player2Card2);
+        player2Card2View.setVisibility(View.INVISIBLE);
 
-        Card player3Card1 = players[3].getHand().get(0);
+        Card player3Card1 = players.get(3).getHand().get(0);
         player3Card1View = (ImageView) rootView.findViewById(R.id.player3_card_1);
         player3Card1View.setContentDescription(player3Card1.getCardNumber()+ " of " + player3Card1.getSuitName());
         showCard(player3Card1);
+        player3Card1View.setVisibility(View.INVISIBLE);
 
-        Card player3Card2 = players[3].getHand().get(1);
+        Card player3Card2 = players.get(3).getHand().get(1);
         player3Card2View = (ImageView) rootView.findViewById(R.id.player3_card_2);
         player3Card2View.setContentDescription(player3Card2.getCardNumber()+ " of " + player3Card2.getSuitName());
         showCard(player3Card2);
+        player3Card2View.setVisibility(View.INVISIBLE);
 
-        Card player4Card1 = players[4].getHand().get(0);
+        Card player4Card1 = players.get(4).getHand().get(0);
         player4Card1View = (ImageView) rootView.findViewById(R.id.player4_card_1);
         player4Card1View.setContentDescription(player4Card1.getCardNumber()+ " of " + player4Card1.getSuitName());
         showCard(player4Card1);
+        player4Card1View.setVisibility(View.INVISIBLE);
 
-        Card player4Card2 = players[4].getHand().get(1);
+        Card player4Card2 = players.get(4).getHand().get(1);
         player4Card2View = (ImageView) rootView.findViewById(R.id.player4_card_2);
         player4Card2View.setContentDescription(player4Card2.getCardNumber()+ " of " + player4Card2.getSuitName());
         showCard(player4Card2);
+        player4Card2View.setVisibility(View.INVISIBLE);
 
-        Card player5Card1 = players[5].getHand().get(0);
+        Card player5Card1 = players.get(5).getHand().get(0);
         player5Card1View = (ImageView) rootView.findViewById(R.id.player5_card_1);
         player5Card1View.setContentDescription(player5Card1.getCardNumber()+ " of " + player5Card1.getSuitName());
         showCard(player5Card1);
+        player5Card1View.setVisibility(View.INVISIBLE);
 
-        Card player5Card2 = players[5].getHand().get(1);
+        Card player5Card2 = players.get(5).getHand().get(1);
         player5Card2View = (ImageView) rootView.findViewById(R.id.player5_card_2);
         player5Card2View.setContentDescription(player5Card2.getCardNumber()+ " of " + player5Card2.getSuitName());
-        showCard(player5Card2); */
+        showCard(player5Card2);
+        player5Card2View.setVisibility(View.INVISIBLE);
     }
 
     public void raiseBet() {
@@ -435,13 +445,17 @@ public class PokerGame extends Fragment implements View.OnClickListener {
 
     public void endGame(){
         ArrayList<Player> nute=this.getWinner();
-        player1View.setVisibility(View.VISIBLE);
-        player2View.setVisibility(View.VISIBLE);
-        player3View.setVisibility(View.VISIBLE);
-        player4View.setVisibility(View.VISIBLE);
-        player5View.setVisibility(View.VISIBLE);
-        player6View.setVisibility(View.VISIBLE);
-        winnerTitle(nute);//TODO: Make a text box saying who won;
+        player1Card1View.setVisibility(View.VISIBLE);
+        player1Card2View.setVisibility(View.VISIBLE);
+        player2Card1View.setVisibility(View.VISIBLE);
+        player2Card2View.setVisibility(View.VISIBLE);
+        player3Card1View.setVisibility(View.VISIBLE);
+        player3Card2View.setVisibility(View.VISIBLE);
+        player4Card1View.setVisibility(View.VISIBLE);
+        player4Card2View.setVisibility(View.VISIBLE);
+        player5Card1View.setVisibility(View.VISIBLE);
+        player5Card2View.setVisibility(View.VISIBLE);
+        Log.d(TAG, "endGame: "+winnerTitle(nute));//TODO: Make a text box saying who won;
             for(int i=0;i<nute.size();i++){
                 nute.get(i).setMonnies(nute.get(i).getMonnies()+potMoney/nute.size());
             }
