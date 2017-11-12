@@ -1,8 +1,11 @@
 package com.example.caroline.realpoker;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -45,6 +51,39 @@ public class PokerGame extends Fragment {
         createCards();
         wireWidgets();
 
+
+
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+
+     //   final TextView tw =new TextView(getActivity());
+        final  EditText et = new EditText(getActivity());
+        et.setText("Enter Number of Players");
+
+
+
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(et);
+
+        // set dialog message
+        alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show it
+        alertDialog.show();
+        if(Integer.parseInt(et.getText().toString()) <6 && Integer.parseInt(et.getText().toString())>0)
+        {
+            numOfPlayers=Integer.parseInt(et.getText().toString());
+        }
+
+
+
+
         //get any other initial set up done
         //in place of where you would normally say this,
         //you use getActivity() instead to get the context
@@ -73,12 +112,12 @@ public class PokerGame extends Fragment {
     }
 
     private void createCardsOnTheTable() {
-        int cardPlace = (int) Math.random()*deck.size();
+        int cardPlace = (int) (Math.random()*deck.size());
         cardsOnTheTable = new ArrayList<>();
         for(int i = 0; i<5;i++){
             cardsOnTheTable.add(deck.get(cardPlace));
             deck.remove(cardPlace);
-            cardPlace = (int) Math.random()*deck.size();
+            cardPlace = (int) (Math.random()*deck.size());
         }
     }
 
@@ -139,13 +178,14 @@ public class PokerGame extends Fragment {
     }
 
     public ArrayList<Card> getHand() {
-        int cardPlace = (int) Math.random()*deck.size();
+        int cardPlace = (int)( Math.random()*deck.size());
         ArrayList<Card> hand = new ArrayList<>();
         hand.add(deck.get(cardPlace));
         deck.remove(cardPlace);
-        cardPlace = (int) Math.random()*deck.size();
+        cardPlace = (int) (Math.random()*deck.size());
         hand.add(deck.get(cardPlace));
         deck.remove(cardPlace);
         return hand;
     }
+
 }
