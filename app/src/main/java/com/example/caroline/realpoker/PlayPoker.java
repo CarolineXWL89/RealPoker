@@ -94,7 +94,7 @@ public class PlayPoker extends AppCompatActivity
         } else if (id == R.id.nav_reference) {
             currentFragment = new Reference();
         } else if (id == R.id.nav_settings) {
-            //currentFragment = new realSettings();
+            currentFragment = new RealSettings();
         }
 
         FragmentManager fm = getSupportFragmentManager();

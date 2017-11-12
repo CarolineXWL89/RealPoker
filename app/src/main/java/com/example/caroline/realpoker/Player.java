@@ -17,8 +17,7 @@ public class Player {
     public Player(String name, int monnies, ArrayList<Card> hand) {
         this.name = name;
         this.monnies = monnies;
-        Hand me = new Hand(hand);
-        this.hand = Hand.getBestHand();
+        this.hand = hand;
     }
 
     public String getName() {
