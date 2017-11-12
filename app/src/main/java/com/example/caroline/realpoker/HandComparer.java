@@ -262,6 +262,65 @@ public class HandComparer {
         }
         else if(storedTwo.size()>storedOne.size() && storedTwo.size()>0){
             list.add(storedTwo.get(0));
+            if (matches == 6) {
+                list.add(storedTwo.get(0));
+            } else if (matches == 7) {
+                int b = 4;
+                for (int i = 0; i < 3; i++) {
+                    if (cards.get(i).getNumber() != cards.get(i + 1).getNumber()) {
+                        if (cards.get(i).getNumber() != cards.get(4).getNumber()) {
+                            b = i;
+                        } else {
+                            b = i + 1;
+                        }
+                    }
+                }
+                list.add(cards.get(b).getNumber());
+            } else if (matches == 3) {
+                int a = Math.max(cards.get(0).getNumber(), cards.get(1).getNumber());
+                int b = Math.max(Math.max(cards.get(2).getNumber(), cards.get(3).getNumber()), (cards.get(4).getNumber()));
+                if (a > b) {
+                    list.add(a);
+                } else if (b > a) {
+                    list.add(b);
+                } else {
+                    if (cards.get(0).getNumber() != cards.get(1).getNumber()) {
+                        list.add(Math.max(Math.min(cards.get(0).getNumber(), cards.get(1).getNumber()), Math.min(Math.min(cards.get(2).getNumber()
+                                , cards.get(3).getNumber()), (cards.get(4).getNumber()))));
+                    } else {
+                        if (b == cards.get(2).getNumber()) {
+                            list.add(Math.max(cards.get(3).getNumber(), cards.get(4).getNumber()));
+                        } else if (b == cards.get(3).getNumber()) {
+                            list.add(Math.max(cards.get(2).getNumber(), cards.get(4).getNumber()));
+                        } else {
+                            list.add(Math.max(cards.get(3).getNumber(), cards.get(2).getNumber()));
+                        }
+                    }
+                }
+            }
+            else{
+                int n=cards.size();
+                for(int i=0; i<n; i++)
+                {
+                    for (int j=1;j<n-i; j++)
+                    {
+                        if(cards.get(j-1).getNumber()>cards.get(j).getNumber())
+                        {
+                            cards.add(j-1, cards.remove(j));
+
+                        }
+
+                    }
+
+                }
+                if(cards.get(4).getNumber()==cards.get(3).getNumber()){
+                    list.add(cards.get(2).getNumber());
+                }
+                else{
+                    list.add(cards.get(4).getNumber());
+                }
+            }
+
         }
         else{
             int a = Math.max(cards.get(0).getNumber(),cards.get(1).getNumber());
