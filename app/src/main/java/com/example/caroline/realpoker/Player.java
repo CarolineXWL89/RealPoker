@@ -42,4 +42,5 @@ public class Player {
     public void setHand(ArrayList<Card> hand) {
         this.hand = hand;
     }
+
 }
