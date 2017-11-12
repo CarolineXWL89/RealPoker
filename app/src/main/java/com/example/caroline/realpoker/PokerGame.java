@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
 import static com.example.caroline.realpoker.R.drawable.ic_menu_send;
 
 public class PokerGame extends Fragment {
@@ -29,6 +30,7 @@ public class PokerGame extends Fragment {
     private ArrayList<Card> deck;
     private int numOfPlayers;
     private Player[] players;
+    private TextView player1View, player2View, player3View, player4View, player5View, player6View;
 
     private Card myCard1, myCard2, tableCard1, tableCard2, tableCard3, tableCard4, tableCard5;
     private ImageView myCard1View, myCard2View, tableCard1View, tableCard2View, tableCard3View, tableCard4View, tableCard5View;
@@ -50,6 +52,8 @@ public class PokerGame extends Fragment {
         createCardsOnTheTable();
         createCards();
         wireWidgets();
+        checkingHand();
+
 
 
         //get any other initial set up done
@@ -69,6 +73,13 @@ public class PokerGame extends Fragment {
         return rootView;
     }
 
+    private void checkingHand() {
+        Hand hand1 = new Hand(players[0].getHand(), cardsOnTheTable);
+        ArrayList<Integer> intstuff =  new ArrayList<>();
+                intstuff.addAll(hand1.getBestHand());
+        Log.d(TAG, "checkingHand: "+intstuff.toString());
+    }
+
     private void createCards() {
         myCard1 = players[0].getHand().get(0);
         myCard2 = players[0].getHand().get(1);
@@ -80,12 +91,12 @@ public class PokerGame extends Fragment {
     }
 
     private void createCardsOnTheTable() {
-        int cardPlace = (int) (Math.random()*deck.size());
+        int cardPlace = (int)(Math.random()*deck.size());
         cardsOnTheTable = new ArrayList<>();
         for(int i = 0; i<5;i++){
             cardsOnTheTable.add(deck.get(cardPlace));
             deck.remove(cardPlace);
-            cardPlace = (int) (Math.random()*deck.size());
+            cardPlace = (int)(Math.random()*deck.size());
         }
     }
 
@@ -101,7 +112,7 @@ public class PokerGame extends Fragment {
     private void createPlayers() {
         players = new Player[numOfPlayers];
         for(int i = 0; i< numOfPlayers; i++){
-            players[0] = new Player("Player"+i,10000, getHand());
+            players[i] = new Player("Player"+i,10000, getHand());
         }
     }
 
@@ -118,23 +129,42 @@ public class PokerGame extends Fragment {
 
         tableCard1View = (ImageView) rootView.findViewById(R.id.table_card_1);
         tableCard1View.setContentDescription(tableCard1.getCardNumber()+ " of " + tableCard1.getSuitName());
-        showCard(tableCard1);
 
         tableCard2View = (ImageView) rootView.findViewById(R.id.table_card_2);
         tableCard2View.setContentDescription(tableCard2.getCardNumber()+ " of " + tableCard2.getSuitName());
-        showCard(tableCard2);
 
         tableCard3View = (ImageView) rootView.findViewById(R.id.table_card_3);
         tableCard3View.setContentDescription(tableCard3.getCardNumber()+ " of " + tableCard3.getSuitName());
-        showCard(tableCard3);
 
         tableCard4View = (ImageView) rootView.findViewById(R.id.table_card_4);
         tableCard4View.setContentDescription(tableCard4.getCardNumber()+ " of " + tableCard4.getSuitName());
-        showCard(tableCard4);
 
         tableCard5View = (ImageView) rootView.findViewById(R.id.table_card_5);
         tableCard5View.setContentDescription(tableCard5.getCardNumber()+ " of " + tableCard5.getSuitName());
-        showCard(tableCard5);
+
+        player1View = (TextView) rootView.findViewById(R.id.player_1);
+        String p1 = players[1].getName() + ": $" + players[1].getMonnies();
+        player1View.setText(p1);
+
+        player2View = (TextView) rootView.findViewById(R.id.player_2);
+        String p2 = players[2].getName() + ": $" + players[2].getMonnies();
+        player2View.setText(p2);
+
+        player3View = (TextView) rootView.findViewById(R.id.player_3);
+        String p3 = players[3].getName() + ": $" + players[3].getMonnies();
+        player3View.setText(p3);
+
+        player4View = (TextView) rootView.findViewById(R.id.player_4);
+        String p4 = players[4].getName() + ": $" + players[4].getMonnies();
+        player4View.setText(p4);
+
+        player5View = (TextView) rootView.findViewById(R.id.player_5);
+        String p5 = players[5].getName() + ": $" + players[5].getMonnies();
+        player5View.setText(p5);
+
+        player6View = (TextView) rootView.findViewById(R.id.user);
+        String p6 = players[0].getName() + ": $" + players[0].getMonnies();
+        player6View.setText(p6);
     }
 
     private void showCard(Card myCard) {
@@ -154,7 +184,7 @@ public class PokerGame extends Fragment {
         } else if(myCard.equals(tableCard5)){
             tableCard5View.setImageResource(res);
         }
-    }//
+    }
 
     public ArrayList<Card> getHand() {
         int cardPlace = (int)( Math.random()*deck.size());
@@ -167,4 +197,56 @@ public class PokerGame extends Fragment {
         return hand;
     }
 
+   /** public Player getWinner(){
+        ArrayList<Integer> best = new ArrayList<>();
+        best.add(-1);
+        int bestPlayer = -1;
+        for(int i = 0; i < players.length;i++) {
+            Hand hand1 = new Hand(players[i].getHand(), cardsOnTheTable);
+            ArrayList<Integer> intstuff1 = new ArrayList<>();
+            intstuff1.addAll(hand1.getBestHand());
+            if(hand1.getHigherHand(best,intstuff1)==intstuff1){
+                bestPlayer = i;
+            }
+            best = hand1.getHigherHand(best,intstuff1);
+        }
+
+        return players[bestPlayer];
+    }
+    */
+
 }
+
+/**
+ *Hand hand1 = new Hand(players[0].getHand(), cardsOnTheTable);
+ ArrayList<Integer> intstuff1 =  new ArrayList<>();
+ intstuff1.addAll(hand1.getBestHand());
+
+ Hand hand2 = new Hand(players[1].getHand(), cardsOnTheTable);
+ ArrayList<Integer> intstuff2 =  new ArrayList<>();
+ intstuff2.addAll(hand2.getBestHand());
+
+ Hand hand3 = new Hand(players[2].getHand(), cardsOnTheTable);
+ ArrayList<Integer> intstuff3 =  new ArrayList<>();
+ intstuff3.addAll(hand3.getBestHand());
+ if(players.length>3) {
+ Hand hand4 = new Hand(players[3].getHand(), cardsOnTheTable);
+ ArrayList<Integer> intstuff4 = new ArrayList<>();
+ intstuff4.addAll(hand4.getBestHand());
+ hand1.getHigherHand(hand1.getHigherHand(intstuff1,intstuff2),hand1.getHigherHand(intstuff3,intstuff4));
+ }
+ else if(players.length>4) {
+ Hand hand5 = new Hand(players[4].getHand(), cardsOnTheTable);
+ ArrayList<Integer> intstuff5 = new ArrayList<>();
+ intstuff5.addAll(hand5.getBestHand());
+ }
+
+ else if(players.length>5) {
+ Hand hand6 = new Hand(players[5].getHand(), cardsOnTheTable);
+ ArrayList<Integer> intstuff6 = new ArrayList<>();
+ intstuff6.addAll(hand6.getBestHand());
+ }
+ else{
+ return;
+ }
+ */

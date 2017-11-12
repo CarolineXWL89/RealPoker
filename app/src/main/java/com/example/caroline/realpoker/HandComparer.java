@@ -141,9 +141,12 @@ public class HandComparer {
                 && cards.get(2).getSuit().equals(cards.get(3).getSuit())
                 && cards.get(3).getSuit().equals(cards.get(4).getSuit()))
         {
+
             return true;
         }
-        return false;
+        else{
+            return false;
+        }
 
     }
 

@@ -13,6 +13,7 @@ public class Player {
     private int monnies;
     private ArrayList<Card> hand;
 
+
     public Player(String name, int monnies, ArrayList<Card> hand) {
         this.name = name;
         this.monnies = monnies;
@@ -42,4 +43,5 @@ public class Player {
     public void setHand(ArrayList<Card> hand) {
         this.hand = hand;
     }
+
 }
