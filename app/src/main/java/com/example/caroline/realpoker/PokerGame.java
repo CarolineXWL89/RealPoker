@@ -83,7 +83,7 @@ public class PokerGame extends Fragment {
     }
 
     private void createDeck() {
-        String[] suits = {"C", "D", "H", "S"};
+        String[] suits = {"c", "d", "h", "s"};
         for(String s:suits){
             for(int i = 2; i < 15;i++){
                 deck.add(new Card(i,s));
@@ -103,26 +103,38 @@ public class PokerGame extends Fragment {
         //Wire any widgets -- must use rootView.findViewById
         myCard1View = (ImageView) rootView.findViewById(R.id.my_card_1);
         myCard1View.setContentDescription(myCard1.getCardNumber()+ " of " + myCard1.getSuitName());
-        int res = getResources().getIdentifier(myCard1.getNumber()+myCard1.getSuit(), "drawable/cards", "com.example.caroline.realpoker:");
-        myCard1View.setImageResource(res);
+        int resA = getResources().getIdentifier(myCard1.getSuit()+"_"+myCard1.getNumber(), "drawable", "com.example.caroline.realpoker");
+        myCard1View.setImageResource(resA);
 
-        myCard2View = (ImageView) rootView.findViewById(R.id.my_card_2);;
+        myCard2View = (ImageView) rootView.findViewById(R.id.my_card_2);
         myCard2View.setContentDescription(myCard2.getCardNumber()+ " of " + myCard2.getSuitName());
+        int resB = getResources().getIdentifier(myCard2.getSuit()+"_"+myCard2.getNumber(), "drawable", "com.example.caroline.realpoker");
+        myCard1View.setImageResource(resB);
 
         tableCard1View = (ImageView) rootView.findViewById(R.id.table_card_1);
         tableCard1View.setContentDescription(tableCard1.getCardNumber()+ " of " + tableCard1.getSuitName());
+        int res1 = getResources().getIdentifier(tableCard1.getSuit()+"_"+tableCard1.getNumber(), "drawable", "com.example.caroline.realpoker");
+        myCard1View.setImageResource(res1);
 
         tableCard2View = (ImageView) rootView.findViewById(R.id.table_card_2);
         tableCard2View.setContentDescription(tableCard2.getCardNumber()+ " of " + tableCard2.getSuitName());
+        int res2 = getResources().getIdentifier(tableCard2.getSuit()+"_"+tableCard2.getNumber(), "drawable", "com.example.caroline.realpoker");
+        myCard1View.setImageResource(res2);
 
         tableCard3View = (ImageView) rootView.findViewById(R.id.table_card_3);
         tableCard3View.setContentDescription(tableCard3.getCardNumber()+ " of " + tableCard3.getSuitName());
+        int res3 = getResources().getIdentifier(tableCard1.getSuit()+"_"+tableCard1.getNumber(), "drawable", "com.example.caroline.realpoker");
+        myCard1View.setImageResource(res3);
 
         tableCard4View = (ImageView) rootView.findViewById(R.id.table_card_4);
         tableCard4View.setContentDescription(tableCard4.getCardNumber()+ " of " + tableCard4.getSuitName());
+        int res4 = getResources().getIdentifier(tableCard4.getSuit()+"_"+tableCard4.getNumber(), "drawable", "com.example.caroline.realpoker");
+        myCard1View.setImageResource(res4);
 
         tableCard5View = (ImageView) rootView.findViewById(R.id.table_card_5);
         tableCard5View.setContentDescription(tableCard5.getCardNumber()+ " of " + tableCard5.getSuitName());
+        int res5 = getResources().getIdentifier(tableCard5.getSuit()+"_"+tableCard5.getNumber(), "drawable", "com.example.caroline.realpoker");
+        myCard1View.setImageResource(res5);
 
     }
 

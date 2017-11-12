@@ -28,7 +28,6 @@ public class PlayPoker extends AppCompatActivity
         setContentView(R.layout.activity_play_poker);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -37,6 +36,18 @@ public class PlayPoker extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        startGame();
+    }
+
+    private void startGame() {
+        Fragment currentFragment = new PokerGame();
+        FragmentManager fm = getSupportFragmentManager();
+        if(currentFragment != null)
+        {
+            fm.beginTransaction()
+                    .replace(R.id.fragment_container, currentFragment)
+                    .commit();
+        }
     }
 
     @Override

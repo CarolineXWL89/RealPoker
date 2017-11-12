@@ -28,16 +28,16 @@ public class Card {
     public String getSuitName() {
         String s = suit;
         switch(suit){
-            case "C":
+            case "c":
                 s = "Clubs";
                 break;
-            case "H":
+            case "h":
                 s = "Hearts";
                 break;
-            case "D":
+            case "d":
                 s = "Diamonds";
                 break;
-            case "S":
+            case "s":
                 s = "Spades";
                 break;
         }
