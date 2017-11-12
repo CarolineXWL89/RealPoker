@@ -34,7 +34,9 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     private int potMoney;
     private ArrayList<Player> players;
     private TextView player1View, player2View, player3View, player4View, player5View, player6View, bet;
-
+    private boolean hasRaised = false;
+    private int round;
+    private int turn;
     private Card myCard1, myCard2, tableCard1, tableCard2, tableCard3, tableCard4, tableCard5;
     private ImageView myCard1View, myCard2View, tableCard1View, tableCard2View, tableCard3View, tableCard4View, tableCard5View,
             player1Card1View, player1Card2View, player2Card1View, player2Card2View, player3Card1View, player3Card2View, player4Card1View, player4Card2View,
@@ -256,6 +258,32 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         player5Card2View.setVisibility(View.INVISIBLE);
     }
 
+    public void checkCall(){
+        if(players.size()==2&&!hasRaised&&players.get(0).getRaiseBy() == 0 && players.get(1).getRaiseBy() ==0){
+            hasRaised = false;
+            round = 0;
+            turn++;
+            endTurn();
+        }
+        else if(players.get(2).getRaiseBy() == 0 && hasRaised){
+            hasRaised = false;
+            round = 0;
+            turn++;
+            endTurn();
+        }
+        else if(!hasRaised && round -1>players.size()){
+            hasRaised = false;
+            round = 0;
+            turn++;
+            endTurn();
+        }
+        else{
+            players.get(0).setMonnies(players.get(0).getMonnies()-players.get(0).getRaiseBy());
+            players.get(0).setRaiseBy(0);
+            nextGuy();
+        }
+    }
+
     public void raiseBet() {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         final EditText input = new EditText(getActivity());
@@ -275,7 +303,13 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                     if (Integer.parseInt(input.getText().toString()) > 0 && (Integer.parseInt(input.getText().toString()) < players.get(0).getMonnies())) {
                         amountRaised = Integer.parseInt(input.getText().toString());
                         potMoney += amountRaised;
+                        players.get(1).setRaiseBy(players.get(1).getRaiseBy()+amountRaised);
+                        players.get(2).setRaiseBy(players.get(2).getRaiseBy()+amountRaised);
+                        players.get(3).setRaiseBy(players.get(3).getRaiseBy()+amountRaised);
+                        players.get(4).setRaiseBy(players.get(4).getRaiseBy()+amountRaised);
+                        players.get(5).setRaiseBy(players.get(5).getRaiseBy()+amountRaised);
                         players.get(0).setMonnies(players.get(0).getMonnies() - amountRaised);
+                        hasRaised = true;
                         bet.setText("$" + potMoney);
                         player6View.setText(players.get(0).getName() + ": $" + players.get(0).getMonnies());
                     }
@@ -299,7 +333,20 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     }
 
     public void endTurn() {//todo add fold method
-        Log.d(TAG, "endTurn: ");
+        if(turn == 1){
+            showCard(tableCard1);
+            showCard(tableCard2);
+            showCard(tableCard3);
+        }
+        else if(turn == 2){
+            showCard(tableCard4);
+        }
+        else if(turn == 3){
+            showCard(tableCard5);
+        }
+        else{
+            endGame();
+        }
     }
 
     public void nextGuy() {
@@ -395,7 +442,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                 raiseBet();
                 break;
             case R.id.call_check:
-                nextGuy();
+                checkCall();
                 break;
             case R.id.fold:
                 endTurn();
@@ -459,6 +506,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
             for(int i=0;i<nute.size();i++){
                 nute.get(i).setMonnies(nute.get(i).getMonnies()+potMoney/nute.size());
             }
+            potMoney = 0;
 
     }
 }

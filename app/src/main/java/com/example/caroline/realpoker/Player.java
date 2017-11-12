@@ -12,12 +12,21 @@ public class Player {
     private String name;
     private int monnies;
     private ArrayList<Card> hand;
+    private int raiseBy = 0;
 
 
     public Player(String name, int monnies, ArrayList<Card> hand) {
         this.name = name;
         this.monnies = monnies;
         this.hand = hand;
+    }
+
+    public int getRaiseBy() {
+        return raiseBy;
+    }
+
+    public void setRaiseBy(int raiseBy) {
+        this.raiseBy = raiseBy;
     }
 
     public String getName() {
