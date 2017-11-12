@@ -6,17 +6,229 @@
     android:layout_height="match_parent"
     tools:context="com.example.caroline.realpoker.Reference">
 
-    <TextView
-        android:id="@+id/reference_sheet_text"
-        android:layout_width="279dp"
-        android:layout_height="196dp"
+
+    <ScrollView
+        android:layout_width="583dp"
+        android:layout_height="237dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
-        android:text="shit goes here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/image_view_reference_1"
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:src="@drawable/royal_flush"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toTopOf="@id/constraint" />
+
+            <TextView
+                android:id="@+id/text_view_reference1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#1: Royal Flush"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/image_view_reference_1" />
+
+            <ImageView
+                android:id="@+id/image_view_reference2"
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/straight_flush"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintHorizontal_bias="0.493"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/text_view_reference1" />
+            <TextView
+                android:id="@+id/text_view_reference2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#2: Straight Flush"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/image_view_reference2" />
+            <ImageView
+                android:id="@+id/image_view_reference3"
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/four_of_a_kind"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/text_view_reference2" />
+            <TextView
+                android:id="@+id/text_view_reference3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#3: Four of a Kind"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/image_view_reference3" />
+            <ImageView
+                android:id="@+id/image_view_reference4"
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/full_house"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/text_view_reference3" />
+            <TextView
+                android:id="@+id/text_view_reference4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#4: Full House"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/image_view_reference4" />
+            <ImageView
+                android:id="@+id/image_view_reference5"
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/flush"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/text_view_reference4" />
+            <TextView
+                android:id="@+id/text_view_reference5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#5: Flush"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/image_view_reference5" />
+            <ImageView
+                android:id="@+id/image_view_reference6"
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/straight"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/text_view_reference5" />
+            <TextView
+                android:id="@+id/text_view_reference6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#6: Straight"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/image_view_reference6" />
+            <ImageView
+                android:id="@+id/image_view_reference7"
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/three_of_a_kind"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/text_view_reference6" />
+            <TextView
+                android:id="@+id/text_view_reference7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#7: Three of a Kind"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/image_view_reference7" />
+            <ImageView
+                android:id="@+id/image_view_reference8"
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/two_pairs"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/text_view_reference7" />
+            <TextView
+                android:id="@+id/text_view_reference8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#8: Two Pairs"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/image_view_reference8" />
+            <ImageView
+                android:id="@+id/image_view_reference9"
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/one_pair"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/text_view_reference8" />
+            <TextView
+                android:id="@+id/text_view_reference9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#9: One Pair"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/image_view_reference9" />
+            <ImageView
+                android:id="@+id/image_view_reference10"
+                android:layout_width="500dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/high_card"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/text_view_reference9" />
+            <TextView
+                android:id="@+id/text_view_reference10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#10: High Card"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintTop_toBottomOf="@id/image_view_reference10" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
 </android.support.constraint.ConstraintLayout>
