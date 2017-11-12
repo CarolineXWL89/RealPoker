@@ -33,6 +33,19 @@ public class HandComparer {
         else if (flush)
         {
             ans.add(5);
+            String a = cards.get(0).getSuit();
+            if(a.equals("c")){
+                ans.add(1);
+            }
+            else if(a.equals("d")){
+                ans.add(2);
+            }
+            else if(a.equals("h")){
+                ans.add(3);
+            }
+            else{
+                ans.add(4);
+            }
         }
         // Straight might be a WIP
         else if (straight)
