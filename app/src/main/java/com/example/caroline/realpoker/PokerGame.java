@@ -1,8 +1,10 @@
 package com.example.caroline.realpoker;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -19,7 +21,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
@@ -35,7 +36,9 @@ public class PokerGame extends Fragment implements View.OnClickListener{
     private TextView player1View, player2View, player3View, player4View, player5View, player6View, bet;
 
     private Card myCard1, myCard2, tableCard1, tableCard2, tableCard3, tableCard4, tableCard5;
-    private ImageView myCard1View, myCard2View, tableCard1View, tableCard2View, tableCard3View, tableCard4View, tableCard5View;
+    private ImageView myCard1View, myCard2View, tableCard1View, tableCard2View, tableCard3View, tableCard4View, tableCard5View,
+    player1Card1View, player1Card2View, player2Card1View, player2Card2View, player3Card1View, player3Card2View, player4Card1View, player4Card2View,
+            player5Card1View, player5Card2View;
     private View rootView;
 
     public PokerGame() {
@@ -51,6 +54,7 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         numOfPlayers = 6;
         startNewGame();
         currentplayer=0;
+
 
 
         //get any other initial set up done
@@ -184,6 +188,56 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         fold.setOnClickListener(this);
         Button callCheck = (Button) rootView.findViewById(R.id.call_check);
         callCheck.setOnClickListener(this);
+
+        Card player1Card1 = players[1].getHand().get(0);
+        player1Card1View = (ImageView) rootView.findViewById(R.id.player1_card_1);
+        player1Card1View.setContentDescription(player1Card1.getCardNumber()+ " of " + player1Card1.getSuitName());
+        showCard(player1Card1);
+
+        Card player1Card2 = players[1].getHand().get(1);
+        player1Card2View = (ImageView) rootView.findViewById(R.id.player1_card_2);
+        player1Card2View.setContentDescription(player1Card2.getCardNumber()+ " of " + player1Card2.getSuitName());
+        showCard(player1Card2);
+
+        Card player2Card1 = players[2].getHand().get(0);
+        player2Card1View = (ImageView) rootView.findViewById(R.id.player2_card_1);
+        player2Card1View.setContentDescription(player2Card1.getCardNumber()+ " of " + player2Card1.getSuitName());
+        showCard(player2Card1);
+
+        Card player2Card2 = players[2].getHand().get(1);
+        player2Card2View = (ImageView) rootView.findViewById(R.id.player2_card_2);
+        player2Card2View.setContentDescription(player2Card2.getCardNumber()+ " of " + player2Card2.getSuitName());
+        showCard(player2Card2);
+
+        Card player3Card1 = players[3].getHand().get(0);
+        player3Card1View = (ImageView) rootView.findViewById(R.id.player3_card_1);
+        player3Card1View.setContentDescription(player3Card1.getCardNumber()+ " of " + player3Card1.getSuitName());
+        showCard(player3Card1);
+
+        Card player3Card2 = players[3].getHand().get(1);
+        player3Card2View = (ImageView) rootView.findViewById(R.id.player3_card_2);
+        player3Card2View.setContentDescription(player3Card2.getCardNumber()+ " of " + player3Card2.getSuitName());
+        showCard(player3Card2);
+
+        Card player4Card1 = players[4].getHand().get(0);
+        player4Card1View = (ImageView) rootView.findViewById(R.id.player4_card_1);
+        player4Card1View.setContentDescription(player4Card1.getCardNumber()+ " of " + player4Card1.getSuitName());
+        showCard(player4Card1);
+
+        Card player4Card2 = players[4].getHand().get(1);
+        player4Card2View = (ImageView) rootView.findViewById(R.id.player4_card_2);
+        player4Card2View.setContentDescription(player4Card2.getCardNumber()+ " of " + player4Card2.getSuitName());
+        showCard(player4Card2);
+
+        Card player5Card1 = players[5].getHand().get(0);
+        player5Card1View = (ImageView) rootView.findViewById(R.id.player5_card_1);
+        player5Card1View.setContentDescription(player5Card1.getCardNumber()+ " of " + player5Card1.getSuitName());
+        showCard(player5Card1);
+
+        Card player5Card2 = players[5].getHand().get(1);
+        player5Card2View = (ImageView) rootView.findViewById(R.id.player5_card_2);
+        player5Card2View.setContentDescription(player5Card2.getCardNumber()+ " of " + player5Card2.getSuitName());
+        showCard(player5Card2);
     }
     public void raiseBet(){
          final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
@@ -327,9 +381,29 @@ public class PokerGame extends Fragment implements View.OnClickListener{
             best = hand1.getHigherHand(best,intstuff1);
         }
 
+
+    public String winnerTitle(ArrayList<Player> winners){
+        String samIsTired="";
+        for(int i = 0; i < winners.size(); i++){
+            if(winners.size() - 1 == i && i !=0){
+                samIsTired=samIsTired +" and ";
+            }
+            else if(i != 0){
+                samIsTired=samIsTired+", ";
+            }
+            samIsTired = samIsTired + winners.get(i).getName();
+        }
+\
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString("player1"), players[0].get);
+        editor.commit();
+        return samIsTired + " won!";
         return players[bestPlayer];
     }
     */
+
+
 
 }
 
