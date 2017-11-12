@@ -1,0 +1,120 @@
+package com.example.caroline.realpoker;
+
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+public class PokerGame extends Fragment {
+
+    private ArrayList<Card> cardsOnTheTable;
+    private ArrayList<Card> deck;
+    private int numOfPlayers;
+    private Player[] players;
+
+    private Card myCard1, myCard2, tableCard1, tableCard2, tableCard3, tableCard4, tableCard5;
+    private ImageView myCard1View, myCard2View, tableCard1View, tableCard2View, tableCard3View, tableCard4View, tableCard5View;
+    private View rootView;
+
+    public PokerGame() {
+    }
+
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState){
+        super.onCreateView(inflater, container, savedInstanceState);
+        //Inflate the layout we made (one_fragment.xml)
+        rootView = inflater.inflate(R.layout.activity_poker_game, container, false);
+        createDeck();
+        createPlayers();
+        createCardsOnTheTable();
+        wireWidgets();
+
+        //get any other initial set up done
+        //in place of where you would normally say this,
+        //you use getActivity() instead to get the context
+        //todo do this for real stuff
+        /*
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "I CLICKED THE THING",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
+        //return the view that we inflated.
+        return rootView;
+    }
+
+    private void createCardsOnTheTable() {
+        int cardPlace = (int) Math.random()*deck.size();
+        cardsOnTheTable = new ArrayList<>();
+        for(int i = 0; i<5;i++){
+            cardsOnTheTable.add(deck.get(cardPlace));
+            deck.remove(cardPlace);
+            cardPlace = (int) Math.random()*deck.size();
+        }
+    }
+
+    private void createDeck() {
+        String[] suits = {"C", "D", "H", "S"};
+        for(String s:suits){
+            for(int i = 2; i < 15;i++){
+                deck.add(new Card(i,s));
+            }
+        }
+    }
+    //todo get player name from a dialogue we will write later
+    private void createPlayers() {
+        players = new Player[numOfPlayers];
+        for(int i = 0; i< numOfPlayers; i++){
+            players[0] = new Player("Player"+i,10000, getHand());
+        }
+    }
+
+    private void wireWidgets() {
+
+        //Wire any widgets -- must use rootView.findViewById
+        myCard1View = (ImageView) rootView.findViewById(R.id.my_card_1);
+        myCard1View.setContentDescription(myCard1.getCardNumber()+ " of " + myCard1.getSuitName());
+
+        myCard2View = (ImageView) rootView.findViewById(R.id.my_card_2);;
+        myCard2View.setContentDescription(myCard2.getCardNumber()+ " of " + myCard2.getSuitName());
+
+        tableCard1View = (ImageView) rootView.findViewById(R.id.table_card_1);
+        tableCard1View.setContentDescription(tableCard1.getCardNumber()+ " of " + tableCard1.getSuitName());
+
+        tableCard2View = (ImageView) rootView.findViewById(R.id.table_card_2);
+        tableCard2View.setContentDescription(tableCard2.getCardNumber()+ " of " + tableCard2.getSuitName());
+
+        tableCard3View = (ImageView) rootView.findViewById(R.id.table_card_3);
+        tableCard3View.setContentDescription(tableCard3.getCardNumber()+ " of " + tableCard3.getSuitName());
+
+        tableCard4View = (ImageView) rootView.findViewById(R.id.table_card_4);
+        tableCard4View.setContentDescription(tableCard4.getCardNumber()+ " of " + tableCard4.getSuitName());
+
+        tableCard5View = (ImageView) rootView.findViewById(R.id.table_card_5);
+        tableCard5View.setContentDescription(tableCard5.getCardNumber()+ " of " + tableCard5.getSuitName());
+
+    }
+
+    public ArrayList<Card> getHand() {
+        int cardPlace = (int) Math.random()*deck.size();
+        ArrayList<Card> hand = new ArrayList<>();
+        hand.add(deck.get(cardPlace));
+        deck.remove(cardPlace);
+        cardPlace = (int) Math.random()*deck.size();
+        hand.add(deck.get(cardPlace));
+        deck.remove(cardPlace);
+        return hand;
+    }
+}
