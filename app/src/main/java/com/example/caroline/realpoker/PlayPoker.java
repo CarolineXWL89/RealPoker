@@ -38,12 +38,9 @@ public class PlayPoker extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        currentGame = new PokerGame();
-        Log.d("blah", "onCreate: new game");
-        startGame();
-    }
 
-    private void startGame() {
+        currentGame = new PokerGame();
+
         Fragment currentFragment = currentGame;
         FragmentManager fm = getSupportFragmentManager();
         if(currentFragment != null)
