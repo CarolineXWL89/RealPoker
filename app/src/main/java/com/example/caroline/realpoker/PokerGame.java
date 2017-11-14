@@ -27,8 +27,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     private ArrayList<Card> deck;
     private int numOfPlayers, currentplayer;
     private int potMoney;
-    private ArrayList<Player> players;
-    private ArrayList<Player> totalPlayers;
+    private ArrayList<Player> players, playersPlaying; //first one keeps track for purposes of showing cards when player's fold, second one keeps track for shiftign from playre one to player two etc...
     private TextView player1View, player2View, player3View, player4View, player5View, player6View, bet;
     private boolean hasRaised = false;
     private int round, turn;
@@ -47,14 +46,13 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     public PokerGame() {
     }
 
-    //todo Overall:
-        //todo include blinds (make one method call for first and second) NOtfiy player they are blind before just screwing them
-        //todo change call/check button text/undersatnd that code
-        //todo debug stuff
-        //todo debug/implement folding
-        //todo set up end screen with options fro new game, change players, im doen or change certain players
-        //todo have settings use shared preferences so you can delete players
-        //todo FIX SHARED PREFRENCES so you can keep players all the time (ie keep them when app is closed and restarts)
+    //TODO Overall:
+        //TODO #1 debug raise and fold w/nic (also check why flipping over at end is so f*cked up)
+        //TODO #2 fix call check method and ask nic whats up with it w/nic
+        //TODO #3 include blinds (make one method call for first and second) NOtfiy player they are blind before just screwing them
+        //TODO #4 FIX SHARED PREFRENCES so you can keep players all the time (ie keep them when app is closed and restarts)
+        //todo #5 set up end screen with options fro new game, change players, im doen or change certain players
+        //todo #6 have settings use shared preferences so you can delete players
 
 
     public View onCreateView(LayoutInflater inflater,
@@ -119,7 +117,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         alertDialog.show();
     }
 
-    //todo call blinds and start the game
     private void editPlayerName(int i, String name) {
         players.get(i).setName(name);
         if(i == numOfPlayers-1) {
@@ -128,6 +125,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         }
     }
 
+    //todo call blinds and start the game
     private void startGame() {
         addPlayersToSharedPref();
         createCards();
@@ -135,11 +133,10 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         checkingHand();
     }
 
-    //todo make it so saving actually works
+    //todo make it so saving actually works, also check monnies are saved round by round
     //saves players when they are created
     private void addPlayersToSharedPref() {
         //adds all players to shared preferences to be used later
-        //todo update monnies at the end of the game and when people fold
         Log.d(TAG, "addPlayersToSharedPref: ive been called");
         editor.putBoolean("hasPlayers?", true);
 
@@ -256,8 +253,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         }
     }
 
-  //sets up cards and player names  
-  //todo comment/clean entire method and change rotation order so player 2 plays next not player 6
+  //sets up cards and player names
     private void wireWidgets() {
         Log.d(TAG, "wireWidgets: ");
         myCard1 = players.get(0).getHand().get(0);
@@ -447,7 +443,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         }
     }
 
-    //todo read through/ comment, understand and make any necessary changes
+    //todo check and make sure people cant bet more than they have etc...
     //lets player 0 raise
     public void raiseBet() {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
@@ -483,7 +479,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                         }
                     }
 
-/*
+                    /*
                                 try{
                                     if(Integer.parseInt(input.getText().toString())>0 &&(Integer.parseInt(input.getText().toString())<players.get(0).getMonnies())){
 
@@ -493,7 +489,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                                         bet.setText("$"+potMoney);
                                         player6View.setText(players.get(0).getName()+": $"+players.get(0).getMonnies());
                                     nextGuy();}
- master*/
+                    master*/
 
                 } catch (NumberFormatException e) {
                     Toast.makeText(getActivity(), "Please enter a number", Toast.LENGTH_SHORT).show();
@@ -509,6 +505,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     }
 
     //ends the round and flips middle cars as nesscary, calls
+    //todo fix for folded players
     public void endRound() {
         if(turn == 1){
             showCard(tableCard1);
@@ -530,7 +527,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     }
 
     //dialog for passing player
-    //todo test how foldign is going
+    //todo test how foldign is going cause its f*cked up right now
     public void nextGuy() {
         int nextPlayer = currentplayer + 1;
 
@@ -573,12 +570,14 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     }
 
     //switches order or array list to ensure player 0 is the next player
-    //todo needs to reflect number of players still in (ie dont let empty player become player 0)
-    //todo maybe create two arraylists? or just have number that number still in and check if playername  == folded
-
+    //todo fix the idsplays of cards
     private void changePlayer() {
-        Player p = players.remove(0);
+        Player p = players.remove(0); //switches order so its player 0's turn but next its gonna check if new player zero has foled
         players.add(p);
+        while(players.get(0).getName().equals("folded")){
+            p = players.remove(0);
+            players.add(p);
+        }
         wireWidgets();
     }
 
