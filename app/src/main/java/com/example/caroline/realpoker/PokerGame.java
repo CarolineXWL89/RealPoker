@@ -739,6 +739,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     }
   
     //todo set up winner's dialog
+    //todo cards are not shifting properly at end folded hadns are just set to other stuff, should be fixed by second array list
     public void endGame(){
         ArrayList<Player> nute=this.getWinner();
         player1Card1View.setVisibility(View.VISIBLE);
