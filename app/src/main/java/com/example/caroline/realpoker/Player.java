@@ -1,7 +1,7 @@
 package com.example.caroline.realpoker;
 
 
-import java.util.ArrayList;
+        import java.util.ArrayList;
 
 /**
  * Created by maylisw on 11/11/17.
@@ -64,11 +64,11 @@ public class Player {
     public void setBet(int bet) {
         this.bet = bet;
     }
-    public void hasFolded( boolean f)
-    {
-        hasFolded=f;
+  
+    public void setHasFolded(boolean fold){
+        hasFolded = fold;
     }
-    public boolean nic(){
+    public boolean isHasFolded(){
         return hasFolded;
     }
 
