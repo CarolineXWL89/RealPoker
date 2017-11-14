@@ -1,14 +1,11 @@
 package com.example.caroline.realpoker;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,14 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
-import static com.example.caroline.realpoker.R.drawable.ic_menu_send;
 
 @SuppressLint("ValidFragment")
 public class PokerGame extends Fragment implements View.OnClickListener{
@@ -34,15 +29,21 @@ public class PokerGame extends Fragment implements View.OnClickListener{
     private int numOfPlayers, currentplayer;
     private int potMoney;
     private ArrayList<Player> players;
+    private ArrayList<Player> totalPlayers;
     private TextView player1View, player2View, player3View, player4View, player5View, player6View, bet;
+    private boolean hasRaised = false;
+    private int round, turn;
+    private Player emptyPlayer;
     private Button raise, fold,callCheck;
-
     private Card myCard1, myCard2, tableCard1, tableCard2, tableCard3, tableCard4, tableCard5;
     private ImageView myCard1View, myCard2View, tableCard1View, tableCard2View, tableCard3View, tableCard4View, tableCard5View,
             player1Card1View, player1Card2View, player2Card1View, player2Card2View, player3Card1View, player3Card2View, player4Card1View, player4Card2View,
             player5Card1View, player5Card2View;
     private View rootView;
-    private ArrayList<Card> hand;
+    private Context context;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
+
 
 
     private Player emptyPlayer;
@@ -62,38 +63,153 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         deck = new ArrayList<>();
         numOfPlayers = 6;
         currentplayer = 0;
-        hand = new ArrayList<>();
-        hand.add(new Card(0, "c"));
-        hand.add(new Card(0, "c"));
-        emptyPlayer=new Player("", 0, hand);
-        startNewGame();
 
-        //get any other initial set up done
-        //in place of where you would normally say this,
-        //you use getActivity() instead to get the context
-        //todo do this for real stuff
-        /*
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(), "I CLICKED THE THING",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });*/
+        context = getContext();
+        sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+        editor.putBoolean("hasPlayers?", false);
+        editor.commit();
 
-        //return the view that we inflated.
+        ArrayList<Card> emptyHand = new ArrayList<>();
+        emptyHand.add(new Card(0, "c"));
+        emptyHand.add(new Card(0, "c"));
+        emptyPlayer = new Player("",0, emptyHand);
+        players = new ArrayList<>();
+        Log.d(TAG, "onCreateView: ");
+
+        createDeck();
+        createCardsOnTheTable();
+        areNewPlayers(); //either creates new players or gets the old ones and assigns them to their spots on the array list
+
         return rootView;
     }
 
-    private void startNewGame() {
-        createDeck();
-        createPlayerHands();
-        createCardsOnTheTable();
-        createCards();
-        wireWidgets();
-        //checkingHand();
+    private void areNewPlayers() {
+        Log.d(TAG, "areNewPlayers: ");
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        // set title
+        alertDialogBuilder.setTitle("Same players as last time?");
+
+        // set dialog message
+
+        alertDialogBuilder.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                Log.d(TAG, "onClick: dismissed dialogue from yes");
+                useOldPlayers();
+            }
+        });
+
+        alertDialogBuilder.setCancelable(false).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                Log.d(TAG, "onClick: dismissed dialogue from no");
+                howManyPlayers();
+            }
+        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+
     }
 
+    private void editPlayerName(int i, String name) {
+        players.get(i).setName(name);
+        if(i == numOfPlayers-1) {
+            addPlayersToSharedPref();
+            createCards();
+            wireWidgets();
+            checkingHand();
+        }
+    }
+
+    //saves players when they are created
+    //todo make sure this actually works
+    private void addPlayersToSharedPref() {
+        //adds all players to shared preferences to be used later
+        //todo update monnies at the end of the game and when people fold
+        Log.d(TAG, "addPlayersToSharedPref: ive been called");
+        editor.putBoolean("hasPlayers?", true);
+
+        editor.putInt("Number of Players", numOfPlayers);
+
+        editor.putString("Player 1",players.get(0).getName());
+        editor.putInt("Player 1 Monnies", players.get(0).getMonnies());
+
+        editor.putString("Player 2",players.get(1).getName());
+        editor.putInt("Player 2 Monnies", players.get(1).getMonnies());
+
+        editor.putString("Player 3",players.get(2).getName());
+        editor.putInt("Player 3 Monnies", players.get(2).getMonnies());
+
+        editor.putString("Player 4",players.get(3).getName());
+        editor.putInt("Player 4 Monnies", players.get(3).getMonnies());
+
+        editor.putString("Player 5",players.get(4).getName());
+        editor.putInt("Player 5 Monnies", players.get(4).getMonnies());
+
+        editor.putString("Player 6",players.get(5).getName());
+        editor.putInt("Player 6 Monnies", players.get(5).getMonnies());
+
+        editor.commit();
+    }
+
+    //lets user use last rounds players if they exist else creates new ones
+    private void useOldPlayers() {
+        if(sharedPref.getBoolean("hasPlayers?", false)) { //if there are players
+            numOfPlayers = sharedPref.getInt("Number of Players", 6);
+            for (int i = 1; i < 7; i++) {
+                String name = sharedPref.getString("Player " + i, "Player " + i);
+                int monney = sharedPref.getInt("Player " + i + " Monnies", 10000);
+                Player p = new Player(name, monney, getHand());
+                players.add(p);
+            }
+        } else { //otherwise create new ones
+            Toast.makeText(context, "You don't have any saved players", Toast.LENGTH_LONG).show();
+            howManyPlayers();
+        }
+    }
+
+    //popup for # of players from 2-6
+    private void howManyPlayers() {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        final EditText input = new EditText(getActivity());
+        // set title
+        alertDialogBuilder.setTitle("How many players?");
+        alertDialogBuilder.setView(input);
+
+        CharSequence[] items = {"2","3","4","5","6"};
+        alertDialogBuilder.setCancelable(false).setItems(items,new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                numOfPlayers = id + 3;
+                createNewPlayers();
+            }
+        });
+
+        // create alert dialog
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
+    //adds players to players arraylist
+    private void createNewPlayers() {
+        Log.d(TAG, "createNewPlayers: has been called");
+        if(numOfPlayers != -1){
+            for (int i = numOfPlayers; i >0; i--){
+                players.add(createPlayingPlayers(i));
+            }
+            for(int i= 6-numOfPlayers; i>0; i--){
+                players.add(emptyPlayer);
+            }
+        }
+
+    //gets player's best hand before cards are flipped
     private void checkingHand() {
         Hand hand1 = new Hand(players.get(0).getHand(), cardsOnTheTable);
         ArrayList<Integer> intstuff = new ArrayList<>();
@@ -101,6 +217,7 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         Log.d(TAG, "checkingHand: " + intstuff.toString());
     }
 
+    //sets the card objects
     private void createCards() {
         myCard1 = players.get(0).getHand().get(0);
         myCard2 = players.get(0).getHand().get(1);
@@ -111,6 +228,7 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         tableCard5 = cardsOnTheTable.get(4);
     }
 
+    //draws cards on the table
     private void createCardsOnTheTable() {
         int cardPlace = (int) (Math.random() * deck.size());
         cardsOnTheTable = new ArrayList<>();
@@ -121,6 +239,7 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         }
     }
 
+    //creates 52 cards in the arraylist
     private void createDeck() {
         String[] suits = {"c", "d", "h", "s"};
         for (String s : suits) {
@@ -129,33 +248,9 @@ public class PokerGame extends Fragment implements View.OnClickListener{
             }
         }
     }
-
-    //todo get player name from a dialogue we will write later
-    private void createPlayerHands(){
-        for(Player p:players) {
-           p.setHand(getHand());
-        }
-        while(players.size()<6){
-            if(players.size()<4)
-            {
-                players.add(3,emptyPlayer);
-                players.add(4, emptyPlayer);
-                players.add(5, emptyPlayer);
-            }
-            else if(players.size() <5)
-            {
-                players.add(4,emptyPlayer);
-                players.add(5, emptyPlayer);
-            }
-            else{
-                players.add(5, emptyPlayer);
-            }
-
-        }
-    }
-
+    //todo comment/clean entire method and change rotation order so player 2 plays next not player 6
     private void wireWidgets() {
-
+        Log.d(TAG, "wireWidgets: ");
         myCard1 = players.get(0).getHand().get(0);
         myCard2 = players.get(0).getHand().get(1);
 
@@ -225,7 +320,7 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         fold = (Button) rootView.findViewById(R.id.fold);
         fold.setOnClickListener(this);
         callCheck = (Button) rootView.findViewById(R.id.call_check);
-        callCheck.setText("Start Game");
+        callCheck.setText("call/check")
         callCheck.setOnClickListener(this);
 
         Card player1Card1 = players.get(1).getHand().get(0);
@@ -289,21 +384,80 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         player5Card2View.setVisibility(View.INVISIBLE);
     }
 
+    //todo change button to reflect checking or calling also read through and understand/make changes as necessary
+    //lets player 0 check if nothing has been bet or call if stuff has
+    public void checkCall(){
+        if(players.size()==2&&!hasRaised&&players.get(0).getRaiseBy() == 0 && players.get(1).getRaiseBy() ==0){
+            hasRaised = false;
+            round = 0;
+            turn++;
+            endRound();
+        }
+        else if(players.get(1).getRaiseBy() == 0 && hasRaised){
+            hasRaised = false;
+            round = 0;
+            turn++;
+            endRound();
+        }
+        else if(!hasRaised && round +2>players.size()){
+            hasRaised = false;
+            round = 0;
+            turn ++;
+            endRound();
+        }
+        else{
+            if(players.get(0).getMonnies()<players.get(0).getRaiseBy()){
+                potMoney += players.get(0).getRaiseBy();
+                players.get(0).setMonnies(0);
+                players.get(0).setRaiseBy(0);
+                round++;
+                nextGuy();
+            }
+            else {
+                potMoney += players.get(0).getRaiseBy();
+                players.get(0).setMonnies(players.get(0).getMonnies() - players.get(0).getRaiseBy());
+                players.get(0).setRaiseBy(0);
+                round++;
+                nextGuy();
+            }
+        }
+    }
+
+    //todo read through/ comment, understand and make any necessary changes
+    //lets player 0 raise
     public void raiseBet() {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         final EditText input = new EditText(getActivity());
         // set title
         alertDialogBuilder.setTitle("Input Raise amount");
         alertDialogBuilder.setView(input);
-        //alertDialogBuilder.setIcon(R.drawable.ic_delete);
-        // set dialog message
-
 
         alertDialogBuilder.setCancelable(true).setPositiveButton("ok", new DialogInterface.OnClickListener() {
             int amountRaised;
 
             public void onClick(DialogInterface dialog, int id) {
 
+                try {
+                    if (Integer.parseInt(input.getText().toString()) > 0 && (Integer.parseInt(input.getText().toString()) < players.get(0).getMonnies())) {
+                        amountRaised = Integer.parseInt(input.getText().toString());
+                        if(amountRaised<=players.get(0).getRaiseBy()){
+                            Toast.makeText(getActivity(), "please enter a number larger than the call", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            potMoney += amountRaised;
+                            players.get(1).setRaiseBy(players.get(1).getRaiseBy() + amountRaised);
+                            players.get(2).setRaiseBy(players.get(2).getRaiseBy() + amountRaised);
+                            players.get(3).setRaiseBy(players.get(3).getRaiseBy() + amountRaised);
+                            players.get(4).setRaiseBy(players.get(4).getRaiseBy() + amountRaised);
+                            players.get(5).setRaiseBy(players.get(5).getRaiseBy() + amountRaised);
+                            players.get(0).setMonnies(players.get(0).getMonnies() - amountRaised);
+                            hasRaised = true;
+                            bet.setText("$" + potMoney);
+                            player6View.setText(players.get(0).getName() + ": $" + players.get(0).getMonnies());
+                            nextGuy();
+                        }
+                    }
+/*
                                 try{
                                     if(Integer.parseInt(input.getText().toString())>0 &&(Integer.parseInt(input.getText().toString())<players.get(0).getMonnies())){
 
@@ -313,14 +467,12 @@ public class PokerGame extends Fragment implements View.OnClickListener{
                                         bet.setText("$"+potMoney);
                                         player6View.setText(players.get(0).getName()+": $"+players.get(0).getMonnies());
                                     nextGuy();}
+ master*/
 
                 } catch (NumberFormatException e) {
-                    Toast.makeText(getActivity(), "please enter a number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please enter a number", Toast.LENGTH_SHORT).show();
 
                 }
-                // if this button is clicked, close
-                // current activity
-
             }
         });
         // create alert dialog
@@ -328,33 +480,50 @@ public class PokerGame extends Fragment implements View.OnClickListener{
 
         // show it
         alertDialog.show();
-
-
-
     }
 
-    public void endTurn() {//todo add fold method
-
-        nextGuy();
-        Log.d(TAG, "endTurn: ");
-    }
-
-    public void nextGuy() {
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        // set title
-        int i = 0;
-        if (currentplayer < players.size() - 1) {
-            i = currentplayer + 1;
+    //todo add fold method
+    //todo comment/ check logic
+    //ends the round
+    public void endRound() {
+        if(turn == 1){
+            showCard(tableCard1);
+            showCard(tableCard2);
+            showCard(tableCard3);
+            nextGuy();
         }
-        alertDialogBuilder.setTitle("Are you " + players.get(i).getName() + "?");
-
-        // set dialog message
+        else if(turn == 2){
+            showCard(tableCard4);
+            nextGuy();
+        }
+        else if(turn == 3){
+            showCard(tableCard5);
+            nextGuy();
+        }
+        else{
+            endGame();
+        }
+    }
+    //todo change order rotation either here or at wire widgets so its teh same as order name was entered in
+    //todo quick read through and commetn if nesscary
+    //dialog for passing player
+    public void nextGuy() {
+        int player0 = currentplayer;
+        while(!checkIfNotFolded(player0)){
+            player0++;
+        }
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        //sets message
+        final TextView question = new TextView(context);
+        question.setText("Are you "+ players.get(player0).getName()+"?");
+        // set title
+        alertDialogBuilder.setTitle(players.get(player0).getName() + "'s turn. Please pass to "+players.get(player0).getName());
+        alertDialogBuilder.setView(question);
 
         alertDialogBuilder.setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 changePlayer();
                 // current activity
-
             }
         });
         // create alert dialog
@@ -362,17 +531,15 @@ public class PokerGame extends Fragment implements View.OnClickListener{
 
         // show it
         alertDialog.show();
-        Log.d(TAG, "nextGuy: ");
 
-    } //todo move to next player
-
+    }
+    //todo move to next player, this is where order is decied, check logic here
     private void changePlayer() {
         Player p = players.remove(0);
         players.add(p);
         wireWidgets();
     }
-
-
+    //displays the cards
     private void showCard(Card myCard) {
         int res = getResources().getIdentifier(myCard.getSuit() + "_" + myCard.getNumber(), "drawable", "com.example.caroline.realpoker");
         if (myCard.equals(myCard1)) {
@@ -412,6 +579,7 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         }
     }
 
+    //draws two cards for each player
     public ArrayList<Card> getHand() {
         int cardPlace = (int) (Math.random() * deck.size());
         ArrayList<Card> hand = new ArrayList<>();
@@ -423,24 +591,52 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         return hand;
     }
 
+    //todo check logic and comment
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "onClick: " + v.getId());
-        Log.d(TAG, "onClick: " + R.id.raise);
         switch (v.getId()) {
             case R.id.raise:
                 raiseBet();
                 break;
             case R.id.call_check:
-                callCheck.setText("call/check");
-                nextGuy();
+                checkCall();
+                //nextGuy();
+
                 break;
             case R.id.fold:
-                endTurn();
+                playerFolded();
                 break;
         }
     }
 
+    //todo make me and the next funciton work
+    private void playerFolded() {
+        players.get(0).hasFolded(true);
+        nextGuy();
+    }
+
+    //todo make me work
+    public boolean checkIfNotFolded(int player){
+        int n = getNextGuy(player);
+        if(players.get(n).nic()){
+            return false;
+        } else{
+            return true;
+        }
+
+    }
+    //todo check logic
+    private int getNextGuy(int i) {
+        int nextPlayer = i;
+        if(i<players.size()-1){
+            nextPlayer++;
+        }else{
+            nextPlayer = 0;
+        }
+        return nextPlayer;
+    }
+
+    //todo check how this and end game are useda nd maybe set up winner's screen but at the very least create a new dialog to say blah won
     public ArrayList<Player> getWinner() {
         ArrayList<Integer> best = new ArrayList<>();
         ArrayList<Player> winners = new ArrayList<>();
@@ -466,7 +662,7 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         return winners;
     }
 
-
+    //todo chekc how all winner's stuff is used
     public String winnerTitle(ArrayList<Player> winners){
         String samIsTired="";
         for(int i = 0; i < winners.size(); i++){
@@ -481,6 +677,7 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         return samIsTired + " won!";
     }
 
+    //todo chekc how all winner's stuff is used
     public void endGame(){
         ArrayList<Player> nute=this.getWinner();
         player1Card1View.setVisibility(View.VISIBLE);
@@ -494,48 +691,35 @@ public class PokerGame extends Fragment implements View.OnClickListener{
         player5Card1View.setVisibility(View.VISIBLE);
         player5Card2View.setVisibility(View.VISIBLE);
         Log.d(TAG, "endGame: "+winnerTitle(nute));//TODO: Make a text box saying who won;
+        Toast.makeText(getActivity(), winnerTitle(nute), Toast.LENGTH_LONG).show();
             for(int i=0;i<nute.size();i++){
                 nute.get(i).setMonnies(nute.get(i).getMonnies()+potMoney/nute.size());
             }
+            potMoney = 0;
 
     }
+
+    public Player createPlayingPlayers(int i) { //i is index
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        final EditText input = new EditText(context);
+        final int playerNumber = i; //player 1 is at index 0
+        // set title
+        alertDialogBuilder.setTitle("Set Player #" + playerNumber + "'s name");
+        alertDialogBuilder.setView(input);
+        Player p = new Player("Player #"+i,10000, getHand());
+        alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                String name =input.getText().toString();
+                Log.d(TAG, "createPlayerI: "+input.getText().toString());
+                editPlayerName(playerNumber-1, name);
+            }
+        });
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+        return p;
+    }
+
 }
-
-
-
-
-/**
- *Hand hand1 = new Hand(players[0].getHand(), cardsOnTheTable);
- ArrayList<Integer> intstuff1 =  new ArrayList<>();
- intstuff1.addAll(hand1.getBestHand());
-
- Hand hand2 = new Hand(players[1].getHand(), cardsOnTheTable);
- ArrayList<Integer> intstuff2 =  new ArrayList<>();
- intstuff2.addAll(hand2.getBestHand());
-
- Hand hand3 = new Hand(players[2].getHand(), cardsOnTheTable);
- ArrayList<Integer> intstuff3 =  new ArrayList<>();
- intstuff3.addAll(hand3.getBestHand());
- if(players.length>3) {
- Hand hand4 = new Hand(players[3].getHand(), cardsOnTheTable);
- ArrayList<Integer> intstuff4 = new ArrayList<>();
- intstuff4.addAll(hand4.getBestHand());
- hand1.getHigherHand(hand1.getHigherHand(intstuff1,intstuff2),hand1.getHigherHand(intstuff3,intstuff4));
- }
- else if(players.length>4) {
- Hand hand5 = new Hand(players[4].getHand(), cardsOnTheTable);
- ArrayList<Integer> intstuff5 = new ArrayList<>();
- intstuff5.addAll(hand5.getBestHand());
- }
-
- else if(players.length>5) {
- Hand hand6 = new Hand(players[5].getHand(), cardsOnTheTable);
- ArrayList<Integer> intstuff6 = new ArrayList<>();
- intstuff6.addAll(hand6.getBestHand());
- }
- else{
- return;
- }
- */
-
-
