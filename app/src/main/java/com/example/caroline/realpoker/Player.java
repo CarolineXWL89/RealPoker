@@ -64,6 +64,7 @@ public class Player {
     public void setBet(int bet) {
         this.bet = bet;
     }
+  
     public void setHasFolded(boolean fold){
         hasFolded = fold;
     }

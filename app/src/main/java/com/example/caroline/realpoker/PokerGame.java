@@ -43,6 +43,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     private SharedPreferences.Editor editor;
     private Button callCheck, fold, raise;
 
+
     public PokerGame() {
     }
 
@@ -116,7 +117,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
 
         // show it
         alertDialog.show();
-
     }
 
     //todo call blinds and start the game
@@ -235,7 +235,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         tableCard4 = cardsOnTheTable.get(3);
         tableCard5 = cardsOnTheTable.get(4);
     }
-
     //draws cards for the table
     private void createCardsOnTheTable() {
         int cardPlace = (int) (Math.random() * deck.size());
@@ -256,11 +255,15 @@ public class PokerGame extends Fragment implements View.OnClickListener {
             }
         }
     }
-    
-    //sets up cards and player names
-    private void wireWidgets() {
 
-        //Sets the players cards
+  //sets up cards and player names  
+  //todo comment/clean entire method and change rotation order so player 2 plays next not player 6
+    private void wireWidgets() {
+        Log.d(TAG, "wireWidgets: ");
+        myCard1 = players.get(0).getHand().get(0);
+        myCard2 = players.get(0).getHand().get(1);
+
+        //Wire any widgets -- must use rootView.findViewById
         myCard1View = (ImageView) rootView.findViewById(R.id.my_card_1);
         myCard1View.setContentDescription(myCard1.getCardNumber() + " of " + myCard1.getSuitName());
         showCard(myCard1);
@@ -463,6 +466,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                         amountRaised = Integer.parseInt(input.getText().toString());
                         if(amountRaised<=players.get(0).getRaiseBy()){
                             Toast.makeText(getActivity(), "Please enter a number larger than the call", Toast.LENGTH_SHORT).show();
+
                         }
                         else{
                             potMoney += amountRaised;
@@ -479,6 +483,18 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                         }
                     }
 
+/*
+                                try{
+                                    if(Integer.parseInt(input.getText().toString())>0 &&(Integer.parseInt(input.getText().toString())<players.get(0).getMonnies())){
+
+                                        amountRaised=Integer.parseInt(input.getText().toString());
+                                        potMoney+=amountRaised;
+                                        players.get(0).setMonnies(players.get(0).getMonnies()-amountRaised);
+                                        bet.setText("$"+potMoney);
+                                        player6View.setText(players.get(0).getName()+": $"+players.get(0).getMonnies());
+                                    nextGuy();}
+ master*/
+
                 } catch (NumberFormatException e) {
                     Toast.makeText(getActivity(), "Please enter a number", Toast.LENGTH_SHORT).show();
 
@@ -490,7 +506,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
 
         // show it
         alertDialog.show();
-
     }
 
     //ends the round and flips middle cars as nesscary, calls
@@ -555,12 +570,12 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         myCard2View.setVisibility(View.INVISIBLE);
         // show it
         alertDialog.show();
-
     }
 
     //switches order or array list to ensure player 0 is the next player
     //todo needs to reflect number of players still in (ie dont let empty player become player 0)
     //todo maybe create two arraylists? or just have number that number still in and check if playername  == folded
+
     private void changePlayer() {
         Player p = players.remove(0);
         players.add(p);
@@ -621,6 +636,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         return hand;
     }
 
+    //todo check logic and comment
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -670,8 +686,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         players.add(0, emptyPlayer);
         nextGuy();
     }
-
-    //gets the next player and loops around if at player 6
+  
     private int getNextGuy(int i) {
         int nextPlayer = i;
         if(i<players.size()-1){
@@ -681,7 +696,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         }
         return nextPlayer;
     }
-
 
     //todo set up winner's dialog
     public ArrayList<Player> getWinner() {
@@ -723,6 +737,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         }
         return samIsTired + " won!";
     }
+  
     //todo set up winner's dialog
     public void endGame(){
         ArrayList<Player> nute=this.getWinner();
@@ -769,5 +784,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         alertDialog.show();
         return p;
     }
+
 
 }
