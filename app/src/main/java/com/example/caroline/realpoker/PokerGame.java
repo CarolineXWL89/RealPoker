@@ -21,7 +21,8 @@ import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
-public class PokerGame extends Fragment implements View.OnClickListener {
+@SuppressLint("ValidFragment")
+public class PokerGame extends Fragment implements View.OnClickListener{
 
     private ArrayList<Card> cardsOnTheTable;
     private ArrayList<Card> deck;
@@ -33,6 +34,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     private boolean hasRaised = false;
     private int round, turn;
     private Player emptyPlayer;
+    private Button raise, fold,callCheck;
     private Card myCard1, myCard2, tableCard1, tableCard2, tableCard3, tableCard4, tableCard5;
     private ImageView myCard1View, myCard2View, tableCard1View, tableCard2View, tableCard3View, tableCard4View, tableCard5View,
             player1Card1View, player1Card2View, player2Card1View, player2Card2View, player3Card1View, player3Card2View, player4Card1View, player4Card2View,
@@ -42,7 +44,14 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
 
-    public PokerGame() {
+
+
+    private Player emptyPlayer;
+
+    @SuppressLint("ValidFragment")
+    public PokerGame(int num, ArrayList<Player> p) {
+        numOfPlayers = num;
+        players = p;
     }
 
     public View onCreateView(LayoutInflater inflater,
@@ -199,7 +208,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                 players.add(emptyPlayer);
             }
         }
-    }
 
     //gets player's best hand before cards are flipped
     private void checkingHand() {
@@ -240,7 +248,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
             }
         }
     }
-    
     //todo comment/clean entire method and change rotation order so player 2 plays next not player 6
     private void wireWidgets() {
         Log.d(TAG, "wireWidgets: ");
@@ -271,45 +278,49 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         tableCard5View = (ImageView) rootView.findViewById(R.id.table_card_5);
         tableCard5View.setContentDescription(tableCard5.getCardNumber() + " of " + tableCard5.getSuitName());
 
-        player1View = (TextView) rootView.findViewById(R.id.player_1);
-        String p1 = players.get(1).getName() + ": $" + players.get(1).getMonnies();
-        player1View.setText(p1);
+          player1View = (TextView) rootView.findViewById(R.id.player_1);
+         String p1 = players.get(1).getName() + ": $" + players.get(1).getMonnies();
+          player1View.setText(p1);
 
 
-        player2View = (TextView) rootView.findViewById(R.id.player_2);
-        String p2 = players.get(2).getName() + ": $" + players.get(2).getMonnies();
-        player2View.setText(p2);
+          player2View = (TextView) rootView.findViewById(R.id.player_2);
+          String p2 = players.get(2).getName() + ": $" + players.get(2).getMonnies();
+          player2View.setText(p2);
 
 
-        player3View = (TextView) rootView.findViewById(R.id.player_3);
-        String p3 = players.get(3).getName() + ": $" + players.get(3).getMonnies();
-        player3View.setText(p3);
+          player3View = (TextView) rootView.findViewById(R.id.player_3);
+          String p3 = players.get(3).getName() + ": $" + players.get(3).getMonnies();
+          player3View.setText(p3);
 
 
-        player4View = (TextView) rootView.findViewById(R.id.player_4);
-        String p4 = players.get(4).getName() + ": $" + players.get(4).getMonnies();
-        player4View.setText(p4);
+          player4View = (TextView) rootView.findViewById(R.id.player_4);
+          String p4 = players.get(4).getName() + ": $" + players.get(4).getMonnies();
+          player4View.setText(p4);
+
+          player5View = (TextView) rootView.findViewById(R.id.player_5);
+          String p5 = players.get(5).getName() + ": $" + players.get(5).getMonnies();
+          player5View.setText(p5);
+
+          player6View = (TextView) rootView.findViewById(R.id.user);
+          String p6 = players.get(0).getName() + ": $" + players.get(0).getMonnies();
+          player6View.setText(p6);
 
 
-        player5View = (TextView) rootView.findViewById(R.id.player_5);
-        String p5 = players.get(5).getName() + ": $" + players.get(5).getMonnies();
-        player5View.setText(p5);
 
 
-        player6View = (TextView) rootView.findViewById(R.id.user);
-        String p6 = players.get(0).getName() + ": $" + players.get(0).getMonnies();
-        player6View.setText(p6);
+
+
 
 
         bet = (TextView) rootView.findViewById(R.id.bet);
         bet.setText("$" + potMoney);
 
-        Button raise = (Button) rootView.findViewById(R.id.raise);
+        raise = (Button) rootView.findViewById(R.id.raise);//todo
         raise.setOnClickListener(this);
-        Button fold = (Button) rootView.findViewById(R.id.fold);
+        fold = (Button) rootView.findViewById(R.id.fold);
         fold.setOnClickListener(this);
-        Button callCheck = (Button) rootView.findViewById(R.id.call_check);
-        callCheck.setText("call/check");
+        callCheck = (Button) rootView.findViewById(R.id.call_check);
+        callCheck.setText("call/check")
         callCheck.setOnClickListener(this);
 
         Card player1Card1 = players.get(1).getHand().get(0);
@@ -446,6 +457,17 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                             nextGuy();
                         }
                     }
+/*
+                                try{
+                                    if(Integer.parseInt(input.getText().toString())>0 &&(Integer.parseInt(input.getText().toString())<players.get(0).getMonnies())){
+
+                                        amountRaised=Integer.parseInt(input.getText().toString());
+                                        potMoney+=amountRaised;
+                                        players.get(0).setMonnies(players.get(0).getMonnies()-amountRaised);
+                                        bet.setText("$"+potMoney);
+                                        player6View.setText(players.get(0).getName()+": $"+players.get(0).getMonnies());
+                                    nextGuy();}
+ master*/
 
                 } catch (NumberFormatException e) {
                     Toast.makeText(getActivity(), "Please enter a number", Toast.LENGTH_SHORT).show();
@@ -458,7 +480,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
 
         // show it
         alertDialog.show();
-
     }
 
     //todo add fold method
@@ -579,6 +600,8 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                 break;
             case R.id.call_check:
                 checkCall();
+                //nextGuy();
+
                 break;
             case R.id.fold:
                 playerFolded();
