@@ -68,6 +68,7 @@ public class Player {
     public void setHasFolded(boolean fold){
         hasFolded = fold;
     }
+
     public boolean isHasFolded(){
         return hasFolded;
     }
