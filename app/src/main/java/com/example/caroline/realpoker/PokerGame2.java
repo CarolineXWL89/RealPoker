@@ -45,11 +45,17 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     }
 
     //TODO Overall:
-    //TODO #1 debug raise, fold, call/check and nextguy
-    //TODO #3 write blind method using logic for switching players
-    //TODO #4 FIX SHARED PREFRENCES (debug logic behind them)
-    //todo #5 set up end screen with options fro new game, change players, im doen or change certain players
-    //todo #6 have settings use shared preferences so you can delete players
+    //TODO #1 Create raise, fold, call/check and nextguy
+        //todo make sure monnies are updated when a player folds
+        //todo write blind methods by switching players
+    //todo #3 set up end screen with options for new game, change players, or im done
+    //todo #4 have settings use shared preferences so you can delete players
+    //todo #5 ui
+        //todo themes
+        //todo portriat for all except pokergame fragment
+        //todo fix icons on side
+        //todo get rid of andorid studio junk
+        //todo add textedits for blah raised or folded/fix contraints
 
 
     public View onCreateView(LayoutInflater inflater,
@@ -71,7 +77,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         emptyHand.add(new Card(0, "c"));
         emptyHand.add(new Card(0, "c"));
 
-        emptyPlayer = new Player(null, 0, emptyHand);
+        emptyPlayer = new Player("", 0, emptyHand);
         players = new ArrayList<>();
 
         createDeck();
@@ -219,24 +225,24 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                 indices[4] = -5;
                 break;
             case 0:
-                indices[0] = 0;
-                indices[1] = 1;
-                indices[2] = 2;
-                indices[3] = 3;
-                indices[4] = 4;
+                indices[0] = 1;
+                indices[1] = 2;
+                indices[2] = 3;
+                indices[3] = 4;
+                indices[4] = 5;
                 break;
         }
         //rotates player textview
         player1View = (TextView) rootView.findViewById(R.id.player_1);
         String p1 ="";
-        if (players.get(index +indices[0]).getName() != null) {
+        if (players.get(index +indices[0]).getName() != "") {
             p1 = players.get(index +indices[0]).getName() + ": $" + players.get(index +indices[0]).getMonnies();
         }
         player1View.setText(p1);
 
         player2View = (TextView) rootView.findViewById(R.id.player_2);
         String p2 ="";
-        if (players.get(index +indices[1]).getName() != null) {
+        if (players.get(index +indices[1]).getName() != "") {
             p2 = players.get(index +indices[1]).getName() + ": $" + players.get(index +indices[1]).getMonnies();
         }
         player2View.setText(p2);
@@ -244,7 +250,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
         player3View = (TextView) rootView.findViewById(R.id.player_3);
         String p3 = "";
-        if (players.get(index +indices[2]).getName() != null) {
+        if (players.get(index +indices[2]).getName() != "") {
             p3 = players.get(index +indices[2]).getName() + ": $" + players.get(index +indices[2]).getMonnies();
         }
         player3View.setText(p3);
@@ -252,7 +258,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
         player4View = (TextView) rootView.findViewById(R.id.player_4);
         String p4 = "";
-        if (players.get(index +indices[3]).getName() != null) {
+        if (players.get(index +indices[3]).getName() != "") {
             p4 = players.get(index +indices[3]).getName() + ": $" + players.get(index +indices[3]).getMonnies();
         }
         player4View.setText(p4);
@@ -260,7 +266,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
         player5View = (TextView) rootView.findViewById(R.id.player_5);
         String p5 = "";
-        if (players.get(index +indices[4]).getName() != null) {
+        if (players.get(index +indices[4]).getName() != "") {
             p5 = players.get(index + indices[4]).getName() + ": $" + players.get(index + indices[4]).getMonnies();
         }
         player5View.setText(p5);
@@ -275,7 +281,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         bet = (TextView) rootView.findViewById(R.id.bet);
         bet.setText("$" + potMoney);
 
-        raise = (Button) rootView.findViewById(R.id.raise);//todo
+        raise = (Button) rootView.findViewById(R.id.raise);
         raise.setOnClickListener(this);
 
         fold = (Button) rootView.findViewById(R.id.fold);
@@ -283,6 +289,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
         callCheck = (Button) rootView.findViewById(R.id.call_check);
         callCheck.setOnClickListener(this);
+        callCheck.setText("Call");
     }
 
     //displays the cards in the right card view
@@ -395,7 +402,6 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         players.get(i).setName(name);
         if(i == numOfPlayers-1) {
             startGame();
-
         }
     }
 
@@ -452,7 +458,6 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         alertDialog.show();
     }
 
-    //todo FIX WAY ITS SHARED, also check that monnies are saved round by round
     private void addPlayersToSharedPref() {
         //adds all players to shared preferences to be used later
         Log.d(TAG, "addPlayersToSharedPref: ive been called");
@@ -462,21 +467,27 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
         editor.putString("Player 1",players.get(0).getName());
         editor.putInt("Player 1 Monnies", players.get(0).getMonnies());
+        Log.d(TAG, "addPlayersToSharedPref: "+players.get(0).getName());
 
         editor.putString("Player 2",players.get(1).getName());
         editor.putInt("Player 2 Monnies", players.get(1).getMonnies());
+        Log.d(TAG, "addPlayersToSharedPref: "+players.get(1).getName());
 
         editor.putString("Player 3",players.get(2).getName());
         editor.putInt("Player 3 Monnies", players.get(2).getMonnies());
+        Log.d(TAG, "addPlayersToSharedPref: "+players.get(2).getName());
 
         editor.putString("Player 4",players.get(3).getName());
         editor.putInt("Player 4 Monnies", players.get(3).getMonnies());
+        Log.d(TAG, "addPlayersToSharedPref: "+players.get(3).getName());
 
         editor.putString("Player 5",players.get(4).getName());
         editor.putInt("Player 5 Monnies", players.get(4).getMonnies());
+        Log.d(TAG, "addPlayersToSharedPref: "+players.get(4).getName());
 
         editor.putString("Player 6",players.get(5).getName());
         editor.putInt("Player 6 Monnies", players.get(5).getMonnies());
+        Log.d(TAG, "addPlayersToSharedPref: "+players.get(5).getName());
 
         editor.commit();
     }

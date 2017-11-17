@@ -19,7 +19,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_play_poker"
         app:menu="@menu/activity_play_poker_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
