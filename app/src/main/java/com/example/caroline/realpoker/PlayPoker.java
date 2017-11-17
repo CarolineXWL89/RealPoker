@@ -3,6 +3,7 @@ package com.example.caroline.realpoker;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,6 +29,9 @@ import java.util.ArrayList;
 public class PlayPoker extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Fragment currentGame;
+    private Context context;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +47,15 @@ public class PlayPoker extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        currentGame = new PokerGame();
+        context = this;
+        sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+        editor = sharedPref.edit();
+        editor.putBoolean("hasPlayers?", false);
+        editor.commit();
+
+        currentGame = new PokerGame2();
         Fragment currentFragment = currentGame;
         FragmentManager fm = getSupportFragmentManager();
         if(currentFragment != null)

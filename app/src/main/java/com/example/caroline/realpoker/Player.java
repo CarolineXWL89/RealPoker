@@ -14,8 +14,7 @@ public class Player {
     private ArrayList<Card> hand;
     private int raiseBy = 0;
     private boolean hasFolded;
-
-
+    ArrayList<Card> emptyHand = new ArrayList<>();
     private int bet;
 
 
@@ -23,6 +22,8 @@ public class Player {
         this.name = name;
         this.monnies = monnies;
         this.hand = hand;
+        emptyHand.add(new Card(0, "c"));
+        emptyHand.add(new Card(0, "c"));
     }
 
     public int getRaiseBy() {
@@ -66,6 +67,7 @@ public class Player {
     }
   
     public void setHasFolded(boolean fold){
+        hand = emptyHand;
         hasFolded = fold;
     }
 

@@ -416,12 +416,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         return (players.get(0).getRaiseBy() > 0);
     }
 
-
-
-
-
-    //todo change button to reflect checking or calling also read through and understand/make changes as necessary
-    //todo ask nicolo what the hell is going on
+    //todo fix
     //lets player 0 check if nothing has been bet or call if stuff has
     public void checkCall(){
         if(players.size()==2&&!hasRaised&&players.get(0).getRaiseBy() == 0 && players.get(1).getRaiseBy() ==0){
@@ -460,7 +455,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         }
     }
 
-    //todo check and make sure people cant bet more than they have etc...
+    //todo fix
     //lets player 0 raise
     public void raiseBet() {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
@@ -522,7 +517,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     }
 
     //ends the round and flips middle cars as nesscary, calls
-    //todo fix for folded players
+    //todo fix
     public void endRound() {
         if(turn == 1){
             showCard(tableCard1);
@@ -544,7 +539,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     }
 
     //dialog for passing player
-    //todo test how foldign is going cause its f*cked up right now
+    //todo fix
     public void nextGuy() {
         int nextPlayer = currentplayer + 1;
 
@@ -563,8 +558,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                 nextPlayer++;
             }
         }
-
-
 
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         //sets message
@@ -589,7 +582,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     }
 
     //switches order or array list to ensure player 0 is the next player
-    //todo fix the idsplays of cards
+    //todo dont use in new code
     private void changePlayer() {
         Player p = players.remove(0); //switches order so its player 0's turn but next its gonna check if new player zero has foled
         players.add(p);
@@ -655,7 +648,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         return hand;
     }
 
-    //todo check logic and comment
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -705,7 +697,8 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         players.add(0, emptyPlayer);
         nextGuy();
     }
-  
+
+    //todo fix
     private int getNextGuy(int i) {
         int nextPlayer = i;
         if(i<players.size()-1){
@@ -716,7 +709,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         return nextPlayer;
     }
 
-    //todo set up winner's dialog
+    //todo winner
     public ArrayList<Player> getWinner() {
         ArrayList<Integer> best = new ArrayList<>();
         ArrayList<Player> winners = new ArrayList<>();
@@ -742,7 +735,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         return winners;
     }
 
-    //todo set up winner's dialog
+    //todo winner
     public String winnerTitle(ArrayList<Player> winners){
         String samIsTired="";
         for(int i = 0; i < winners.size(); i++){
@@ -757,8 +750,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         return samIsTired + " won!";
     }
   
-    //todo set up winner's dialog
-    //todo cards are not shifting properly at end folded hadns are just set to other stuff, should be fixed by second array list
+    //todo winner
     public void endGame(){
         ArrayList<Player> nute=this.getWinner();
         player1Card1View.setVisibility(View.VISIBLE);
