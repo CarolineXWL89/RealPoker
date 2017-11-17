@@ -338,7 +338,15 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         fold.setOnClickListener(this);
 
         callCheck = (Button) rootView.findViewById(R.id.call_check);
-        callCheck.setText("Call");
+
+        if(needsToCall())
+        {
+            callCheck.setText("Call");
+        }
+        else
+        {
+            callCheck.setText("Check");
+        }
         callCheck.setOnClickListener(this);
 
         //Creates other player's cards and sets visability to invisible
@@ -402,6 +410,15 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         showCard(player5Card2);
         player5Card2View.setVisibility(View.INVISIBLE);
     }
+
+    public boolean needsToCall()
+    {
+        return (players.get(0).getRaiseBy() > 0);
+    }
+
+
+
+
 
     //todo change button to reflect checking or calling also read through and understand/make changes as necessary
     //todo ask nicolo what the hell is going on
@@ -547,6 +564,8 @@ public class PokerGame extends Fragment implements View.OnClickListener {
             }
         }
 
+
+
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         //sets message
         final TextView question = new TextView(context);
@@ -578,6 +597,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
             p = players.remove(0);
             players.add(p);
         }
+
         wireWidgets();
     }
 
