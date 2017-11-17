@@ -23,7 +23,8 @@
         <activity android:name=".PokerGame" />
         <activity android:name=".Reference" />
         <activity android:name=".RealSettings" />
-        <activity android:name=".FinalScreen"></activity>
+        <activity android:name=".FinalScreen" />
+        <activity android:name=".PokerGame2"></activity>
     </application>
 
 </manifest>
