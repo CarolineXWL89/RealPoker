@@ -8,8 +8,8 @@
 
 
     <ScrollView
-        android:layout_width="583dp"
-        android:layout_height="237dp"
+        android:layout_width="0dp"
+        android:layout_height="475dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,6 +56,7 @@
                 app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/text_view_reference1" />
+
             <TextView
                 android:id="@+id/text_view_reference2"
                 android:layout_width="wrap_content"
@@ -67,6 +68,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference2" />
+
             <ImageView
                 android:id="@+id/image_view_reference3"
                 android:layout_width="500dp"
@@ -76,6 +78,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/text_view_reference2" />
+
             <TextView
                 android:id="@+id/text_view_reference3"
                 android:layout_width="wrap_content"
@@ -83,9 +86,11 @@
                 android:text="#3: Four of a Kind"
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
-                android:textStyle="bold"                app:layout_constraintEnd_toEndOf="@id/constraint"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference3" />
+
             <ImageView
                 android:id="@+id/image_view_reference4"
                 android:layout_width="500dp"
@@ -95,6 +100,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/text_view_reference3" />
+
             <TextView
                 android:id="@+id/text_view_reference4"
                 android:layout_width="wrap_content"
@@ -106,6 +112,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference4" />
+
             <ImageView
                 android:id="@+id/image_view_reference5"
                 android:layout_width="500dp"
@@ -115,6 +122,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/text_view_reference4" />
+
             <TextView
                 android:id="@+id/text_view_reference5"
                 android:layout_width="wrap_content"
@@ -126,6 +134,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference5" />
+
             <ImageView
                 android:id="@+id/image_view_reference6"
                 android:layout_width="500dp"
@@ -135,6 +144,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/text_view_reference5" />
+
             <TextView
                 android:id="@+id/text_view_reference6"
                 android:layout_width="wrap_content"
@@ -146,6 +156,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference6" />
+
             <ImageView
                 android:id="@+id/image_view_reference7"
                 android:layout_width="500dp"
@@ -155,6 +166,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/text_view_reference6" />
+
             <TextView
                 android:id="@+id/text_view_reference7"
                 android:layout_width="wrap_content"
@@ -166,6 +178,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference7" />
+
             <ImageView
                 android:id="@+id/image_view_reference8"
                 android:layout_width="500dp"
@@ -175,6 +188,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/text_view_reference7" />
+
             <TextView
                 android:id="@+id/text_view_reference8"
                 android:layout_width="wrap_content"
@@ -186,6 +200,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference8" />
+
             <ImageView
                 android:id="@+id/image_view_reference9"
                 android:layout_width="500dp"
@@ -195,6 +210,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/text_view_reference8" />
+
             <TextView
                 android:id="@+id/text_view_reference9"
                 android:layout_width="wrap_content"
@@ -206,6 +222,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference9" />
+
             <ImageView
                 android:id="@+id/image_view_reference10"
                 android:layout_width="500dp"
@@ -215,6 +232,7 @@
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/text_view_reference9" />
+
             <TextView
                 android:id="@+id/text_view_reference10"
                 android:layout_width="wrap_content"
