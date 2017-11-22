@@ -440,14 +440,14 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         else{
             if(players.get(0).getMonnies()<players.get(0).getRaiseBy()){
                 potMoney += players.get(0).getRaiseBy();
-                players.get(0).setMonnies(0);
+           //     players.get(0).setMonnies(0);
                 players.get(0).setRaiseBy(0);
                 round++;
                 nextGuy();
             }
             else {
                 potMoney += players.get(0).getRaiseBy();
-                players.get(0).setMonnies(players.get(0).getMonnies() - players.get(0).getRaiseBy());
+           //     players.get(0).setMonnies(players.get(0).getMonnies() - players.get(0).getRaiseBy());
                 players.get(0).setRaiseBy(0);
                 round++;
                 nextGuy();
@@ -483,7 +483,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                             players.get(3).setRaiseBy(players.get(3).getRaiseBy() + amountRaised);
                             players.get(4).setRaiseBy(players.get(4).getRaiseBy() + amountRaised);
                             players.get(5).setRaiseBy(players.get(5).getRaiseBy() + amountRaised);
-                            players.get(0).setMonnies(players.get(0).getMonnies() - amountRaised);
+                    //        players.get(0).setMonnies(players.get(0).getMonnies() - amountRaised);
                             hasRaised = true;
                             bet.setText("$" + potMoney);
                             player6View.setText(players.get(0).getName() + ": $" + players.get(0).getMonnies());
@@ -766,7 +766,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         Log.d(TAG, "endGame: "+winnerTitle(nute));//TODO: Make a text box saying who won;
         Toast.makeText(getActivity(), winnerTitle(nute), Toast.LENGTH_LONG).show();
             for(int i=0;i<nute.size();i++){
-                nute.get(i).setMonnies(nute.get(i).getMonnies()+potMoney/nute.size());
+             //   nute.get(i).setMonnies(nute.get(i).getMonnies()+potMoney/nute.size());
             }
             potMoney = 0;
 
