@@ -415,7 +415,15 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         wireWidgets();
         setUpCards();
         checkingHand();
-        //firstBlind();
+        setUpBlinds();
+    }
+
+    private void setUpBlinds() {
+        players[numOfPlayers-2].setBet(100);
+
+        players[numOfPlayers-1].setBet(200);
+        bet.setText("$"+potMoney);
+        //player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies()); todo figure out how to do this w/o resetting all player views
     }
 
     //todo set up
@@ -594,6 +602,13 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                 raiseBet();
                 break;
             case R.id.call_check:
+                if(needsToCall())
+                {
+                    call();
+                }
+                else{
+                    nextGuy();
+                }
                 //checkCall();
                 break;
             case R.id.fold:
@@ -601,6 +616,28 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
+    private void call() {
+        int cb=currentBet;
+        if (players[currentplayer].getMonnies()>currentBet)
+        {
+            players[currentplayer].setBet(cb);
+            potMoney+=cb;
+            bet.setText("$"+potMoney);
+            player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies());
+            nextGuy();
+        }
+        else {
+            Toast.makeText(context, "you have gone all in", Toast.LENGTH_SHORT).show();
+            players[currentplayer].setBet(players[currentplayer].getMonnies());
+            potMoney+=players[currentplayer].getMonnies();
+            bet.setText("$"+potMoney);
+            player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies());
+            nextGuy();
+
+        }
+    }
+
     public void raiseBet()
     {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
@@ -634,18 +671,6 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                     else{
                         Toast.makeText(getActivity(), "You don't have that much money", Toast.LENGTH_SHORT).show();
                     }
-
-                    /*
-                                try{
-                                    if(Integer.parseInt(input.getText().toString())>0 &&(Integer.parseInt(input.getText().toString())<players.get(0).getMonnies())){
-
-                                        amountRaised=Integer.parseInt(input.getText().toString());
-                                        potMoney+=amountRaised;
-                                        players.get(0).setMonnies(players.get(0).getMonnies()-amountRaised);
-                                        bet.setText("$"+potMoney);
-                                        player6View.setText(players.get(0).getName()+": $"+players.get(0).getMonnies());
-                                    nextGuy();}
-                    master*/
 
                 } catch (NumberFormatException e) {
                     Toast.makeText(getActivity(), "Please enter a number", Toast.LENGTH_SHORT).show();
@@ -702,13 +727,15 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
     }
 
-    private void needsToCall() {
+    private boolean needsToCall() {
         if(currentBet>players[currentplayer].getBet()){
             callCheck.setText("Call");
+            return true;
         }
         else
         {
             callCheck.setText("Check");
+            return  false;
         }
     }
 

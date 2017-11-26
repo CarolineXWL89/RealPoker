@@ -548,7 +548,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                 nextPlayer = 0;
             } else if(nextPlayer == currentplayer){ //check if everyone else folded
                 Log.d(TAG, "nextGuy: everyoen else has folded");
-                Toast.makeText(context, "Everyone else has folded, you win!",Toast.LENGTH_LONG);
+                Toast.makeText(context, "Everyone else has folded, you win!",Toast.LENGTH_LONG).show();
                 ArrayList<Player> p = new ArrayList<>();
                 p.add(players.get(currentplayer));
                 winnerTitle(p);
