@@ -50,7 +50,8 @@ public class Player {
         this.name = name;
     }
 
-    public void setMonnies(int monnies) {
+    public void subtractMonnies(int monnies) {
+
         this.monnies = monnies;
     }
 
@@ -64,6 +65,7 @@ public class Player {
 
     public void setBet(int bet) {
         this.bet = bet;
+        monnies-=bet;
     }
   
     public void setHasFolded(boolean fold){
@@ -71,7 +73,7 @@ public class Player {
         hasFolded = fold;
     }
 
-    public boolean isHasFolded(){
+    public boolean hasFolded(){
         return hasFolded;
     }
 

@@ -25,13 +25,14 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
     private ArrayList<Card> cardsOnTheTable;
     private ArrayList<Card> deck;
+
     private int numOfPlayers, currentplayer;
     private int potMoney;
     private Player[] players;
     private ArrayList<Card> emptyHand = new ArrayList<>();
     private TextView player1View, player2View, player3View, player4View, player5View, player6View, bet;
     private boolean hasRaised = false;
-    private int round, turn;
+    private int round, turn, currentBet;
     private Player emptyPlayer;
     private Card myCard1, myCard2, tableCard1, tableCard2, tableCard3, tableCard4, tableCard5;
     private ImageView myCard1View, myCard2View, tableCard1View, tableCard2View, tableCard3View, tableCard4View, tableCard5View,
@@ -68,6 +69,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
         deck = new ArrayList<>();
         currentplayer = 0;
+        currentBet=0;
         context = getContext();
 
         sharedPref = context.getSharedPreferences(
@@ -79,6 +81,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         emptyHand.add(new Card(0, "c"));
 
         emptyPlayer = new Player("", 0, emptyHand);
+        emptyPlayer.setHasFolded(true);
         players = new Player[6];
 
         createDeck();
@@ -412,7 +415,15 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         wireWidgets();
         setUpCards();
         checkingHand();
-        //firstBlind();
+        setUpBlinds();
+    }
+
+    private void setUpBlinds() {
+        players[numOfPlayers-2].setBet(100);
+
+        players[numOfPlayers-1].setBet(200);
+        bet.setText("$"+potMoney);
+        //player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies()); todo figure out how to do this w/o resetting all player views
     }
 
     //todo set up
@@ -588,9 +599,16 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.raise:
-                //raiseBet();
+                raiseBet();
                 break;
             case R.id.call_check:
+                if(needsToCall())
+                {
+                    call();
+                }
+                else{
+                    nextGuy();
+                }
                 //checkCall();
                 break;
             case R.id.fold:
@@ -598,5 +616,158 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
+    private void call() {
+        int cb=currentBet;
+        if (players[currentplayer].getMonnies()>currentBet)
+        {
+            players[currentplayer].setBet(cb);
+            potMoney+=cb;
+            bet.setText("$"+potMoney);
+            player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies());
+            nextGuy();
+        }
+        else {
+            Toast.makeText(context, "you have gone all in", Toast.LENGTH_SHORT).show();
+            players[currentplayer].setBet(players[currentplayer].getMonnies());
+            potMoney+=players[currentplayer].getMonnies();
+            bet.setText("$"+potMoney);
+            player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies());
+            nextGuy();
+
+        }
+    }
+
+    public void raiseBet()
+    {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        final EditText input = new EditText(getActivity());
+        // set title
+        alertDialogBuilder.setTitle("Input Raise amount");
+        alertDialogBuilder.setView(input);
+        alertDialogBuilder.setCancelable(true).setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            int amountRaised;
+            public void onClick(DialogInterface dialog, int id) {
+
+                try {
+                    if (Integer.parseInt(input.getText().toString()) > 0 && (Integer.parseInt(input.getText().toString()) <= players[currentplayer].getMonnies())) {
+                        amountRaised = Integer.parseInt(input.getText().toString());
+                        //players[currentplayer].setBet(amountRaised);
+                        if(amountRaised<currentBet){
+                            Toast.makeText(getActivity(), "Please enter a number larger than the bet", Toast.LENGTH_SHORT).show();
+
+                        }
+                        else{
+                            potMoney += amountRaised;
+                            players[currentplayer].setBet(amountRaised);
+                            currentBet=amountRaised;
+                            //players[currentplayer].subtractMonnies(amountRaised);
+                            hasRaised = true;
+                            bet.setText("$" + potMoney);
+                            player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies());
+                            nextGuy();
+                        }
+                    }
+                    else{
+                        Toast.makeText(getActivity(), "You don't have that much money", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getActivity(), "Please enter a number", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+
+    }
+
+    public void nextGuy()
+    {
+            if(checkIfEveryoneElseFolded())
+            {
+                Log.d(TAG, "nextGuy: everyone dipped");
+                Toast.makeText(context, "everyone else has dipped", Toast.LENGTH_SHORT).show();
+                //endRound(); todo create method to end round for the case that everyone has folded
+            }
+            else {
+                currentplayer=nextNonFoldedGuy();
+                //changePlayerView();
+
+
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                //sets message
+                final TextView question = new TextView(context);
+                //todo change size and style to look good
+                question.setText("Are you "+ players[currentplayer].getName()+"?");
+                // set title
+                alertDialogBuilder.setTitle(players[currentplayer].getName() + "'s turn. Please pass to "+players[currentplayer].getName());
+                alertDialogBuilder.setView(question);
+
+                alertDialogBuilder.setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        needsToCall();
+                        changePlayerView();
+                    }
+                });
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                myCard1View.setVisibility(View.INVISIBLE);
+                myCard2View.setVisibility(View.INVISIBLE);
+                // show it
+                alertDialog.show();
+
+
+
+            }
+
+    }
+
+    private boolean needsToCall() {
+        if(currentBet>players[currentplayer].getBet()){
+            callCheck.setText("Call");
+            return true;
+        }
+        else
+        {
+            callCheck.setText("Check");
+            return  false;
+        }
+    }
+
+    public boolean checkIfEveryoneElseFolded()
+    {
+        int pplNotFolded=0;
+        for (Player p: players) {
+            if (!p.hasFolded()) {
+                pplNotFolded++;
+            }
+        }
+        return (pplNotFolded<2);
+    }
+    public int nextNonFoldedGuy()
+    {
+        int n=whosNext(currentplayer);
+        while(players[n].hasFolded()) {
+            n=whosNext(n);
+        }
+        return n;
+    }
+    public int whosNext(int currentGuy)
+    {
+        int n=currentGuy;
+        if (n == 5) {
+            n = 0;
+        } else {
+            n++;
+        }
+        return n;
+
+    }
+
 
 }
