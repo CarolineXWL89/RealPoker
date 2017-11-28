@@ -117,15 +117,12 @@ public class PlayPoker extends AppCompatActivity
         Fragment currentFragment = null;
 
         if (id == R.id.nav_game) {
-            //this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
             currentFragment = currentGame;
 
         } else if (id == R.id.nav_reference) {
             currentFragment = new Reference();
-            //this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
 
         } else if (id == R.id.nav_settings) {
-            //this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
             //currentFragment = new RealSettings();
 
         }
