@@ -48,18 +48,18 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     }
 
     //TODO Overall:
-    //TODO #1 Create raise, fold, call/check and nextguy
+    //TODO #1 Create fold, call/check, blinds
         //todo make sure monnies are updated when a player folds
         //todo when player folds check to make sure that he isn;t the num-1 player to fold or if he is set the last player to automatically win
         //todo write blind methods by switching players
-    //todo #3 set up end screen with options for new game, change players, or im done
-    //todo #4 have settings use shared preferences so you can delete players
-    //todo #5 ui
+    //todo #2 set up end screen with options for new game and im done
+    //todo #3 have settings use shared preferences so you can delete players OR change type of poker
+    //todo #4 ui
         //todo themes
         //todo fix orientationa nd loading for fragments
         //todo fix icons on side
-        //todo add textedits for blah raised or folded/fix contraints
-
+        //todo add textedits for blah raised or folded/fix constraints
+        //todo have refrence landscape
 
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
@@ -91,7 +91,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         return rootView;
     }
 
-    private void setUpCards(){
+    private void setUpCards() {
         //Sets the table cards but doesnt show them
         tableCard1View = (ImageView) rootView.findViewById(R.id.table_card_1);
         tableCard1View.setContentDescription(tableCard1.getCardNumber() + " of " + tableCard1.getSuitName());
@@ -408,7 +408,6 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         }
     }
 
-    //todo call blinds to start the game
     private void startGame() {
         addPlayersToSharedPref();
         createCards();
@@ -424,49 +423,6 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         players[numOfPlayers-1].setBet(200);
         bet.setText("$"+potMoney);
         //player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies()); todo figure out how to do this w/o resetting all player views
-    }
-
-    //todo set up
-    private void firstBlind() {
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        final TextView question = new TextView(context);
-
-        // set title
-        alertDialogBuilder.setTitle("You are first blind");
-
-        alertDialogBuilder.setView(question);
-        question.setText("You bet $100");
-
-        alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //todo call raise for first blind and change players and call second blind
-            }
-        });
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        // show it
-        alertDialog.show();
-    }
-    //todo set up
-    private void secondBlind(){
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        final TextView question = new TextView(context);
-
-        // set title
-        alertDialogBuilder.setTitle("You are second blind");
-
-        alertDialogBuilder.setView(question);
-        question.setText("You bet $200");
-
-        alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //todo call raise for second blind and change players then start game at third person with call/check
-            }
-        });
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        // show it
-        alertDialog.show();
     }
 
     private void addPlayersToSharedPref() {
@@ -594,7 +550,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         tableCard5 = cardsOnTheTable.get(4);
     }
 
-    //todo write raise bet check call and player folded
+    //todo write check/call and player folded
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -638,8 +594,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void raiseBet()
-    {
+    public void raiseBet() {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         final EditText input = new EditText(getActivity());
         // set title
@@ -686,8 +641,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
     }
 
-    public void nextGuy()
-    {
+    public void nextGuy() {
             if(checkIfEveryoneElseFolded())
             {
                 Log.d(TAG, "nextGuy: everyone dipped");
@@ -739,8 +693,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         }
     }
 
-    public boolean checkIfEveryoneElseFolded()
-    {
+    public boolean checkIfEveryoneElseFolded() {
         int pplNotFolded=0;
         for (Player p: players) {
             if (!p.hasFolded()) {
@@ -749,16 +702,16 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         }
         return (pplNotFolded<2);
     }
-    public int nextNonFoldedGuy()
-    {
+
+    public int nextNonFoldedGuy() {
         int n=whosNext(currentplayer);
         while(players[n].hasFolded()) {
             n=whosNext(n);
         }
         return n;
     }
-    public int whosNext(int currentGuy)
-    {
+
+    public int whosNext(int currentGuy) {
         int n=currentGuy;
         if (n == 5) {
             n = 0;
@@ -768,6 +721,5 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         return n;
 
     }
-
 
 }

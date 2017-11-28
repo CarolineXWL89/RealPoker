@@ -46,13 +46,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     public PokerGame() {
     }
 
-    //TODO Overall:
-        //TODO #1 debug raise and fold w/nic (also check why flipping over at end is so f*cked up)
-        //TODO #2 fix call check method and ask nic whats up with it w/nic
-        //TODO #3 include blinds (make one method call for first and second) NOtfiy player they are blind before just screwing them
-        //TODO #4 FIX SHARED PREFRENCES so you can keep players all the time (ie keep them when app is closed and restarts)
-        //todo #5 set up end screen with options fro new game, change players, im doen or change certain players
-        //todo #6 have settings use shared preferences so you can delete players
+
 
 
     public View onCreateView(LayoutInflater inflater,
@@ -455,7 +449,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         }
     }
 
-    //todo fix
     //lets player 0 raise
     public void raiseBet() {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
@@ -490,19 +483,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
                             nextGuy();
                         }
                     }
-
-                    /*
-                                try{
-                                    if(Integer.parseInt(input.getText().toString())>0 &&(Integer.parseInt(input.getText().toString())<players.get(0).getMonnies())){
-
-                                        amountRaised=Integer.parseInt(input.getText().toString());
-                                        potMoney+=amountRaised;
-                                        players.get(0).setMonnies(players.get(0).getMonnies()-amountRaised);
-                                        bet.setText("$"+potMoney);
-                                        player6View.setText(players.get(0).getName()+": $"+players.get(0).getMonnies());
-                                    nextGuy();}
-                    master*/
-
                 } catch (NumberFormatException e) {
                     Toast.makeText(getActivity(), "Please enter a number", Toast.LENGTH_SHORT).show();
 
