@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     //TODO Overall:
     //TODO #1 Create fold, call/check, blinds
         //todo make sure monnies are updated when a player folds
-        //todo when player folds check to make sure that he isn;t the num-1 player to fold or if he is set the last player to automatically win
+        //todo when player folds check to make sure that he isn't the num-1 player to fold or if he is set the last player to automatically win
         //todo write blind methods by switching players
     //todo #2 set up end screen with options for new game and im done
     //todo #3 have settings use shared preferences so you can delete players OR change type of poker
@@ -110,6 +111,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
         createOtherPlayersCards();
         changePlayerView();
+
     }
 
     private void createOtherPlayersCards() {
@@ -418,13 +420,42 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     }
 
     private void setUpBlinds() {
-        players[numOfPlayers-2].setBet(100);
+        int sb=100;
+        int bb=200;
 
-        players[numOfPlayers-1].setBet(200);
+        players[numOfPlayers-2].setBet(sb);
+        players[numOfPlayers-1].setBet(bb);
+        currentBet=bb;
+        potMoney=sb+bb;
         bet.setText("$"+potMoney);
+
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+
+        final TextView t = new TextView(context);
+
+        //todo change size and style to look good
+
+        t.setText(players[numOfPlayers-2].getName()+ " has the small blind. \n "+players[numOfPlayers-1].getName()+ " has the big blind. \n "+"It is "+ players[0].getName() +"'s turn");
+        // set title
+        t.setTextSize(30);
+        t.setGravity(Gravity.CENTER);
+        alertDialogBuilder.setView(t);
+        alertDialogBuilder.setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                changePlayerView();
+
+            }
+        });
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        myCard1View.setVisibility(View.INVISIBLE);
+        myCard2View.setVisibility(View.INVISIBLE);
+
+        // show it
+        alertDialog.show();
+
         //player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies()); todo figure out how to do this w/o resetting all player views
     }
-
     private void addPlayersToSharedPref() {
         //adds all players to shared preferences to be used later
         editor.putBoolean("hasPlayers?", true);
@@ -577,8 +608,9 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         int cb=currentBet;
         if (players[currentplayer].getMonnies()>currentBet)
         {
-            players[currentplayer].setBet(cb);
-            potMoney+=cb;
+            potMoney+=cb-players[currentplayer].getBet();
+            players[currentplayer].setBet(cb-players[currentplayer].getBet());
+
             bet.setText("$"+potMoney);
             player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies());
             nextGuy();
@@ -721,5 +753,6 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         return n;
 
     }
+
 
 }
