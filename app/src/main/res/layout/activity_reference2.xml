@@ -10,6 +10,7 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,33 +30,35 @@
 
             <ImageView
                 android:id="@+id/image_view_reference_1"
+                android:layout_marginTop="15dp"
                 android:layout_width="246dp"
                 android:layout_height="75dp"
                 android:src="@drawable/royal_flush"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toTopOf="@id/constraint" />
 
             <TextView
                 android:id="@+id/text_view_reference1"
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="23dp"
-                android:layout_marginTop="15dp"
                 android:text="#1: Royal Flush"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.097"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.15"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference_1" />
 
             <ImageView
                 android:id="@+id/image_view_reference2"
+                android:layout_marginTop="15dp"
                 android:layout_width="246dp"
                 android:layout_height="75dp"
-                android:layout_marginStart="8dp"
                 android:src="@drawable/straight_flush"
+                app:layout_constraintHorizontal_bias="0.65"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toEndOf="@+id/image_view_reference_1"
                 app:layout_constraintTop_toTopOf="@id/constraint" />
@@ -65,181 +68,205 @@
                 android:layout_width="wrap_content"
                 android:layout_height="23dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="15dp"
                 android:text="#2: Straight Flush"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.645"
+                app:layout_constraintHorizontal_bias="0.65"
                 app:layout_constraintStart_toEndOf="@+id/text_view_reference1"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference2" />
 
             <ImageView
-                android:id="@+id/image_view_reference3"
-                android:layout_width="235dp"
-                android:layout_height="45dp"
+                android:id="@+id/image_view_reference_3"
+                android:layout_width="246dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/four_of_a_kind"
+                app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="@id/constraint"
-                tools:layout_editor_absoluteY="247dp" />
+                app:layout_constraintTop_toBottomOf="@+id/text_view_reference1" />
 
             <TextView
                 android:id="@+id/text_view_reference3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="#3: Four of a Kind"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:text="#3: Four of a Kind "
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.08"
+                app:layout_constraintHorizontal_bias="0.103"
                 app:layout_constraintStart_toStartOf="@id/constraint"
-                app:layout_constraintTop_toBottomOf="@id/image_view_reference3" />
+                app:layout_constraintTop_toBottomOf="@+id/image_view_reference_3" />
 
             <ImageView
                 android:id="@+id/image_view_reference4"
-                android:layout_width="500dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/full_house"
+                android:layout_width="246dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/straight_flush"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintStart_toStartOf="@id/constraint"
-                app:layout_constraintTop_toBottomOf="@id/text_view_reference3" />
+                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintStart_toEndOf="@+id/image_view_reference_3"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_reference2" />
 
             <TextView
                 android:id="@+id/text_view_reference4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="#4: Full House"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:text="#4: Straight Flush"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintStart_toEndOf="@+id/text_view_reference3"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference4" />
 
             <ImageView
-                android:id="@+id/image_view_reference5"
-                android:layout_width="500dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
+                android:id="@+id/image_view_reference_5"
+                android:layout_width="246dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/flush"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="@id/constraint"
-                app:layout_constraintTop_toBottomOf="@id/text_view_reference4" />
+                app:layout_constraintTop_toBottomOf="@+id/text_view_reference3" />
 
             <TextView
                 android:id="@+id/text_view_reference5"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="#5: Flush"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:text="#5: Flush "
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintHorizontal_bias="0.103"
                 app:layout_constraintStart_toStartOf="@id/constraint"
-                app:layout_constraintTop_toBottomOf="@id/image_view_reference5" />
+                app:layout_constraintTop_toBottomOf="@+id/image_view_reference_5" />
 
             <ImageView
                 android:id="@+id/image_view_reference6"
-                android:layout_width="500dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="246dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/straight"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintStart_toStartOf="@id/constraint"
-                app:layout_constraintTop_toBottomOf="@id/text_view_reference5" />
+                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintStart_toEndOf="@+id/image_view_reference_5"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_reference4" />
 
             <TextView
                 android:id="@+id/text_view_reference6"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
                 android:text="#6: Straight"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintStart_toEndOf="@+id/text_view_reference5"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference6" />
 
             <ImageView
-                android:id="@+id/image_view_reference7"
-                android:layout_width="500dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
+                android:id="@+id/image_view_reference_7"
+                android:layout_width="246dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/three_of_a_kind"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="@id/constraint"
-                app:layout_constraintTop_toBottomOf="@id/text_view_reference6" />
+                app:layout_constraintTop_toBottomOf="@+id/text_view_reference5" />
 
             <TextView
                 android:id="@+id/text_view_reference7"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="#7: Three of a Kind"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:text="#7: Three of a Kind "
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintHorizontal_bias="0.103"
                 app:layout_constraintStart_toStartOf="@id/constraint"
-                app:layout_constraintTop_toBottomOf="@id/image_view_reference7" />
+                app:layout_constraintTop_toBottomOf="@+id/image_view_reference_7" />
 
             <ImageView
                 android:id="@+id/image_view_reference8"
-                android:layout_width="500dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="246dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/two_pairs"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintStart_toStartOf="@id/constraint"
-                app:layout_constraintTop_toBottomOf="@id/text_view_reference7" />
+                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintStart_toEndOf="@+id/image_view_reference_7"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_reference6" />
 
             <TextView
                 android:id="@+id/text_view_reference8"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
                 android:text="#8: Two Pairs"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintStart_toEndOf="@+id/text_view_reference7"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference8" />
 
             <ImageView
-                android:id="@+id/image_view_reference9"
-                android:layout_width="500dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
+                android:id="@+id/image_view_reference_9"
+                android:layout_width="246dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/one_pair"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="@id/constraint"
-                app:layout_constraintTop_toBottomOf="@id/text_view_reference8" />
+                app:layout_constraintTop_toBottomOf="@+id/text_view_reference7" />
 
             <TextView
                 android:id="@+id/text_view_reference9"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="#9: One Pair"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:text="#9: One Pair "
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
+                app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="@id/constraint"
-                app:layout_constraintTop_toBottomOf="@id/image_view_reference9" />
+                app:layout_constraintTop_toBottomOf="@+id/image_view_reference_9" />
 
             <ImageView
                 android:id="@+id/image_view_reference10"
-                android:layout_width="500dp"
-                android:layout_height="100dp"
+                android:layout_width="246dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/high_card"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.347"
-                app:layout_constraintStart_toStartOf="@id/constraint"
-                app:layout_constraintTop_toBottomOf="@id/text_view_reference9" />
+                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintStart_toEndOf="@+id/image_view_reference_9"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_reference8" />
 
             <TextView
                 android:id="@+id/text_view_reference10"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="#10: High Card"
+                android:layout_height="23dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="10dp"
+                android:text="#8: High Card"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintStart_toStartOf="@id/constraint"
+                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintStart_toEndOf="@+id/text_view_reference9"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference10" />
 
         </android.support.constraint.ConstraintLayout>

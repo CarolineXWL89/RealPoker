@@ -44,30 +44,35 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
     private Button callCheck, fold, raise;
+    private boolean newGame;
 
     public PokerGame2() {
+        newGame = true;
     }
 
     //TODO Overall:
-    //TODO #1 Create fold, call/check, blinds
-        //todo make sure monnies are updated when a player folds
-        //todo when player folds check to make sure that he isn't the num-1 player to fold or if he is set the last player to automatically win
-        //todo write blind methods by switching players
-    //todo #2 set up end screen with options for new game and im done
-    //todo #3 have settings use shared preferences so you can delete players OR change type of poker
-    //todo #4 ui
-        //todo themes
-        //todo fix orientationa nd loading for fragments
-        //todo fix icons on side
-        //todo add textedits for blah raised or folded/fix constraints
-        //todo have refrence landscape
+    //TODO #1 Create/Debug fold, call/check, end turn
+        //todo make sure monnies are updated when a player folds (3 min)
+        //todo when player folds check to make sure that he isn't the num-1 player to fold or if he is set the last player to automatically win (i think this already exists)
+    //todo #2 set up end screen with options for new game and im done (30 min)
+    //todo #3 ui
+        //todo add textedits for blah raised or folded + fix constraints overall on that screen (30-45 min)
 
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         rootView = inflater.inflate(R.layout.activity_poker_game, container, false);
+        //if(newGame){ doesnt wor see below
+            newGame();
 
+        //} todo need a better else, right now saved instance state takes us to what XML files have saved...
+        //todo use saved instance state to save EVERYTHING and retrieve it all when we return to a poker game...
+
+        return rootView;
+    }
+
+    private void newGame() {
         deck = new ArrayList<>();
         currentplayer = 0;
         currentBet=0;
@@ -88,8 +93,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         createDeck();
         createCardsOnTheTable();
         areNewPlayers(); //either creates new players or gets the old ones then starts the game
-
-        return rootView;
+        newGame = false;
     }
 
     private void setUpCards() {
@@ -754,5 +758,8 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
     }
 
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 }

@@ -54,7 +54,6 @@ public class Player {
 
         this.monnies = monnies;
     }
-
     public void setHand(ArrayList<Card> hand) {
         this.hand = hand;
     }
