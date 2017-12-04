@@ -13,9 +13,10 @@ public class Player {
     private int monnies;
     private ArrayList<Card> hand;
     private int raiseBy = 0;
-    private boolean hasFolded;
+    private boolean hasFolded,hasCalled;
     ArrayList<Card> emptyHand = new ArrayList<>();
     private int bet;
+
 
 
     public Player(String name, int monnies, ArrayList<Card> hand) {
@@ -62,9 +63,9 @@ public class Player {
         return bet;
     }
 
-    public void setBet(int bet) {
-        this.bet = bet;
-        monnies-=bet;
+    public void setBet(int newBetAmount) {
+        monnies-=(newBetAmount-bet);
+        bet=newBetAmount;
     }
   
     public void setHasFolded(boolean fold){
@@ -76,8 +77,11 @@ public class Player {
         return hasFolded;
     }
 
+    public boolean hasCalled() {
+        return hasCalled;
+    }
 
-
-
-
+    public void setHasCalled(boolean hasCalled) {
+        this.hasCalled = hasCalled;
+    }
 }

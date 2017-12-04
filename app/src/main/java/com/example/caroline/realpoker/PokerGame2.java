@@ -76,6 +76,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         deck = new ArrayList<>();
         currentplayer = 0;
         currentBet=0;
+        round=0;
         context = getContext();
 
         sharedPref = context.getSharedPreferences(
@@ -494,8 +495,14 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
             for (int i = 1; i < 7; i++) {
                 String name = sharedPref.getString("Player " + i, "Player " + i);
                 int monney = sharedPref.getInt("Player " + i + " Monnies", 10000);
+
                 Player p = new Player(name, monney, getHand());
                 players[i-1]=p;
+                if(name=="")
+                {
+                    players[i-1].setHasFolded(true);
+                }
+
             }
             startGame();
         } else { //otherwise create new ones
@@ -603,17 +610,23 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                 //checkCall();
                 break;
             case R.id.fold:
-                //playerFolded();
+                fold();
                 break;
         }
     }
 
+    private void fold() {
+        players[currentplayer].setHasFolded(true);
+        nextGuy();
+    }
+
     private void call() {
         int cb=currentBet;
+        players[currentplayer].setHasCalled(true);
         if (players[currentplayer].getMonnies()>currentBet)
         {
             potMoney+=cb-players[currentplayer].getBet();
-            players[currentplayer].setBet(cb-players[currentplayer].getBet());
+            players[currentplayer].setBet(cb);
 
             bet.setText("$"+potMoney);
             player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies());
@@ -685,7 +698,13 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                 //endRound(); todo create method to end round for the case that everyone has folded
             }
             else {
+                if(players[currentplayer].hasCalled())
+                {
+                    endRound();
+                }
+
                 currentplayer=nextNonFoldedGuy();
+
                 //changePlayerView();
 
 
@@ -717,6 +736,38 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
     }
 
+    private void endRound() {
+        for(int i=0; i<players.length; i++)
+        {
+            players[i].setBet(0);
+        }
+        currentBet=0;
+        if(round==0) {
+            showCard(cardsOnTheTable.get(0));
+            showCard(cardsOnTheTable.get(1));
+            showCard(cardsOnTheTable.get(2));
+        }
+        else if (round==1){
+            showCard(cardsOnTheTable.get(4));
+        }
+        else if(round==2){
+            showCard(cardsOnTheTable.get(5));
+        }
+        else if(round==3)
+        {
+            endGame(); //todo copy endgame if it works in other class, else write
+        }
+        round++;
+    }
+
+    private void endGame() {
+        for(int i=0; i<players.length; i++)
+        {
+            editor.putInt("Player "+currentplayer+ "Monnies", players[currentplayer].getMonnies());
+            newGame();
+        }
+    }
+
     private boolean needsToCall() {
         if(currentBet>players[currentplayer].getBet()){
             callCheck.setText("Call");
@@ -741,7 +792,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
     public int nextNonFoldedGuy() {
         int n=whosNext(currentplayer);
-        while(players[n].hasFolded()) {
+        while(players[n].hasFolded()|| players[n].getHand().get(0).getNumber()==0) {
             n=whosNext(n);
         }
         return n;
