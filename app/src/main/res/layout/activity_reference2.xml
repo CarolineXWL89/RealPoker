@@ -261,7 +261,7 @@
                 android:layout_height="23dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="10dp"
-                android:text="#8: High Card"
+                android:text="#10: High Card"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"

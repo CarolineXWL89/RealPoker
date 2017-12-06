@@ -76,8 +76,8 @@ public class Player {
         return hasFolded;
     }
 
-
-
-
-
+    @Override
+    public String toString() {
+        return name +"\n $" + monnies;
+    }
 }

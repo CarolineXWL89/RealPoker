@@ -424,7 +424,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     }
 
     private void setUpBlinds() {
-        int sb=100;
+        int sb =100;
         int bb=200;
 
         players[numOfPlayers-2].setBet(sb);
@@ -460,6 +460,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
         //player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies()); todo figure out how to do this w/o resetting all player views
     }
+
     private void addPlayersToSharedPref() {
         //adds all players to shared preferences to be used later
         editor.putBoolean("hasPlayers?", true);
