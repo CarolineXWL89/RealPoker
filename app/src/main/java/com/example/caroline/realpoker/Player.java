@@ -67,6 +67,10 @@ public class Player {
         monnies-=(newBetAmount-bet);
         bet=newBetAmount;
     }
+    public void resetBet()
+    {
+        bet=0;
+    }
   
     public void setHasFolded(boolean fold){
         hand = emptyHand;
