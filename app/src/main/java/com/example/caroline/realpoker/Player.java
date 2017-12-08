@@ -13,13 +13,14 @@ public class Player {
     private int monnies;
     private ArrayList<Card> hand;
     private int raiseBy = 0;
-    private boolean hasFolded,hasCalled;
+    private boolean hasFolded,hasCalled, hasChecked;
     ArrayList<Card> emptyHand = new ArrayList<>();
     private int bet;
 
 
 
     public Player(String name, int monnies, ArrayList<Card> hand) {
+        hasChecked=false;
         this.name = name;
         this.monnies = monnies;
         this.hand = hand;
@@ -64,8 +65,8 @@ public class Player {
     }
 
     public void setBet(int newBetAmount) {
-        monnies-=(newBetAmount-bet);
-        bet=newBetAmount;
+        monnies-=(newBetAmount);
+        bet=newBetAmount+bet;
     }
     public void resetBet()
     {
@@ -87,5 +88,9 @@ public class Player {
 
     public void setHasCalled(boolean hasCalled) {
         this.hasCalled = hasCalled;
+    }
+
+    public boolean hasChecked() {
+        return hasChecked;
     }
 }

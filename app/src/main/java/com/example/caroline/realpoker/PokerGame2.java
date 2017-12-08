@@ -607,6 +607,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                     call();
                 }
                 else{
+                    players[currentplayer].setHasCalled(true);
                     nextGuy();
                 }
                 //checkCall();
@@ -649,14 +650,14 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         final EditText input = new EditText(getActivity());
         // set title
-        alertDialogBuilder.setTitle("Input Raise amount");
+        alertDialogBuilder.setTitle("The current bet is "+currentBet+"\n input the amount you want to raise to");
         alertDialogBuilder.setView(input);
         alertDialogBuilder.setCancelable(true).setPositiveButton("ok", new DialogInterface.OnClickListener() {
             int amountRaised;
             public void onClick(DialogInterface dialog, int id) {
 
                 try {
-                    if (Integer.parseInt(input.getText().toString()) > 0 && (Integer.parseInt(input.getText().toString()) <= players[currentplayer].getMonnies())) {
+                    if ((Integer.parseInt(input.getText().toString()) <= players[currentplayer].getMonnies())) {
                         amountRaised = Integer.parseInt(input.getText().toString());
                         //players[currentplayer].setBet(amountRaised);
                         if(amountRaised<currentBet){
@@ -718,32 +719,34 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                 {
                     endRound();
                 }
+                else {
 
 
-                //changePlayerView();
+                    //changePlayerView();
 
 
-                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-                //sets message
-                final TextView question = new TextView(context);
-                //todo change size and style to look good
-                question.setText("Are you "+ players[currentplayer].getName()+"?");
-                // set title
-                alertDialogBuilder.setTitle(players[currentplayer].getName() + "'s turn. Please pass to "+players[currentplayer].getName());
-                alertDialogBuilder.setView(question);
+                    final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    //sets message
+                    final TextView question = new TextView(context);
+                    //todo change size and style to look good
+                    question.setText("Are you " + players[currentplayer].getName() + "?");
+                    // set title
+                    alertDialogBuilder.setTitle(players[currentplayer].getName() + "'s turn. Please pass to " + players[currentplayer].getName());
+                    alertDialogBuilder.setView(question);
 
-                alertDialogBuilder.setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        needsToCall();
-                        changePlayerView();
-                    }
-                });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                myCard1View.setVisibility(View.INVISIBLE);
-                myCard2View.setVisibility(View.INVISIBLE);
-                // show it
-                alertDialog.show();
+                    alertDialogBuilder.setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            needsToCall();
+                            changePlayerView();
+                        }
+                    });
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    myCard1View.setVisibility(View.INVISIBLE);
+                    myCard2View.setVisibility(View.INVISIBLE);
+                    // show it
+                    alertDialog.show();
+                }
 
 
 
@@ -775,7 +778,10 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         {
             endGame(); //todo copy endgame if it works in other class, else write
         }
+
         round++;
+        currentplayer=5;
+        nextGuy();
     }
 
     private void endGame() {
