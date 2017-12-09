@@ -13,7 +13,7 @@ public class Player {
     private int monnies;
     private ArrayList<Card> hand;
     private int raiseBy = 0;
-    private boolean hasFolded,hasCalled;
+    private boolean hasFolded,hasCalled, hasChecked;
     ArrayList<Card> emptyHand = new ArrayList<>();
     private int bet;
     private String sharedPref;
@@ -21,6 +21,7 @@ public class Player {
 
 
     public Player(String name, int monnies, ArrayList<Card> hand) {
+        hasChecked=false;
         this.name = name;
         this.monnies = monnies;
         this.hand = hand;
@@ -65,8 +66,12 @@ public class Player {
     }
 
     public void setBet(int newBetAmount) {
-        monnies-=(newBetAmount-bet);
-        bet=newBetAmount;
+        monnies-=(newBetAmount);
+        bet=newBetAmount+bet;
+    }
+    public void resetBet()
+    {
+        bet=0;
     }
   
     public void setHasFolded(boolean fold){
@@ -95,5 +100,9 @@ public class Player {
 
     public void setSharedPref(String sharedPref) {
         this.sharedPref = sharedPref;
+    }
+
+    public boolean hasChecked() {
+        return hasChecked;
     }
 }

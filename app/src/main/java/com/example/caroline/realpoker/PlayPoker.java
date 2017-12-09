@@ -122,6 +122,7 @@ public class PlayPoker extends AppCompatActivity
                     .commit();
         }
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
