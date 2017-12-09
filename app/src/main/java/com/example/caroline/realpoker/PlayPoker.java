@@ -26,6 +26,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextClock;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.nio.charset.MalformedInputException;
@@ -87,25 +89,44 @@ public class PlayPoker extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.play_poker, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        Fragment currentFragment = null;
+        if(currentFragment.getClass() == PokerGame2.class ){
+            areYouSure(item.getItemId());
+        } else {
+            leave(item.getItemId());
+        }
+        return true;
+    }
 
+    private void areYouSure(int id) {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        final TextView input = new TextView(this);
+        input.setText("Leaving now will lose progress for this hand. Do you want to leave?");
+        // set title
+        alertDialogBuilder.setTitle("Are you sure?");
+        alertDialogBuilder.setView(input);
+
+        alertDialogBuilder.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                leave(id);
+            }
+        });
+
+        alertDialogBuilder.setCancelable(false).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                stay();
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void leave(int id) {
         if (id == R.id.nav_game) {
             currentFragment = currentGame;
 
@@ -125,6 +146,10 @@ public class PlayPoker extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
+
+    private void stay() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    } //todo fix selection for the side menu
 }

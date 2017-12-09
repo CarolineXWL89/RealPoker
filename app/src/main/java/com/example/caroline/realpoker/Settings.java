@@ -32,7 +32,6 @@ public class Settings extends Fragment implements AdapterView.OnItemClickListene
 
     public Settings() {
     }
-    //todo have settings use shared preferences so you can delete playerList NEEDS FIXING
     //todo change type of poker
     //todo have themes
         //either they can change card background and overall backgorund however they want
@@ -54,7 +53,7 @@ public class Settings extends Fragment implements AdapterView.OnItemClickListene
         makePlayerList();
 
         gridView = rootView.findViewById(R.id.grid);
-        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, playerList); //todo change to gridlayout
+        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, playerList); //todo change to gridlayout slash a non trashy UI...
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
         registerForContextMenu(gridView);
@@ -91,6 +90,7 @@ public class Settings extends Fragment implements AdapterView.OnItemClickListene
         }
     }
 
+    //todo add stuff to check if its not a player and is in stead change themes or typr of poker
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         //checks position, popu alert dialogue box to xhange name or delete player
@@ -107,8 +107,6 @@ public class Settings extends Fragment implements AdapterView.OnItemClickListene
             public void onClick(DialogInterface dialog, int id) {
                 editor.putString(playerList.get(position).getSharedPref(), editText.getText().toString());
                 editor.commit();
-                Log.d(TAG, "onClick: "+playerList.get(position).getSharedPref());
-                Log.d(TAG, "onClick: "+ sharedPref.getString(playerList.get(position).getSharedPref(),"default")+ " "+ position);
                 makePlayerList();
                 adapter.notifyDataSetChanged();
                 editText.setText("");

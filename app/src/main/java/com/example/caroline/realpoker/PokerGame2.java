@@ -51,14 +51,15 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     }
 
     //TODO Overall:
-    //TODO fix bug in raised
-    //todo set up end screen with options for new game and im done (30 min)
+    //TODO fix folded (player jsut sits on the side of the screen)
+    //todo fix the rotation of players
+    //todo set up end screen with options for new game and im done
     //todo ui
-        //todo add textedits for blah raised or folded + fix constraints overall on that screen (30-45 min)
-        //todo fix contratints for all ohones
-        //todo add a popup dialog if they try to leave in the middle of a round(nic's version)
-        //todo shared prefrences players
-        //todo themes in settings/create themes
+        //todo add textedits for blah raised or folded
+        //todo fix constraints overall for all phones etc... (poker game xml file)
+        //todo  refrence needs some clean up, just at the bottom
+        //todo SETTINGS UI for players needs to be fixed, preferably have a double coulmned thing but idk
+        //todo create themes/brainstrom what that would look like or how it would work (saved instance state?)
 
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
@@ -81,12 +82,9 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
-
         emptyHand.add(new Card(0, "c"));
         emptyHand.add(new Card(0, "c"));
 
-        emptyPlayer = new Player("", 0, emptyHand);
-        emptyPlayer.setHasFolded(true);
         players = new Player[6];
 
         createDeck();
@@ -378,10 +376,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
     private void areNewPlayers() {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        // set title
         alertDialogBuilder.setTitle("Same players as last time?");
-
-        // set dialog message
 
         alertDialogBuilder.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -396,11 +391,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                 howManyPlayers();
             }
         });
-
-        // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
         alertDialog.show();
     }
 
@@ -499,19 +490,18 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
             for (int i = 1; i < 7; i++) {
                 String name = sharedPref.getString("Player " + i, "Player " + i);
                 int monney = sharedPref.getInt("Player " + i + " Monnies", 10000);
-
                 Player p;
                 if(name.equals("")){
-                    p = emptyPlayer;
+                    p = new Player("", 0, emptyHand);
+                    p.setSharedPref("Player "+i);
                 } else {
                     p = new Player(name, monney, getHand());
+                    p.setSharedPref("Player "+i);
                 }
-                players[i-1]=p;
-                if(name=="")
-                {
+                players[i-1] = p;
+                if(name.equals("")) {
                     players[i-1].setHasFolded(true);
                 }
-
             }
             startGame();
         } else { //otherwise create new ones
@@ -547,7 +537,9 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     private void createNewPlayers() {
         if(numOfPlayers != -1){
             for(int i= 0; i<6; i++){
-                players[i] = emptyPlayer;
+                players[i] = new Player("", 0, emptyHand);
+                players[i].setHasFolded(true);
+                players[i].setSharedPref("Player "+(i+1));
             }
             int index=numOfPlayers;
             while(index > 0){
@@ -601,7 +593,6 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         tableCard5 = cardsOnTheTable.get(4);
     }
 
-    //todo write check/call and player folded
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -609,15 +600,13 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                 raiseBet();
                 break;
             case R.id.call_check:
-                if(needsToCall())
-                {
+                if(needsToCall()) {
                     call();
                 }
-                else{
+                else {
                     players[currentplayer].setHasCalled(true);
                     nextGuy();
                 }
-                //checkCall();
                 break;
             case R.id.fold:
                 fold();
@@ -633,11 +622,9 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     private void call() {
         int cb=currentBet;
         players[currentplayer].setHasCalled(true);
-        if (players[currentplayer].getMonnies()>currentBet)
-        {
+        if (players[currentplayer].getMonnies()>currentBet) {
             potMoney+=cb-players[currentplayer].getBet();
             players[currentplayer].setBet(cb);
-
             bet.setText("$"+potMoney);
             player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies());
             nextGuy();
@@ -656,35 +643,29 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     public void raiseBet() {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         final EditText input = new EditText(getActivity());
-        // set title
         alertDialogBuilder.setTitle("The current bet is "+currentBet+"\n input the amount you want to raise to");
         alertDialogBuilder.setView(input);
         alertDialogBuilder.setCancelable(true).setPositiveButton("ok", new DialogInterface.OnClickListener() {
             int amountRaised;
             public void onClick(DialogInterface dialog, int id) {
-
                 try {
                     if ((Integer.parseInt(input.getText().toString()) <= players[currentplayer].getMonnies())) {
                         amountRaised = Integer.parseInt(input.getText().toString());
                         //players[currentplayer].setBet(amountRaised);
                         if(amountRaised<currentBet){
                             Toast.makeText(getActivity(), "Please enter a number larger than the bet", Toast.LENGTH_SHORT).show();
-
                         }
                         else{
                             Log.d(TAG, "onClick: amountRaised: "+amountRaised);
-
                             potMoney += amountRaised;
                             players[currentplayer].setBet(amountRaised);
                             currentBet=amountRaised;
                             Log.d(TAG, "onClick: currentBet: "+currentBet);
-
                             //players[currentplayer].subtractMonnies(amountRaised);
                             hasRaised = true;
                             bet.setText("$" + potMoney);
                             player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies());
-                            for(int i=0; i<players.length;i++)
-                            {
+                            for(int i=0; i<players.length;i++) {
                                     players[i].setHasCalled(false);
                             }
                             players[currentplayer].setHasCalled(true);
@@ -694,44 +675,28 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                     else{
                         Toast.makeText(getActivity(), "You don't have that much money", Toast.LENGTH_SHORT).show();
                     }
-
                 } catch (NumberFormatException e) {
                     Toast.makeText(getActivity(), "Please enter a number", Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
-        // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
         alertDialog.show();
-
     }
 
     public void nextGuy() {
-            if(checkIfEveryoneElseFolded())
-            {
+            if(checkIfEveryoneElseFolded()) {
                 Log.d(TAG, "nextGuy: everyone dipped");
                 Toast.makeText(context, "everyone else has dipped", Toast.LENGTH_SHORT).show();
                 //endRound(); todo create method to end round for the case that everyone has folded
             }
             else {
-
-
                 currentplayer=nextNonFoldedGuy();
-
-
                 if(players[currentplayer].hasCalled())
                 {
                     endRound();
                 }
                 else {
-
-
-                    //changePlayerView();
-
-
                     final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     //sets message
                     final TextView question = new TextView(context);
@@ -747,18 +712,12 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                             changePlayerView();
                         }
                     });
-                    // create alert dialog
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     myCard1View.setVisibility(View.INVISIBLE);
                     myCard2View.setVisibility(View.INVISIBLE);
-                    // show it
                     alertDialog.show();
                 }
-
-
-
             }
-
     }
 
     private void endRound() {
@@ -792,9 +751,9 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     }
 
     private void endGame() {
-        for(int i=0; i<players.length; i++)
-        {
-            editor.putInt("Player "+currentplayer+ "Monnies", players[currentplayer].getMonnies());
+        for(int i = 0; i < players.length; i++) {
+            Log.d(TAG, "endGame: " + i + players[i].getName());
+            editor.putInt(players[i].getSharedPref() + " Monnies", players[currentplayer].getMonnies()); //todo fix this error (null object refrence?)
             newGame();
         }
     }
@@ -839,10 +798,5 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         }
         return n;
 
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 }
