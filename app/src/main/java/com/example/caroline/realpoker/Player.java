@@ -16,6 +16,7 @@ public class Player {
     private boolean hasFolded;
     ArrayList<Card> emptyHand = new ArrayList<>();
     private int bet;
+    private String sharedPref;
 
 
     public Player(String name, int monnies, ArrayList<Card> hand) {
@@ -79,5 +80,13 @@ public class Player {
     @Override
     public String toString() {
         return name +"\n $" + monnies;
+    }
+
+    public String getSharedPref() {
+        return sharedPref;
+    }
+
+    public void setSharedPref(String sharedPref) {
+        this.sharedPref = sharedPref;
     }
 }

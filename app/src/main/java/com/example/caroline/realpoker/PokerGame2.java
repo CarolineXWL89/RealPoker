@@ -51,24 +51,21 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     }
 
     //TODO Overall:
-    //TODO #1 Create/Debug fold, call/check, end turn
-        //todo make sure monnies are updated when a player folds (3 min)
-        //todo when player folds check to make sure that he isn't the num-1 player to fold or if he is set the last player to automatically win (i think this already exists)
-    //todo #2 set up end screen with options for new game and im done (30 min)
-    //todo #3 ui
+    //TODO fix bug in raised
+    //todo set up end screen with options for new game and im done (30 min)
+    //todo ui
         //todo add textedits for blah raised or folded + fix constraints overall on that screen (30-45 min)
+        //todo fix contratints for all ohones
+        //todo add a popup dialog if they try to leave in the middle of a round(nic's version)
+        //todo shared prefrences players
+        //todo themes in settings/create themes
 
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         rootView = inflater.inflate(R.layout.activity_poker_game, container, false);
-        //if(newGame){ doesnt wor see below
-            newGame();
-
-        //} todo need a better else, right now saved instance state takes us to what XML files have saved...
-        //todo use saved instance state to save EVERYTHING and retrieve it all when we return to a poker game...
-
+        newGame();
         return rootView;
     }
 
@@ -467,23 +464,27 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
         editor.putInt("Number of Players", numOfPlayers);
 
-        editor.putString("Player 1",players[0].getName());
-        editor.putInt("Player 1 Monnies", players[0].getMonnies());
+        for(int i = 0; i< players.length; i++){
+            players[i].setSharedPref("Player "+(i+1));
+        }
 
-        editor.putString("Player 2",players[1].getName());
-        editor.putInt("Player 2 Monnies", players[1].getMonnies());
+        editor.putString(players[0].getSharedPref(),players[0].getName());
+        editor.putInt(players[0].getSharedPref() +" Monnies", players[0].getMonnies());
 
-        editor.putString("Player 3",players[2].getName());
-        editor.putInt("Player 3 Monnies", players[2].getMonnies());
+        editor.putString(players[1].getSharedPref(),players[1].getName());
+        editor.putInt(players[1].getSharedPref()+" Monnies", players[1].getMonnies());
 
-        editor.putString("Player 4",players[3].getName());
-        editor.putInt("Player 4 Monnies", players[3].getMonnies());
+        editor.putString(players[2].getSharedPref(),players[2].getName());
+        editor.putInt(players[2].getSharedPref()+" Monnies", players[2].getMonnies());
 
-        editor.putString("Player 5",players[4].getName());
-        editor.putInt("Player 5 Monnies", players[4].getMonnies());
+        editor.putString(players[3].getSharedPref(),players[3].getName());
+        editor.putInt(players[3].getSharedPref()+ " Monnies", players[3].getMonnies());
 
-        editor.putString("Player 6",players[5].getName());
-        editor.putInt("Player 6 Monnies", players[5].getMonnies());
+        editor.putString(players[4].getSharedPref(),players[4].getName());
+        editor.putInt(players[4].getSharedPref()+" Monnies", players[4].getMonnies());
+
+        editor.putString(players[5].getSharedPref(),players[5].getName());
+        editor.putInt(players[5].getSharedPref()+" Monnies", players[5].getMonnies());
 
         editor.commit();
     }
@@ -495,7 +496,12 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
             for (int i = 1; i < 7; i++) {
                 String name = sharedPref.getString("Player " + i, "Player " + i);
                 int monney = sharedPref.getInt("Player " + i + " Monnies", 10000);
-                Player p = new Player(name, monney, getHand());
+                Player p;
+                if(name.equals("")){
+                    p = emptyPlayer;
+                } else {
+                    p = new Player(name, monney, getHand());
+                }
                 players[i-1]=p;
             }
             startGame();
