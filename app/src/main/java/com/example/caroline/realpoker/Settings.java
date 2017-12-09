@@ -80,7 +80,7 @@ public class Settings extends Fragment implements AdapterView.OnItemClickListene
             p.setSharedPref("Player "+(i+1));
             playerList.add(p);
             players[i] = p;
-        }
+        }//bruh
         //removes empty ones
         for(int i = 0; i < playerList.size(); i++){
             Player p = playerList.get(i);
