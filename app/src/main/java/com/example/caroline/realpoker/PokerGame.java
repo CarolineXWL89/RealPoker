@@ -44,6 +44,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
 
 
     public PokerGame() {
+
     }
 
 
@@ -58,6 +59,7 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         deck = new ArrayList<>();
         numOfPlayers = 6;
         currentplayer = 0;
+
 
         context = getContext();
         sharedPref = context.getSharedPreferences(
@@ -76,6 +78,8 @@ public class PokerGame extends Fragment implements View.OnClickListener {
         createDeck();
         createCardsOnTheTable();
         areNewPlayers(); //either creates new players or gets the old ones and assigns them to their spots on the array list
+
+
 
         return rootView;
     }

@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,10 +46,10 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     private SharedPreferences sharedPref;
     private SharedPreferences.Editor editor;
     private Button callCheck, fold, raise;
-    private boolean newGame;
+
 
     public PokerGame2() {
-        newGame = true;
+
     }
 
     //TODO Overall:
@@ -78,8 +80,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         round=0;
         context = getContext();
 
-        sharedPref = context.getSharedPreferences(
-                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
         emptyHand.add(new Card(0, "c"));
@@ -87,28 +88,37 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
         players = new Player[6];
 
+        Log.d(TAG, "newGame: 1");
         createDeck();
+        Log.d(TAG, "newGame: 2");
         createCardsOnTheTable();
+        Log.d(TAG, "newGame: 3");
         areNewPlayers(); //either creates new players or gets the old ones then starts the game
-        newGame = false;
+        Log.d(TAG, "newGame: 4");
+        
     }
 
     private void setUpCards() {
         //Sets the table cards but doesnt show them
         tableCard1View = (ImageView) rootView.findViewById(R.id.table_card_1);
         tableCard1View.setContentDescription(tableCard1.getCardNumber() + " of " + tableCard1.getSuitName());
+        tableCard1View.setImageResource(R.color.colorCardBack);
 
         tableCard2View = (ImageView) rootView.findViewById(R.id.table_card_2);
         tableCard2View.setContentDescription(tableCard2.getCardNumber() + " of " + tableCard2.getSuitName());
+        tableCard2View.setImageResource(R.color.colorCardBack);
 
         tableCard3View = (ImageView) rootView.findViewById(R.id.table_card_3);
         tableCard3View.setContentDescription(tableCard3.getCardNumber() + " of " + tableCard3.getSuitName());
+        tableCard3View.setImageResource(R.color.colorCardBack);
 
         tableCard4View = (ImageView) rootView.findViewById(R.id.table_card_4);
         tableCard4View.setContentDescription(tableCard4.getCardNumber() + " of " + tableCard4.getSuitName());
+        tableCard4View.setImageResource(R.color.colorCardBack);
 
         tableCard5View = (ImageView) rootView.findViewById(R.id.table_card_5);
         tableCard5View.setContentDescription(tableCard5.getCardNumber() + " of " + tableCard5.getSuitName());
+        tableCard5View.setImageResource(R.color.colorCardBack);
 
         createOtherPlayersCards();
         changePlayerView();
@@ -354,6 +364,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
     //creates 52 cards in the arraylist
     private void createDeck() {
+        deck= new ArrayList<>();
         String[] suits = {"c", "d", "h", "s"};
         for (String s : suits) {
             for (int i = 2; i < 15; i++) {
@@ -375,6 +386,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     }
 
     private void areNewPlayers() {
+        Log.d(TAG, "areNewPlayers: 1");
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle("Same players as last time?");
 
@@ -391,8 +403,10 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                 howManyPlayers();
             }
         });
+        Log.d(TAG, "areNewPlayers: 2");
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+        Log.d(TAG, "areNewPlayers: 3");
     }
 
     private void editPlayerName(int i, String name) {
@@ -733,29 +747,36 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
             showCard(cardsOnTheTable.get(0));
             showCard(cardsOnTheTable.get(1));
             showCard(cardsOnTheTable.get(2));
+            round++;
+            currentplayer=5;
+            nextGuy();
         }
         else if (round==1){
             showCard(cardsOnTheTable.get(3));
+            round++;
+            currentplayer=5;
+            nextGuy();
         }
         else if(round==2){
             showCard(cardsOnTheTable.get(4));
+            round++;
+            currentplayer=5;
+            nextGuy();
         }
         else if(round==3)
         {
             endGame(); //todo copy endgame if it works in other class, else write
         }
 
-        round++;
-        currentplayer=5;
-        nextGuy();
+
     }
 
     private void endGame() {
         for(int i = 0; i < players.length; i++) {
             Log.d(TAG, "endGame: " + i + players[i].getName());
             editor.putInt(players[i].getSharedPref() + " Monnies", players[currentplayer].getMonnies()); //todo fix this error (null object refrence?)
-            newGame();
         }
+        newGame();
     }
 
     private boolean needsToCall() {
