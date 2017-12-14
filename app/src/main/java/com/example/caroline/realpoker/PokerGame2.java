@@ -423,7 +423,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         createCards();
         wireWidgets();
         setUpCards();
-        checkingHand();
+        checkingHand(); //todo check hands at ned
         setUpBlinds();
     }
 
@@ -565,10 +565,13 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
     //gets player's best hand before cards are flipped
     private void checkingHand() {
-        Hand hand1 = new Hand(players[0].getHand(), cardsOnTheTable);
-        ArrayList<Integer> intstuff = new ArrayList<>();
-        intstuff.addAll(hand1.getBestHand());
-        Log.d(TAG, "checkingHand: " + intstuff.toString());
+        for(int i = 0; i < players.length;i++){
+            Hand hand1 = new Hand(players[i].getHand(), cardsOnTheTable);
+            ArrayList<Integer> intstuff = new ArrayList<>();
+            intstuff.addAll(hand1.getBestHand());
+            Log.d(TAG, "checkingHand: " + intstuff.toString());
+        }
+
     }
 
     public Player createPlayingPlayers(int i) { //i is player #
