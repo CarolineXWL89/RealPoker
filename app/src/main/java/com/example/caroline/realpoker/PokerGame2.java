@@ -660,16 +660,19 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     private void call() {
         int cb=currentBet;
         players[currentplayer].setHasCalled(true);
-        if (players[currentplayer].getMonnies()>currentBet) {
+        if (players[currentplayer].getMonnies()+players[currentplayer].getBet()>=currentBet) {
             potMoney+=cb-players[currentplayer].getBet();
             players[currentplayer].setBet(cb);
+            Log.d(TAG, "call: "+players[currentplayer].getBet());
+
             bet.setText("$"+potMoney);
             player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies());
             nextGuy();
         }
         else {
             Toast.makeText(context, "you have gone all in", Toast.LENGTH_SHORT).show();
-            players[currentplayer].setBet(players[currentplayer].getMonnies());
+            players[currentplayer].setBet(players[currentplayer].getMonnies()+players[currentplayer].getBet());
+            Log.d(TAG, "call: " +players[currentplayer].getBet());
             potMoney+=players[currentplayer].getMonnies();
             bet.setText("$"+potMoney);
             player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies());
@@ -689,7 +692,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
             int amountRaised;
             public void onClick(DialogInterface dialog, int id) {
                 try {
-                    if ((Integer.parseInt(input.getText().toString()) <= players[currentplayer].getMonnies())) {
+                    if ((Integer.parseInt(input.getText().toString()) <= (players[currentplayer].getMonnies())+players[currentplayer].getBet()) ){
                         amountRaised = Integer.parseInt(input.getText().toString());
                         //players[currentplayer].setBet(amountRaised);
                         if(amountRaised<currentBet){
@@ -697,7 +700,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                         }
                         else{
                             Log.d(TAG, "onClick: amountRaised: "+amountRaised);
-                            potMoney += amountRaised;
+                            potMoney += amountRaised-players[currentplayer].getBet();
                             players[currentplayer].setBet(amountRaised);
                             currentBet=amountRaised;
                             Log.d(TAG, "onClick: currentBet: "+currentBet);
