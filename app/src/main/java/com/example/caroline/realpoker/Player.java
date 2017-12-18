@@ -87,6 +87,7 @@ public class Player {
     public String toString() {
         return name +"\n $" + monnies;
     }
+
     public boolean hasCalled() {
         return hasCalled;
     }
@@ -94,6 +95,7 @@ public class Player {
     public void setHasCalled(boolean hasCalled) {
         this.hasCalled = hasCalled;
     }
+
     public String getSharedPref() {
         return sharedPref;
     }
