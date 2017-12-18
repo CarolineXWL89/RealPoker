@@ -55,7 +55,9 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     //TODO Overall:
     //TODO fix folded (player jsut sits on the side of the screen)
     //todo fix the rotation of players
-    //todo set up end screen with options for new game and im done
+    //todo set up end screen
+        //todo with options for new game and im done
+        //todo winners versus folded
     //todo ui
         //todo add textedits for blah raised or folded
         //todo fix constraints overall for all phones etc... (poker game xml file)
@@ -423,7 +425,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         createCards();
         wireWidgets();
         setUpCards();
-        checkingHand(); //todo check hands at ned
+        checkingHand(); //todo check hands at end
         setUpBlinds();
     }
 
@@ -504,6 +506,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
             for (int i = 1; i < 7; i++) {
                 String name = sharedPref.getString("Player " + i, "Player " + i);
                 int monney = sharedPref.getInt("Player " + i + " Monnies", 10000);
+                Log.d(TAG, "useOldPlayers: "+monney);
                 Player p;
                 if(name.equals("")){
                     p = new Player("", 0, emptyHand);
@@ -705,7 +708,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
             if(checkIfEveryoneElseFolded()) {
                 Log.d(TAG, "nextGuy: everyone dipped");
                 Toast.makeText(context, "everyone else has dipped", Toast.LENGTH_SHORT).show();
-                //endRound(); todo create method to end round for the case that everyone has folded
+                //endGame(); todo create method to end round for the case that everyone has folded
             }
             else {
                 currentplayer=nextNonFoldedGuy();
@@ -768,7 +771,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         }
         else if(round==3)
         {
-            endGame(); //todo copy endgame if it works in other class, else write
+            endGame();
         }
 
 
@@ -777,8 +780,10 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     private void endGame() {
         for(int i = 0; i < players.length; i++) {
             Log.d(TAG, "endGame: " + i + players[i].getName());
-            editor.putInt(players[i].getSharedPref() + " Monnies", players[currentplayer].getMonnies()); //todo fix this error (null object refrence?)
+            editor.putInt(players[i].getSharedPref() + " Monnies", players[currentplayer].getMonnies());
+            editor.commit();
         }
+        //todo make winners screen or show hands and have dialog message for new game etc...
         newGame();
     }
 
