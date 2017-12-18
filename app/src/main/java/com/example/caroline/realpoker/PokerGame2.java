@@ -55,6 +55,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     }
 
     //TODO Overall:
+    //todo debug raise and stuff
     //todo fix blinds so they can work if player in teh middle hasalready folded ()
     //todo set up winners screen and then an end screen with options for new game and im done
     //todo ui
