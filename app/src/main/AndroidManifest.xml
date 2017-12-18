@@ -20,11 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PokerGame" />
-        <activity android:name=".Reference" />
-        <activity android:name=".FinalScreen" />
-        <activity android:name=".PokerGame2" />
-        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>

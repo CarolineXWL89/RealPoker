@@ -101,7 +101,7 @@ public class PlayPoker extends AppCompatActivity
         return true;
     }
 
-    private void areYouSure(int id) {
+    private void areYouSure(final int identification) {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         final TextView input = new TextView(this);
         input.setText("Leaving now will lose progress for this hand. Do you want to leave?");
@@ -112,7 +112,7 @@ public class PlayPoker extends AppCompatActivity
         alertDialogBuilder.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
-                leave(id);
+                leave(identification);
             }
         });
 

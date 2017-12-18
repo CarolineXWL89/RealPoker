@@ -53,10 +53,10 @@ public class Player {
         this.name = name;
     }
 
-    public void subtractMonnies(int monnies) {
-
+    public void setMonnies(int monnies) {
         this.monnies = monnies;
     }
+
     public void setHand(ArrayList<Card> hand) {
         this.hand = hand;
     }
