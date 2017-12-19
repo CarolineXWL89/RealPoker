@@ -55,12 +55,11 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     }
 
     //TODO Overall:
-    //todo debug raise and winners
-    //todo fix blinds so they can work if player in teh middle hasalready folded ()
+    //todo debug raise and winners to fix high card
     //todo ui
-        //todo add textedits for blah raised or folded
+        //todo add toast for who has raised or foldd since your last turn
         //todo fix constraints overall for all phones etc... (poker game xml file)
-        //todo  refrence needs some clean up, just at the bottom
+        //todo refrence needs some clean up, just at the bottom
         //todo SETTINGS UI for players needs to be fixed, preferably have a double coulmned thing but idk
         //todo create themes/brainstrom what that would look like or how it would work (saved instance state?)
         //todo change icon
