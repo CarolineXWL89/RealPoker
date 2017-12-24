@@ -58,7 +58,7 @@
                 android:layout_width="246dp"
                 android:layout_height="75dp"
                 android:src="@drawable/straight_flush"
-                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintHorizontal_bias="0.9"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
                 app:layout_constraintStart_toEndOf="@+id/image_view_reference_1"
                 app:layout_constraintTop_toTopOf="@id/constraint" />
@@ -72,7 +72,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintHorizontal_bias="0.85"
                 app:layout_constraintStart_toEndOf="@+id/text_view_reference1"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference2" />
 
@@ -96,7 +96,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.103"
+                app:layout_constraintHorizontal_bias="0.15"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@+id/image_view_reference_3" />
 
@@ -104,10 +104,10 @@
                 android:id="@+id/image_view_reference4"
                 android:layout_width="246dp"
                 android:layout_height="75dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/straight_flush"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintHorizontal_bias="0.9"
                 app:layout_constraintStart_toEndOf="@+id/image_view_reference_3"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_reference2" />
 
@@ -120,7 +120,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintHorizontal_bias="0.85"
                 app:layout_constraintStart_toEndOf="@+id/text_view_reference3"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference4" />
 
@@ -144,7 +144,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.103"
+                app:layout_constraintHorizontal_bias="0.15"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@+id/image_view_reference_5" />
 
@@ -152,10 +152,10 @@
                 android:id="@+id/image_view_reference6"
                 android:layout_width="246dp"
                 android:layout_height="75dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/straight"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintHorizontal_bias="0.9"
                 app:layout_constraintStart_toEndOf="@+id/image_view_reference_5"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_reference4" />
 
@@ -168,7 +168,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintHorizontal_bias="0.85"
                 app:layout_constraintStart_toEndOf="@+id/text_view_reference5"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference6" />
 
@@ -192,7 +192,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.103"
+                app:layout_constraintHorizontal_bias="0.15"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@+id/image_view_reference_7" />
 
@@ -200,10 +200,10 @@
                 android:id="@+id/image_view_reference8"
                 android:layout_width="246dp"
                 android:layout_height="75dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/two_pairs"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintHorizontal_bias="0.9"
                 app:layout_constraintStart_toEndOf="@+id/image_view_reference_7"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_reference6" />
 
@@ -216,7 +216,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintHorizontal_bias="0.85"
                 app:layout_constraintStart_toEndOf="@+id/text_view_reference7"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference8" />
 
@@ -240,7 +240,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintHorizontal_bias="0.15"
                 app:layout_constraintStart_toStartOf="@id/constraint"
                 app:layout_constraintTop_toBottomOf="@+id/image_view_reference_9" />
 
@@ -248,10 +248,11 @@
                 android:id="@+id/image_view_reference10"
                 android:layout_width="246dp"
                 android:layout_height="75dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/high_card"
+                android:layout_marginBottom="10dp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintHorizontal_bias="0.9"
                 app:layout_constraintStart_toEndOf="@+id/image_view_reference_9"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_reference8" />
 
@@ -265,7 +266,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@id/constraint"
-                app:layout_constraintHorizontal_bias="0.65"
+                app:layout_constraintHorizontal_bias="0.85"
                 app:layout_constraintStart_toEndOf="@+id/text_view_reference9"
                 app:layout_constraintTop_toBottomOf="@id/image_view_reference10" />
 

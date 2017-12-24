@@ -48,6 +48,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     private SharedPreferences.Editor editor;
     private Button callCheck, fold, raise;
     private boolean everyoneHasFolded;
+    private String[] whatHasHappened;
 
 
     public PokerGame2() {
@@ -56,10 +57,9 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
     //TODO Overall:
     //todo debug raise and winners to fix high card
+    //todo onPause works but saved instance state doesnt, ask shorrr to see if he knows anything
     //todo ui
-        //todo add toast for who has raised or foldd since your last turn
-        //todo fix constraints overall for all phones etc... (poker game xml file)
-        //todo refrence needs some clean up, just at the bottom
+        //todo fix constraints overall for all phones etc... (poker game xml file and refrence)
         //todo SETTINGS UI for players needs to be fixed, preferably have a double coulmned thing but idk
         //todo create themes/brainstrom what that would look like or how it would work (saved instance state?)
         //todo change icon
@@ -87,6 +87,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
         players = new Player[6];
         everyoneHasFolded = false;
+        whatHasHappened = new String[]{"", "", "", "", "", ""};
 
         createDeck();
         createCardsOnTheTable();
@@ -652,6 +653,16 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     //folds a player
     private void fold() {
         players[currentplayer].setHasFolded(true);
+        for(int i =0; i < 6; i++){
+            if(i != currentplayer){
+                String phrase =players[currentplayer].getName() + " has folded.";
+                if(whatHasHappened[i].equals("")) {
+                    whatHasHappened[i] = whatHasHappened[i] + phrase;
+                } else{
+                    whatHasHappened[i] = whatHasHappened[i]+"\n" + phrase;
+                }
+            }
+        }
         nextGuy();
     }
 
@@ -710,6 +721,16 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                                     players[i].setHasCalled(false);
                             }
                             players[currentplayer].setHasCalled(true);
+                            for(int i =0; i < 6; i++){
+                                if(i != currentplayer){
+                                    String phrase = players[currentplayer].getName()+ " has raised to $"+amountRaised+".";
+                                    if(whatHasHappened[i].equals("")) {
+                                        whatHasHappened[i] = whatHasHappened[i] + phrase;
+                                    } else{
+                                        whatHasHappened[i] = whatHasHappened[i]+"\n" + phrase;
+                                    }
+                                }
+                            }
                             nextGuy();
                         }
                     }
@@ -750,6 +771,10 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
                     alertDialogBuilder.setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            if (!whatHasHappened[currentplayer].equals("")){
+                                Toast.makeText(context, whatHasHappened[currentplayer], Toast.LENGTH_LONG).show();
+                                whatHasHappened[currentplayer] = "";
+                            }
                             needsToCall();
                             changePlayerView();
                         }
@@ -953,6 +978,6 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
             n++;
         }
         return n;
-
     }
+
 }
