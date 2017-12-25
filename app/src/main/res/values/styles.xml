@@ -2,10 +2,138 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/primaryLightColor</item>
+    </style>
+
+    <style name="Red" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColorRed</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorRed</item>
+        <item name="colorAccent">@color/primaryLightColorRed</item>
+    </style>
+
+    <style name="Orange" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColorOrange</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorOrange</item>
+        <item name="colorAccent">@color/primaryLightColorOrange</item>
+    </style>
+
+    <style name="Yellow" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColorYellow</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorYellow</item>
+        <item name="colorAccent">@color/primaryLightColorYellow</item>
+    </style>
+
+    <style name="LightGreen" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColorLightGreen</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorLightGreen</item>
+        <item name="colorAccent">@color/primaryLightColorLightGreen</item>
+    </style>
+
+    <style name="Green" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColorGreen</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorGreen</item>
+        <item name="colorAccent">@color/primaryLightColorGreen</item>
+    </style>
+
+    <style name="Teal" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColorTeal</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorTeal</item>
+        <item name="colorAccent">@color/primaryLightColorTeal</item>
+    </style>
+
+    <style name="LightBlue" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColorLightBlue</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorLightBlue</item>
+        <item name="colorAccent">@color/primaryLightColorLightBlue</item>
+    </style>
+
+    <style name="Blue" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColorBlue</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorBlue</item>
+        <item name="colorAccent">@color/primaryLightColorBlue</item>
+    </style>
+
+    <style name="DarkBlue" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColorDarkBlue</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorDarkBlue</item>
+        <item name="colorAccent">@color/primaryLightColorDarkBlue</item>
+    </style>
+
+    <style name="Indigo" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColorIndigo</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorIndigo</item>
+        <item name="colorAccent">@color/primaryLightColorIndigo</item>
+    </style>
+
+    <style name="Purple" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColorPurple</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorPurple</item>
+        <item name="colorAccent">@color/primaryLightColorPurple</item>
+    </style>
+
+    <style name="LightPink" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColorLightPink</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorLightPink</item>
+        <item name="colorAccent">@color/primaryLightColorLightPink</item>
+    </style>
+
+    <style name="BrightPink" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColorBrightPink</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorBrightPink</item>
+        <item name="colorAccent">@color/primaryLightColorBrightPink</item>
+    </style>
+
+    <style name="Black" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColorBlack</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColorBlack</item>
+        <item name="colorAccent">@color/primaryLightColorBlack</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

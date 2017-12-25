@@ -1,8 +1,83 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!--?xml version="1.0" encoding="UTF-8"?-->
 <resources>
-    <color name="colorPrimary">#4469e2</color>
-    <color name="colorPrimaryDark">#000000</color>
-    <color name="colorCardBack">#05c277</color>
-    <color name="colorAccent">#8c0d26</color>
+    <color name="lightThemeTextColor">#000000</color>
+    <color name="darkThemeTextColor">#ffffff</color>
+
+    <color name="selectedItem">#999999</color>
+
+    <color name="primaryColor">#3F51B5</color>
+    <color name="primaryLightColor">#ff4081</color>
+    <color name="primaryDarkColor">#303f9f</color>
+    <color name = "cardColorAppTheme">#229177</color>
+
+    <color name="primaryColorRed">#e53935</color>
+    <color name="primaryLightColorRed">#ff6f60</color>
+    <color name="primaryDarkColorRed">#ab000d</color>
+    <color name="cardColorRed">#870000</color>
+
+    <color name="primaryColorOrange">#ff5722</color>
+    <color name="primaryLightColorOrange">#ff8a50</color>
+    <color name="primaryDarkColorOrange">#c41c00</color>
+    <color name="cardColorOrange">#bf360c</color>
+
+    <color name="primaryColorYellow">#ffca28</color>
+    <color name="primaryLightColorYellow">#fffd61</color>
+    <color name="primaryDarkColorYellow">#c79a00</color>
+    <color name="cardColorYellow">#c67f00</color>
+
+    <color name="primaryColorLightGreen">#cddc39</color>
+    <color name="primaryLightColorLightGreen">#ffff6e</color>
+    <color name="primaryDarkColorLightGreen">#99aa00</color>
+    <color name="cardColorLightGreen">#79b700</color>
+
+    <color name="primaryColorGreen">#1b5e20</color>
+    <color name="primaryLightColorGreen">#4c8c4a</color>
+    <color name="primaryDarkColorGreen">#003300</color>
+    <color name="cardColorGreen">#255d00</color>
+
+    <color name="primaryColorTeal">#00838f</color>
+    <color name="primaryLightColorTeal">#4fb3bf</color>
+    <color name="primaryDarkColorTeal">#005662</color>
+    <color name="cardColorTeal">#006064</color>
+
+    <color name="primaryColorLightBlue">#64b5f6</color>
+    <color name="primaryLightColorLightBlue">#9be7ff</color>
+    <color name="primaryDarkColorLightBlue">#2286c3</color>
+    <color name="cardColorLightBlue">#00b2cc</color>
+
+    <color name="primaryColorBlue">#1976d2</color>
+    <color name="primaryLightColorBlue">#63a4ff</color>
+    <color name="primaryDarkColorBlue">#004ba0</color>
+    <color name="cardColorBlue">#005ecb</color>
+
+    <color name="primaryColorDarkBlue">#0d47a1</color>
+    <color name="primaryLightColorDarkBlue">#5472d3</color>
+    <color name="primaryDarkColorDarkBlue">#002171</color>
+    <color name="cardColorDarkBlue">#001064</color>
+
+    <color name="primaryColorIndigo">#311b92</color>
+    <color name="primaryLightColorIndigo">#6746c3</color>
+    <color name="primaryDarkColorIndigo">#000063</color>
+    <color name="cardColorIndigo">#1a237e</color>
+
+    <color name="primaryColorPurple">#6a1b9a</color>
+    <color name="primaryLightColorPurple">#9c4dcc</color>
+    <color name="primaryDarkColorPurple">#38006b</color>
+    <color name="cardColorPurple">#4a148c</color>
+
+    <color name="primaryColorLightPink">#f48fb1</color>
+    <color name="primaryLightColorLightPink">#ffc1e3</color>
+    <color name="primaryDarkColorLightPink">#bf5f82</color>
+    <color name="cardColorLightPink">#ff94c2</color>
+
+    <color name="primaryColorBrightPink">#ad1457</color>
+    <color name="primaryLightColorBrightPink">#e35183</color>
+    <color name="primaryDarkColorBrightPink">#78002e</color>
+    <color name="cardColorBrightPink">#ff4081</color>
+
+    <color name="primaryColorBlack">#212121</color>
+    <color name="primaryLightColorBlack">#484848</color>
+    <color name="primaryDarkColorBlack">#000000</color>
+    <color name="cardColorBlack">#616161</color>
 
 </resources>

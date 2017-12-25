@@ -44,6 +44,61 @@ public class PlayPoker extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        context = this;
+        sharedPref = context.getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        //todo add themes
+        String theme = sharedPref.getString("Theme","Standard");
+        switch(theme){
+            case "Standard":
+                setTheme(R.style.AppTheme);
+                break;
+            case "Red":
+                setTheme(R.style.Red);
+                break;
+            case "Orange":
+                setTheme(R.style.Orange);
+                break;
+            case "Yellow":
+                setTheme(R.style.Yellow);
+                break;
+            case "LightGreen":
+                setTheme(R.style.LightGreen);
+                break;
+            case "Green":
+                setTheme(R.style.Green);
+                break;
+            case "Teal":
+                setTheme(R.style.Teal);
+                break;
+            case "LightBlue":
+                setTheme(R.style.LightBlue);
+                break;
+            case "Blue":
+                setTheme(R.style.Blue);
+                break;
+            case "DarkBlue":
+                setTheme(R.style.DarkBlue);
+                break;
+            case "Indigo":
+                setTheme(R.style.Indigo);
+                break;
+            case "Purple":
+                setTheme(R.style.Purple);
+                break;
+            case "LightPink":
+                setTheme(R.style.LightPink);
+                break;
+            case "BrightPink":
+                setTheme(R.style.BrightPink);
+                break;
+            case "Black":
+                setTheme(R.style.Black);
+                break;
+            default:
+                setTheme(R.style.AppTheme);
+                break;
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_poker);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -60,8 +115,8 @@ public class PlayPoker extends AppCompatActivity
         context = this;
         sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
         if(sharedPref.getString("Player 1", null) == null ){
-            editor = sharedPref.edit();
             editor.putBoolean("hasPlayers?", false);
             editor.commit();
         }
@@ -71,6 +126,8 @@ public class PlayPoker extends AppCompatActivity
             currentGame = new PokerGame2();
         }
 
+        editor.putString("FragmentName","PokerGame");
+        editor.commit();
         if(currentFragment == null){
             currentFragment = currentGame;
             fm.beginTransaction()
@@ -81,9 +138,17 @@ public class PlayPoker extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        String fragment = sharedPref.getString("FragmentName", "");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if(fragment.equals("Themes") || fragment.equals("EditPlayers")){ //todo add change poker type class when its created
+            currentFragment = new Settings();
+            editor.putString("FragmentName","Settings");
+            editor.commit();
+            fm.beginTransaction()
+                    .replace(R.id.fragment_container, currentFragment)
+                    .commit();
         } else {
             super.onBackPressed();
         }
@@ -129,13 +194,16 @@ public class PlayPoker extends AppCompatActivity
     private void leave(int id) {
         if (id == R.id.nav_game) {
             currentFragment = currentGame;
-
+            editor.putString("FragmentName","PokerGame");
+            editor.commit();
         } else if (id == R.id.nav_reference) {
             currentFragment = new Reference();
-
+            editor.putString("FragmentName","Reference");
+            editor.commit();
         } else if (id == R.id.nav_settings) {
             currentFragment = new Settings();
-
+            editor.putString("FragmentName","Settings");
+            editor.commit();
         }
         if(currentFragment != null){
             fm.beginTransaction()

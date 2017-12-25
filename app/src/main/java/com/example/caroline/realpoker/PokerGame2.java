@@ -58,11 +58,16 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     //TODO Overall:
     //todo debug raise and winners to fix high card
     //todo onPause works but saved instance state doesnt, ask shorrr to see if he knows anything
-    //todo ui
-        //todo fix constraints overall for all phones etc... (poker game xml file and refrence)
-        //todo SETTINGS UI for players needs to be fixed, preferably have a double coulmned thing but idk
-        //todo create themes/brainstrom what that would look like or how it would work (saved instance state?)
-        //todo change icon
+    //todo fix if player 0 is deleted
+    //todo FIX CONSTRIANTS
+        //poker game
+        //reference
+        //settings
+        //editplayers
+        //themes
+    //todo add dark themes (toggle)
+    //todo fix themes (switch acccent colors and card colors...?)
+    //todo design new icon in adobe studio at school
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -74,13 +79,14 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     private void newGame(boolean ask) {
         deck = new ArrayList<>();
         currentplayer = 0;
-        currentBet=0;
-        Log.d(TAG, "newGame: currentBet"+currentBet);
+        currentBet = 0;
         round=0;
         context = getContext();
 
         sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         editor = sharedPref.edit();
+
+        setCardBacks();
 
         emptyHand.add(new Card(0, "c"));
         emptyHand.add(new Card(0, "c"));
@@ -101,26 +107,27 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
     //sets the table card view and calls function to change other views
     private void setUpCards() {
+        int cardColor = getResources().getIdentifier("cardColor"+sharedPref.getString("Theme","AppTheme"), "color", "com.example.caroline.realpoker");
         //Sets the table cards but doesnt show them
         tableCard1View = (ImageView) rootView.findViewById(R.id.table_card_1);
         tableCard1View.setContentDescription(tableCard1.getCardNumber() + " of " + tableCard1.getSuitName());
-        tableCard1View.setImageResource(R.color.colorCardBack);
+        tableCard1View.setImageResource(cardColor);
 
         tableCard2View = (ImageView) rootView.findViewById(R.id.table_card_2);
         tableCard2View.setContentDescription(tableCard2.getCardNumber() + " of " + tableCard2.getSuitName());
-        tableCard2View.setImageResource(R.color.colorCardBack);
+        tableCard2View.setImageResource(cardColor);
 
         tableCard3View = (ImageView) rootView.findViewById(R.id.table_card_3);
         tableCard3View.setContentDescription(tableCard3.getCardNumber() + " of " + tableCard3.getSuitName());
-        tableCard3View.setImageResource(R.color.colorCardBack);
+        tableCard3View.setImageResource(cardColor);
 
         tableCard4View = (ImageView) rootView.findViewById(R.id.table_card_4);
         tableCard4View.setContentDescription(tableCard4.getCardNumber() + " of " + tableCard4.getSuitName());
-        tableCard4View.setImageResource(R.color.colorCardBack);
+        tableCard4View.setImageResource(cardColor);
 
         tableCard5View = (ImageView) rootView.findViewById(R.id.table_card_5);
         tableCard5View.setContentDescription(tableCard5.getCardNumber() + " of " + tableCard5.getSuitName());
-        tableCard5View.setImageResource(R.color.colorCardBack);
+        tableCard5View.setImageResource(cardColor);
 
         createOtherPlayersCards();
         changePlayerView();
@@ -464,11 +471,11 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         final TextView t = new TextView(context);
 
         //todo change size and style to look good
-        t.setText(smallBlindName+ " has the small blind. \n "+largeBlindName+ " has the big blind. \n "+"It is "+ players[0].getName() +"'s turn");
+        t.setText(smallBlindName+ " has the small blind. \n "+largeBlindName+ " has the big blind. \n "+"It is "+ players[currentplayer].getName() +"'s turn");
         t.setTextSize(30);
         t.setGravity(Gravity.CENTER);
         alertDialogBuilder.setView(t);
-        alertDialogBuilder.setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 changePlayerView();
             }
@@ -615,8 +622,13 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
     //sets the card objects
     private void createCards() {
-        myCard1 = players[0].getHand().get(0);
-        myCard2 = players[0].getHand().get(1);
+        int i = currentplayer;
+        while(players[i].hasFolded()){
+            i++;
+        }
+        currentplayer = i;
+        myCard1 = players[currentplayer].getHand().get(0);
+        myCard2 = players[currentplayer].getHand().get(1);
         tableCard1 = cardsOnTheTable.get(0);
         tableCard2 = cardsOnTheTable.get(1);
         tableCard3 = cardsOnTheTable.get(2);
@@ -978,6 +990,63 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
             n++;
         }
         return n;
+    }
+
+    private void setCardBacks(){
+        int cardColor = getResources().getIdentifier("cardColor"+sharedPref.getString("Theme","AppTheme"), "color", "com.example.caroline.realpoker");
+        ImageView viewOne = (ImageView) rootView.findViewById(R.id.table_card_1);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.table_card_2);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.table_card_3);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.table_card_4);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.table_card_5);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.my_card_1);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.my_card_2);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.player1_card_1);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.player1_card_2);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.player2_card_1);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.player2_card_2);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.player3_card_1);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.player4_card_1);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.player4_card_2);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.player5_card_1);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.player3_card_2);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+        viewOne = (ImageView) rootView.findViewById(R.id.player5_card_2);
+        viewOne.setImageResource(cardColor);
+        viewOne.setVisibility(View.VISIBLE);
+
+
     }
 
 }
