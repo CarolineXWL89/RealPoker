@@ -454,14 +454,14 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         while(players[i].getName().equals("")){
             i--;
         }
-        players[i].setBet(sb);
-        String smallBlindName = players[i].getName();
+        players[i].setBet(bb);
+        String largeBlindName = players[i].getName();
         i--;
         while(players[i].getName().equals("")){
             i--;
         }
-        players[i].setBet(bb);
-        String largeBlindName = players[i].getName();
+        players[i].setBet(sb);
+        String smallBlindName = players[i].getName();
         currentBet=bb;
         Log.d(TAG, "setUpBlinds: currentBet"+currentBet);
         potMoney=sb+bb;
@@ -682,6 +682,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     private void call() {
         int cb=currentBet;
         players[currentplayer].setHasCalled(true);
+        Log.d(TAG, "call: "+ (players[currentplayer].getMonnies()+players[currentplayer].getBet()));
         if (players[currentplayer].getMonnies()+players[currentplayer].getBet()>=currentBet) {
             potMoney+=cb-players[currentplayer].getBet();
             players[currentplayer].setBet(cb);

@@ -67,7 +67,7 @@ public class Player {
 
     public void setBet(int newBetAmount) {
         monnies-=(newBetAmount-bet);
-        bet=newBetAmount+bet;
+        bet=newBetAmount;
     }
     public void resetBet()
     {
