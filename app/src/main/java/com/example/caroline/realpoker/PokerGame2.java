@@ -683,7 +683,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         int cb=currentBet;
         players[currentplayer].setHasCalled(true);
         Log.d(TAG, "call: "+ (players[currentplayer].getMonnies()+players[currentplayer].getBet()));
-        if (players[currentplayer].getMonnies()+players[currentplayer].getBet()>=currentBet) {
+        if (players[currentplayer].getMonnies()+players[currentplayer].getBet()>currentBet) {
             potMoney+=cb-players[currentplayer].getBet();
             players[currentplayer].setBet(cb);
             Log.d(TAG, "call: "+players[currentplayer].getBet());
@@ -694,6 +694,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         }
         else {
             Toast.makeText(context, "you have gone all in", Toast.LENGTH_SHORT).show();
+            players[currentplayer].setAllIn(true);
             players[currentplayer].setBet(players[currentplayer].getMonnies()+players[currentplayer].getBet());
             Log.d(TAG, "call: " +players[currentplayer].getBet());
             potMoney+=players[currentplayer].getMonnies();
@@ -722,6 +723,10 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
                             Toast.makeText(getActivity(), "Please enter a number larger than the bet", Toast.LENGTH_SHORT).show();
                         }
                         else{
+                            if(amountRaised==players[currentplayer].getMonnies()+players[currentplayer].getBet()){
+                                Toast.makeText(context, "You have gone all in", Toast.LENGTH_SHORT).show();
+                                players[currentplayer].setAllIn(true);
+                            }
                             Log.d(TAG, "onClick: amountRaised: "+amountRaised);
                             potMoney += amountRaised-players[currentplayer].getBet();
                             players[currentplayer].setBet(amountRaised);
@@ -801,13 +806,25 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     }
 
     private void endRound() {
+        int notAllIn=0;
         for(int i=0; i<players.length; i++)
         {
             players[i].resetBet();
             players[i].setHasCalled(false);
+            if(!players[i].isAllIn()&& !players[i].getName().equals("")){
+                notAllIn++;
+            }
             //Log.d(TAG, "endRound: "+players[i].getName()+":"+players[i].getBet());
         }
         currentBet=0;
+        if(notAllIn<=1) {
+            showCard(cardsOnTheTable.get(0));
+            showCard(cardsOnTheTable.get(1));
+            showCard(cardsOnTheTable.get(2));
+            showCard(cardsOnTheTable.get(3));
+            showCard(cardsOnTheTable.get(4));
+            round=3;
+        }
         Log.d(TAG, "endRound: currentBet"+currentBet);
         if(round==0) {
             showCard(cardsOnTheTable.get(0));

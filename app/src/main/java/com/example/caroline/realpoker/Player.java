@@ -8,6 +8,7 @@ package com.example.caroline.realpoker;
  */
 
 public class Player {
+    private boolean allIn;
     //Player (Name, Monnies, hand (ARRAY))
     private String name;
     private int monnies;
@@ -21,12 +22,14 @@ public class Player {
 
 
     public Player(String name, int monnies, ArrayList<Card> hand) {
+
         hasChecked=false;
         this.name = name;
         this.monnies = monnies;
         this.hand = hand;
         emptyHand.add(new Card(0, "c"));
         emptyHand.add(new Card(0, "c"));
+        allIn=false;
     }
 
     public int getRaiseBy() {
@@ -104,7 +107,11 @@ public class Player {
         this.sharedPref = sharedPref;
     }
 
-    public boolean hasChecked() {
-        return hasChecked;
+    public boolean isAllIn() {
+        return allIn;
+    }
+
+    public void setAllIn(boolean allIn) {
+        this.allIn = allIn;
     }
 }
