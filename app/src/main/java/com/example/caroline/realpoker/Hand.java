@@ -59,6 +59,20 @@ public class Hand {
             return two;
         }
     }
+    public boolean handsAreEqual(ArrayList<Integer> one, ArrayList<Integer> two)
+    {
+        if(one.size()==two.size()){
+            for(int i=0;i<one.size();i++)
+            {
+                if(one.get(i).intValue()!=two.get(i).intValue())
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 
 
 }

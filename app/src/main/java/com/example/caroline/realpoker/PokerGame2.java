@@ -3,15 +3,12 @@ package com.example.caroline.realpoker;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -685,6 +682,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         Log.d(TAG, "call: "+ (players[currentplayer].getMonnies()+players[currentplayer].getBet()));
         if (players[currentplayer].getMonnies()+players[currentplayer].getBet()>currentBet) {
             potMoney+=cb-players[currentplayer].getBet();
+            Log.d(TAG, "call: potMoney:"+potMoney);
             players[currentplayer].setBet(cb);
             Log.d(TAG, "call: "+players[currentplayer].getBet());
 
@@ -695,9 +693,11 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
         else {
             Toast.makeText(context, "you have gone all in", Toast.LENGTH_SHORT).show();
             players[currentplayer].setAllIn(true);
+            potMoney+=players[currentplayer].getMonnies();
+
             players[currentplayer].setBet(players[currentplayer].getMonnies()+players[currentplayer].getBet());
             Log.d(TAG, "call: " +players[currentplayer].getBet());
-            potMoney+=players[currentplayer].getMonnies();
+
             bet.setText("$"+potMoney);
             player6View.setText(players[currentplayer].getName() + ": $" + players[currentplayer].getMonnies());
             nextGuy();
@@ -823,10 +823,9 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
             showCard(cardsOnTheTable.get(2));
             showCard(cardsOnTheTable.get(3));
             showCard(cardsOnTheTable.get(4));
-            round=3;
+            endGame();
         }
-        Log.d(TAG, "endRound: currentBet"+currentBet);
-        if(round==0) {
+        else if (round==0) {
             showCard(cardsOnTheTable.get(0));
             showCard(cardsOnTheTable.get(1));
             showCard(cardsOnTheTable.get(2));
@@ -873,6 +872,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
         changePlayerView();
         ArrayList<Integer> winners = this.getWinner();
+        Log.d(TAG, "flipOverCards: winners" + winners.get(0));
         if(players[0].hasFolded()){
             myCard1View.setVisibility(View.INVISIBLE);
             myCard1View.setVisibility(View.INVISIBLE);
@@ -936,37 +936,48 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
     }
 
     //gets winners
-    public ArrayList<Integer> getWinner() {
+    public ArrayList getWinner() {
         ArrayList<Integer> best = new ArrayList<>();
-        ArrayList<Integer> winners = new ArrayList<>();
+       // ArrayList<Integer> winners = new ArrayList<>();
         best.add(-1);
-        int bestPlayer = -1;
+        ArrayList<Integer> bestPlayers = new ArrayList<>();
         for (int i = 0; i < players.length; i++) {
-            if(players[i].hasFolded()){
-
-            } else {
+            if (!players[i].hasFolded()) {
                 Hand hand1 = new Hand(players[i].getHand(), cardsOnTheTable);
                 ArrayList<Integer> intstuff1 = new ArrayList<>();
                 intstuff1.addAll(hand1.getBestHand());
-                if (hand1.getHigherHand(best, intstuff1).equals(intstuff1)) {
-                    bestPlayer = i;
-                }
+                //if (hand1.handsAreEqual(best, intstuff1)) {
+               //   bestPlayers.add(i);
+                //}else
+//                    if(hand1.getHigherHand(best,intstuff1).equals(intstuff1)){
+//                    //bestPlayers=new ArrayList<>();
+//                    bestPlayers.add(i);
+//                    Log.d(TAG, "getWinner: bestplayer" +bestPlayers.get(0));
+//
+//                    }
                 best = hand1.getHigherHand(best, intstuff1);
             }
         }
-        for(int i = 0; i < players.length; i++){
-            if(players[i].hasFolded()){
-
-            } else {
-                Hand hand1 = new Hand(players[i].getHand(), cardsOnTheTable);
-                ArrayList<Integer> intstuff1 = new ArrayList<>();
-                intstuff1.addAll(hand1.getBestHand());
-                if (hand1.getHigherHand(best, intstuff1).equals(intstuff1)) {
-                    winners.add(i);
-                }
+        for (int i = 0; i < players.length; i++) {
+            Hand hand1 = new Hand(players[i].getHand(), cardsOnTheTable);
+            if(hand1.handsAreEqual(best, hand1.getBestHand())) {
+                bestPlayers.add(i);
             }
         }
-        return winners;
+        Log.d(TAG, "getWinner: bestplayer" +bestPlayers.get(0));
+        return bestPlayers;
+//        Log.d(TAG, "getWinner: best:"+ best.get(0)+","+best.get(1)+","+best.get(2));
+//        for(int i = 0; i < players.length; i++){
+//            if (!players[i].hasFolded()) {
+//                Hand hand1 = new Hand(players[i].getHand(), cardsOnTheTable);
+//                ArrayList<Integer> intstuff1 = new ArrayList<>();
+//                intstuff1.addAll(hand1.getBestHand());
+//                if (hand1.getHigherHand(best, intstuff1).equals(intstuff1)) {
+//                    winners.add(i);
+//                }
+//            }
+//        }
+
     } //todo fix so that it checks high card
 
     private boolean needsToCall() {
