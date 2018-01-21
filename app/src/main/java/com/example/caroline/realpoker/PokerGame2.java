@@ -952,7 +952,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 //                    //bestPlayers=new ArrayList<>();
 //                    bestPlayers.add(i);
 //                    Log.d(TAG, "getWinner: bestplayer" +bestPlayers.get(0));
-//
+//what is this commenting style
 //                    }
                 best = hand1.getHigherHand(best, intstuff1);
             }
