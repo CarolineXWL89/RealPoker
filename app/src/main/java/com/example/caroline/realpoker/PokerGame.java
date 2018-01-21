@@ -641,7 +641,6 @@ public class PokerGame extends Fragment implements View.OnClickListener {
     }
 
     //if you click fold sets you equal t
-    //todo add to poker2 (i think logic can be fixed because array keeps everyone in order)
     private void playerFolded() {
         //updates shared prefrences with player's money
         String player = "Player "+ players.get(0).getName();

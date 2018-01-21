@@ -47,58 +47,9 @@ public class PlayPoker extends AppCompatActivity
         context = this;
         sharedPref = context.getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        //todo add themes
+        //todo add more/better themes
         String theme = sharedPref.getString("Theme","Standard");
-        switch(theme){
-            case "Standard":
-                setTheme(R.style.AppTheme);
-                break;
-            case "Red":
-                setTheme(R.style.Red);
-                break;
-            case "Orange":
-                setTheme(R.style.Orange);
-                break;
-            case "Yellow":
-                setTheme(R.style.Yellow);
-                break;
-            case "LightGreen":
-                setTheme(R.style.LightGreen);
-                break;
-            case "Green":
-                setTheme(R.style.Green);
-                break;
-            case "Teal":
-                setTheme(R.style.Teal);
-                break;
-            case "LightBlue":
-                setTheme(R.style.LightBlue);
-                break;
-            case "Blue":
-                setTheme(R.style.Blue);
-                break;
-            case "DarkBlue":
-                setTheme(R.style.DarkBlue);
-                break;
-            case "Indigo":
-                setTheme(R.style.Indigo);
-                break;
-            case "Purple":
-                setTheme(R.style.Purple);
-                break;
-            case "LightPink":
-                setTheme(R.style.LightPink);
-                break;
-            case "BrightPink":
-                setTheme(R.style.BrightPink);
-                break;
-            case "Black":
-                setTheme(R.style.Black);
-                break;
-            default:
-                setTheme(R.style.AppTheme);
-                break;
-        }
+        setTheme(theme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_poker);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar); //blah
@@ -220,4 +171,57 @@ public class PlayPoker extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     } //todo fix selection for the side menu
+
+    private void setTheme(String theme){
+        switch(theme){
+            case "Standard":
+                setTheme(R.style.AppTheme);
+                break;
+            case "Red":
+                setTheme(R.style.Red);
+                break;
+            case "Orange":
+                setTheme(R.style.Orange);
+                break;
+            case "Yellow":
+                setTheme(R.style.Yellow);
+                break;
+            case "LightGreen":
+                setTheme(R.style.LightGreen);
+                break;
+            case "Green":
+                setTheme(R.style.Green);
+                break;
+            case "Teal":
+                setTheme(R.style.Teal);
+                break;
+            case "LightBlue":
+                setTheme(R.style.LightBlue);
+                break;
+            case "Blue":
+                setTheme(R.style.Blue);
+                break;
+            case "DarkBlue":
+                setTheme(R.style.DarkBlue);
+                break;
+            case "Indigo":
+                setTheme(R.style.Indigo);
+                break;
+            case "Purple":
+                setTheme(R.style.Purple);
+                break;
+            case "LightPink":
+                setTheme(R.style.LightPink);
+                break;
+            case "BrightPink":
+                setTheme(R.style.BrightPink);
+                break;
+            case "Black":
+                setTheme(R.style.Black);
+                break;
+            default:
+                setTheme(R.style.AppTheme);
+                break;
+        }
+    }
 }

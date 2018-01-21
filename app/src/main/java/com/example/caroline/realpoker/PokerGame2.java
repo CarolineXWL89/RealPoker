@@ -55,8 +55,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
 
     }
 
-    //TODO Overall:
-    //todo debug raise and winners to fix high card
+    //TODO Overall:\
     //todo onPause works but saved instance state doesnt, ask shorrr to see if he knows anything
     //todo fix if player 0 is deleted
     //todo FIX CONSTRIANTS
@@ -949,7 +948,7 @@ public class PokerGame2 extends Fragment implements View.OnClickListener {
             }
         }
         return winners;
-    } //todo fix so that it checks high card
+    }
 
     private boolean needsToCall() {
         if(currentBet>players[currentplayer].getBet()){
